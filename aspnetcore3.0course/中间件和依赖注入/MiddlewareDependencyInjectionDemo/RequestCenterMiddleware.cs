@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MiddlewareDemo
+namespace MiddlewareDependencyInjectionDemo
 {
     /// <summary>
     /// 请求记录中间件

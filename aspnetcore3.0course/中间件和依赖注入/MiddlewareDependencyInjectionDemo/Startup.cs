@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace MiddlewareDemo
+namespace MiddlewareDependencyInjectionDemo
 {
     public class Startup
     {
@@ -24,16 +24,19 @@ namespace MiddlewareDemo
 
         public void ConfigureServices(IServiceCollection services)
         {
+            //每个构造函数或方法中，使用的地方都要实例化一个RequeryCountRepository
+            //services.AddTransient<IRequeryCountRepository, RequeryCountRepository>();
+            //在一次请求中，实例化一个RequeryCountRepository，其他地方共用这个实例
+            //services.AddScoped<IRequeryCountRepository, RequeryCountRepository>();
+            //所有的请求，实例化一个RequeryCountRepository，所有请求共用这个实例
             services.AddSingleton<IRequeryCountRepository, RequeryCountRepository>();
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
-        {
-            // if (env.IsDevelopment())
-            //{
-            //   app.UseDeveloperExceptionPage();
-            //}
+        {         
             app.UseExceptionHandler(new ExceptionHandlerOptions()
             {
                 ExceptionHandler = new RequestDelegate((context =>

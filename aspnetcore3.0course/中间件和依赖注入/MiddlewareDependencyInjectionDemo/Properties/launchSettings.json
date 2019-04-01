@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "MiddlewareDemo": {
+    "MiddlewareDependencyInjectionDemo": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/values",
