@@ -1,0 +1,13 @@
+[Unit]
+Description=ConfigrationDemo service
+After=network.target
+After=postgresql.service
+
+[Service]
+WorkingDirectory = /home/app/ConfigrationDemo
+ExecStart=/usr/bin/dotnet ConfigrationDemo.dll
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
