@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Connections;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,12 +17,13 @@ namespace ConfigrationDemo
 
         public IConfiguration Configuration { get; }
 
-      
+
         public void ConfigureServices(IServiceCollection services)
         {
-            //机密文件
-            var password = Configuration["dbpassword"];
-            Console.WriteLine(password);
+            //机密文件          
+            var connectionStringBuilder = new Npgsql.NpgsqlConnectionStringBuilder(Configuration.GetConnectionString("DefaultConnectionString"));
+            connectionStringBuilder.Password = Configuration["dbpassword"];
+            Console.WriteLine(connectionStringBuilder.ToString());
 
             //绑定
             var appsetting = new Appsetting();
@@ -34,10 +36,10 @@ namespace ConfigrationDemo
                   .AddNewtonsoftJson();
         }
 
-   
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.EnvironmentName== "Development")
+            if (env.EnvironmentName == "Development")
             {
                 app.UseDeveloperExceptionPage();
             }
