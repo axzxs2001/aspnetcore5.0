@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+
 
 namespace ConfigrationDemo
 {
@@ -24,24 +19,33 @@ namespace ConfigrationDemo
       
         public void ConfigureServices(IServiceCollection services)
         {
+            //机密文件
             var password = Configuration["dbpassword"];
             Console.WriteLine(password);
 
+            //绑定
             var appsetting = new Appsetting();
             Configuration.GetSection("Appsetting").Bind(appsetting);
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            //热更新
+            services.Configure<Appsetting>(Configuration.GetSection("Appsetting"));
+
+            services.AddMvc()
+                  .AddNewtonsoftJson();
         }
 
-  
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+   
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.EnvironmentName== "Development")
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseMvc();
+            app.UseRouting(routes =>
+            {
+                routes.MapControllers();
+            });
+            app.UseAuthorization();
         }
     }
 }

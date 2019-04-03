@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace ConfigrationDemo.Controllers
 {
@@ -10,11 +11,17 @@ namespace ConfigrationDemo.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        // GET api/values
-        [HttpGet]
+        readonly Appsetting _appsetting;
+        public ValuesController(IOptionsSnapshot<Appsetting> optionsSnapshot)
+        {
+            _appsetting = optionsSnapshot.Value;
+        }
+       
+       [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "value1", $"Key:{ _appsetting.Key},Name:{_appsetting.Name}" };
+          
         }
 
         // GET api/values/5

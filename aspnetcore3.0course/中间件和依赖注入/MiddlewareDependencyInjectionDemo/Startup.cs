@@ -32,10 +32,10 @@ namespace MiddlewareDependencyInjectionDemo
             services.AddSingleton<IRequeryCountRepository, RequeryCountRepository>();
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().AddNewtonsoftJson();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {         
             app.UseExceptionHandler(new ExceptionHandlerOptions()
             {
@@ -84,7 +84,11 @@ namespace MiddlewareDependencyInjectionDemo
                 }))
             });
             app.UseRequestCenter();
-            app.UseMvc();
+            app.UseRouting(routes =>
+            {
+                routes.MapControllers();
+            });
+            app.UseAuthorization();
         }
 
     }

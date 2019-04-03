@@ -14,7 +14,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiddlewareDependencyInjecti
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "配置文件", "配置文件", "{FEAB7E33-AAF5-4033-8897-7DF000B5E961}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigrationDemo", "配置文件\ConfigrationDemo\ConfigrationDemo.csproj", "{DEB41E9E-A07A-4517-8144-520B3219B842}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfigrationDemo", "配置文件\ConfigrationDemo\ConfigrationDemo.csproj", "{DEB41E9E-A07A-4517-8144-520B3219B842}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
