@@ -24,8 +24,7 @@ namespace ConfigrationDemo_Custom
                 {
                     webBuilder.ConfigureAppConfiguration((context, config) =>
                     {
-                        config.SetBasePath(Directory.GetCurrentDirectory());
-                       // config.AddJsonFile()
+                        config.SetBasePath(Directory.GetCurrentDirectory());                   
                         config.AddYamlFile("appsettings.yaml");
                     });
                     webBuilder.UseStartup<Startup>();
