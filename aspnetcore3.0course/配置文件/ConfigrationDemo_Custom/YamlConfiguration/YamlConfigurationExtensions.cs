@@ -7,9 +7,9 @@ namespace ConfigrationDemo_Custom
     public static class YamlConfigurationExtensions
     {
         public static IConfigurationBuilder AddYamlFile(
-            this IConfigurationBuilder builder, Action<YamlConfigurationSource> configureSource)
+            this IConfigurationBuilder builder, Action<YamlConfigurationSource>  action)
         {
-            return builder.Add(configureSource);
+            return builder.Add(action);
         }
         public static IConfigurationBuilder AddYamlFile(this IConfigurationBuilder builder, string path)
         {

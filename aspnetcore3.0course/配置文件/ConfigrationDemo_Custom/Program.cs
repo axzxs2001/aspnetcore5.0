@@ -20,11 +20,12 @@ namespace ConfigrationDemo_Custom
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+                .ConfigureWebHostDefaults(webBuilder =>//webBuilder是主机(host)配置构建对象
                 {
-                    webBuilder.ConfigureAppConfiguration((context, config) =>
+
+                    webBuilder.ConfigureAppConfiguration((context, config) => //config是应用(application)配置构建对象
                     {
-                        config.SetBasePath(Directory.GetCurrentDirectory());                   
+                        config.SetBasePath(Directory.GetCurrentDirectory());
                         config.AddYamlFile("appsettings.yaml");
                     });
                     webBuilder.UseStartup<Startup>();

@@ -19,14 +19,17 @@ namespace ConfigrationDemo_Custom
         {
             try
             {
+                //读取到yaml内容
                 var yaml = new StreamReader(stream).ReadToEnd();
+                //创建yaml反序列化器，把内容信息转成对象
                 var deserializer = new DeserializerBuilder().Build();
                 var yamlObject = deserializer.Deserialize(new StringReader(yaml));
-
+                //创建yaml转json序列化器,并把yaml对象转成json字符串
                 var serializer = new SerializerBuilder()
                     .JsonCompatible()
                     .Build();
                 var json = serializer.Serialize(yamlObject);
+                //把json转成配置文件所需的键值表示方式
                 Data = JsonConfigurationFileParser.Parse(new MemoryStream(System.Text.Encoding.UTF8.GetBytes(json)));
             }
             catch (JsonReaderException e)
