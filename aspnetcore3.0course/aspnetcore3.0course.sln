@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "验证和授权", "验证�
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationAuthorization_Cookie_01", "验证和授权\AuthenticationAuthorization_Cookie_01\AuthenticationAuthorization_Cookie_01.csproj", "{40720D33-64FA-4E1E-AF0D-977DD2AED403}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationAuthorization_Cookie_02", "验证和授权\AuthenticationAuthorization_Cookie_02\AuthenticationAuthorization_Cookie_02.csproj", "{7B4104C7-6CBD-4043-AEE8-41F98C14E0E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{40720D33-64FA-4E1E-AF0D-977DD2AED403}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40720D33-64FA-4E1E-AF0D-977DD2AED403}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40720D33-64FA-4E1E-AF0D-977DD2AED403}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B4104C7-6CBD-4043-AEE8-41F98C14E0E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B4104C7-6CBD-4043-AEE8-41F98C14E0E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B4104C7-6CBD-4043-AEE8-41F98C14E0E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B4104C7-6CBD-4043-AEE8-41F98C14E0E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{DEB41E9E-A07A-4517-8144-520B3219B842} = {FEAB7E33-AAF5-4033-8897-7DF000B5E961}
 		{F2F3E650-FC91-4C07-9D4C-B310BC138991} = {FEAB7E33-AAF5-4033-8897-7DF000B5E961}
 		{40720D33-64FA-4E1E-AF0D-977DD2AED403} = {DBEF1CBA-0482-440D-9765-A6D510D1960E}
+		{7B4104C7-6CBD-4043-AEE8-41F98C14E0E4} = {DBEF1CBA-0482-440D-9765-A6D510D1960E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5CB3F486-CE6E-47FB-A62F-70F307BC329E}
