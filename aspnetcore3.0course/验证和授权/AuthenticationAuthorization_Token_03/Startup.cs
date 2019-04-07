@@ -48,8 +48,8 @@ namespace AuthenticationAuthorization_Token_03
             var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
             //这个集合模拟用户权限表,可从数据库中查询出来
             var permission = new List<Permission> {
-                              new Permission {  Url="amdinapi", Name="admin"},
-                              new Permission {  Url="systemapi", Name="system"}
+                              new Permission {  Url="/amdinapi", Name="admin"},
+                              new Permission {  Url="/systemapi", Name="system"}
                           };
             //如果第三个参数，是ClaimTypes.Role，上面集合的每个元素的Name为角色名称，如果ClaimTypes.Name，即上面集合的每个元素的Name为用户名
             var permissionRequirement = new PermissionRequirement(
@@ -115,11 +115,11 @@ namespace AuthenticationAuthorization_Token_03
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
-
-            app.UseRouting(routes =>
-            {
-                routes.MapControllers();
-            });
+            app.UseMvc();
+            //app.UseRouting(routes =>
+            //{
+            //    routes.MapControllers();
+            //});
 
             app.UseAuthorization();
         }
