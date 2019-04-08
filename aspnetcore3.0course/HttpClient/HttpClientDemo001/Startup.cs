@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HttpClientDemo001.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,19 @@ namespace HttpClientDemo001
         public void ConfigureServices(IServiceCollection services)
         {
             //基本用法
-            services.AddHttpClient();
+             services.AddHttpClient();
+            //命名客户端
+            services.AddHttpClient("nameclient5000", c =>
+            {
+                c.BaseAddress = new Uri("http://localhost:5000/");
+                c.DefaultRequestHeaders.Add("User-Agent", "HttpClientDemo001");
+            });
+            //类型化客户端      
+            services.AddTransient<MyHttpClientHandler>();
+            services
+                .AddHttpClient<ITypeClientRepository, TypeClientRepository>("typeclient5000")
+                .AddHttpMessageHandler<MyHttpClientHandler>();
+
 
             services.AddMvc()
                 .AddNewtonsoftJson();

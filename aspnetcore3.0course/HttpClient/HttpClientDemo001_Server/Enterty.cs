@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace HttpClientDemo001_Server
 {
-    public class Enterty
+    public class Entity
     {
         public int ID { get; set; }
 

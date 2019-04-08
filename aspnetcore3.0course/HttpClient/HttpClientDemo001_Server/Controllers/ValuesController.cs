@@ -12,26 +12,26 @@ namespace HttpClientDemo001_Server.Controllers
     {
 
         [HttpGet]
-        public ActionResult<IEnumerable<Enterty>> Get()
+        public ActionResult<IEnumerable<Entity>> Get()
         {
-            return new Enterty[] { new Enterty { ID = 1, Name = "实体1" }, new Enterty { ID = 2, Name = "实体2" }, new Enterty { ID = 3, Name = "实体3" } };
+            return new Entity[] { new Entity { ID = 1, Name = "实体1" }, new Entity { ID = 2, Name = "实体2" }, new Entity { ID = 3, Name = "实体3" } };
         }
 
 
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
-            return new JsonResult(new Enterty { ID = id, Name = $"实体{id}" });
+            return new JsonResult(new Entity { ID = id, Name = $"实体{id}" });
         }
         [HttpGet("idname")]
         public ActionResult<string> IDName(int id, string name)
         {
-            return new JsonResult(new Enterty { ID = id, Name = name });
+            return new JsonResult(new Entity { ID = id, Name = name });
         }
 
 
         [HttpPost]
-        public ActionResult Post([FromBody] Enterty enterty)
+        public ActionResult Post([FromBody] Entity enterty)
         {
             enterty.ID = new Random().Next(100, 999);
             Console.WriteLine("******************************************");
@@ -42,7 +42,7 @@ namespace HttpClientDemo001_Server.Controllers
 
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Enterty enterty)
+        public void Put(int id, [FromBody] Entity enterty)
         {
             Console.WriteLine("******************************************");
             Console.WriteLine($"Put    {enterty.ToString()}");
