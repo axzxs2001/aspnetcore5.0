@@ -9,7 +9,7 @@ namespace AuthenticationAuthorization_Token_03_Client
         /// <summary>
         /// 访问Url
         /// </summary>
-        static string _url = "http://localhost:5000";
+        static string _url = "https://localhost:5001";
         static void Main(string[] args)
         {
             dynamic token = null;
@@ -82,7 +82,7 @@ namespace AuthenticationAuthorization_Token_03_Client
         {
             var client = new RestClient(_url);
             //这里要在获取的令牌字符串前加Bearer
-            string tk = "Bearer " + Convert.ToString(token?.access_token);
+            var tk = $"Bearer {Convert.ToString(token?.access_token)}";
             client.AddDefaultHeader("Authorization", tk);
             var request = new RestRequest("/adminapi", Method.GET);
             IRestResponse response = client.Execute(request);

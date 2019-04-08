@@ -48,7 +48,7 @@ namespace AuthenticationAuthorization_Token_03
             var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
             //这个集合模拟用户权限表,可从数据库中查询出来
             var permission = new List<Permission> {
-                              new Permission {  Url="/amdinapi", Name="admin"},
+                              new Permission {  Url="/adminapi", Name="admin"},
                               new Permission {  Url="/systemapi", Name="system"}
                           };
             //如果第三个参数，是ClaimTypes.Role，上面集合的每个元素的Name为角色名称，如果ClaimTypes.Name，即上面集合的每个元素的Name为用户名
@@ -58,18 +58,14 @@ namespace AuthenticationAuthorization_Token_03
                 audienceConfig["Issuer"],
                 audienceConfig["Audience"],
                 signingCredentials,
-                expiration: TimeSpan.FromSeconds(10)//设置Token过期时间
+                expiration: TimeSpan.FromSeconds(10000)//设置Token过期时间
                 );
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Permission",
-                          policy =>
-                          {
-                              policy.AddRequirements(permissionRequirement);
-                          }
-                          );
-            }).AddAuthentication(options =>
+                options.AddPolicy("Permission",policy =>policy.AddRequirements(permissionRequirement));
+            }).
+            AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -80,19 +76,19 @@ namespace AuthenticationAuthorization_Token_03
                 //不使用https
                  o.RequireHttpsMetadata = false;
                  o.TokenValidationParameters = tokenValidationParameters;
-            
-                //o.Events = new JwtBearerEvents
-                //{
-                //    OnTokenValidated = context =>
-                //    {
-                //        if (context.Request.Path.Value.ToString() == "/api/logout")
-                //        {
-                //            var token = ((context as TokenValidatedContext).SecurityToken as JwtSecurityToken).RawData;
-                //        }
-                //        return Task.CompletedTask;
-                //    }
-                //};
-            });
+
+                 o.Events = new JwtBearerEvents
+                 {
+                     OnTokenValidated = context =>
+                     {
+                         if (context.Request.Path.Value.ToString() == "/api/logout")
+                         {
+                             var token = ((context as TokenValidatedContext).SecurityToken as JwtSecurityToken).RawData;
+                         }
+                         return Task.CompletedTask;
+                     }
+                 };
+             });
             //注入授权Handler
             services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
             services.AddSingleton(permissionRequirement);
@@ -115,6 +111,7 @@ namespace AuthenticationAuthorization_Token_03
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
+            //MVC的方式才能把正确的httpcontext送到自定义策略的AuthorizationHandler.HandleRequirementAsync中
             app.UseMvc();
             //app.UseRouting(routes =>
             //{

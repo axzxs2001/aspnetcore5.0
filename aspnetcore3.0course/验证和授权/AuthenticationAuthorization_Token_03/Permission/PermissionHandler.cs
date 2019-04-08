@@ -60,7 +60,8 @@ namespace AuthenticationAuthorization_Token_03
                 {
 
                     httpContext.User = result.Principal;
-                    //权限中是否存在请求的url
+                    //权限中是否存在请求的url                  
+
                     if (requirement.Permissions.GroupBy(g => g.Url).Where(w => w.Key.ToLower() == questUrl).Count() > 0)
                     {
                         var name = httpContext.User.Claims.SingleOrDefault(s => s.Type == requirement.ClaimType).Value;
