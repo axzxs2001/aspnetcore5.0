@@ -8,5 +8,6 @@ namespace HttpClientDemo001.Repository
     public interface ITypeClientRepository
     {
         Task<List<Entity>> GetEntities();
+        
     }
 }

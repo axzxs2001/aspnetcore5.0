@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Polly;
 
 namespace HttpClientDemo001
 {
@@ -38,7 +39,13 @@ namespace HttpClientDemo001
             services.AddTransient<MyHttpClientHandler>();
             services
                 .AddHttpClient<ITypeClientRepository, TypeClientRepository>("typeclient5000")
-                .AddHttpMessageHandler<MyHttpClientHandler>();
+                .AddHttpMessageHandler<MyHttpClientHandler>();//添加请求中间件
+
+            //重试
+            services.AddHttpClient("pollyclient5000")
+                .AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, _ => TimeSpan.FromSeconds(1)))
+                .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(15, TimeSpan.FromSeconds(30))); 
+
 
 
             services.AddMvc()

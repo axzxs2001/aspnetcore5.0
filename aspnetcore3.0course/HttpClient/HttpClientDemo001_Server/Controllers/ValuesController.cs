@@ -57,5 +57,12 @@ namespace HttpClientDemo001_Server.Controllers
             Console.WriteLine($"Delete    {id}");
             Console.WriteLine("******************************************");
         }
+
+
+        [HttpGet("polly")]
+        public ActionResult<IEnumerable<Entity>> Polly()
+        {           
+            return StatusCode(500);
+        }
     }
 }

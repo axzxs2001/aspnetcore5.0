@@ -25,5 +25,8 @@ namespace HttpClientDemo001.Controllers
         {
             return new JsonResult(await _typeClientRepository.GetEntities());
         }
+
+
+       
     }
 }
