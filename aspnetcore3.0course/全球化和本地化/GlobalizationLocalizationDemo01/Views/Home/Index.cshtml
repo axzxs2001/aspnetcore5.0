@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div class="row" style="margin-top:20px;">
+    <div class="col-md-3">
+
+        <form action="/" method="post" id="form1">
+            <select class="form-control" name="culture" id="culture" onchange="selectSubmit()">
+                <option selected value="zh">中文</option>
+                <option value="ja">日文</option>
+                <option value="en">英文</option>
+            </select>
+
+        </form>
+    </div>
+</div>
+<h2>View:@Localizer["index_test"]</h2>
+<div class="row">
+    <div class="col-md-3">
+        <button class="btn btn-primary">@ViewData["ok"]</button>
+
+        <button class="btn btn-info">@ViewData["no"]</button>
+
+        <button class="btn btn-danger">@ViewData["cancel"]</button>
+    </div>
+</div>
+@section Scripts{
+    <script type="text/javascript" src="/js/jquery.cookie.js"></script>
+    <script>
+        $(function () {
+            if ($.cookie('.AspNetCore.Culture') != '') {
+                console.log($.cookie('.AspNetCore.Culture'))
+                var culture = $.cookie('.AspNetCore.Culture').split("|")[0].split("=")[1];
+                $("#culture").val(culture);
+            }
+        })
+        function selectSubmit() {
+
+            $("#form1").submit();
+        }
+    </script>
+}

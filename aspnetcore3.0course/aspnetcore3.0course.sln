@@ -34,6 +34,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClientDemo001", "HttpCl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClientDemo001_Server", "HttpClient\HttpClientDemo001_Server\HttpClientDemo001_Server.csproj", "{DB33D8D4-D055-4EC8-A402-5495FBB26238}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "全球化和本地化", "全球化和本地化", "{2809C9A7-0EE7-43A0-9A1F-15A1A905764B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalizationLocalizationDemo01", "全球化和本地化\GlobalizationLocalizationDemo01\GlobalizationLocalizationDemo01.csproj", "{4924E9B1-8BB8-409E-9266-FCAB4CA0E578}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +80,10 @@ Global
 		{DB33D8D4-D055-4EC8-A402-5495FBB26238}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB33D8D4-D055-4EC8-A402-5495FBB26238}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB33D8D4-D055-4EC8-A402-5495FBB26238}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4924E9B1-8BB8-409E-9266-FCAB4CA0E578}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4924E9B1-8BB8-409E-9266-FCAB4CA0E578}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4924E9B1-8BB8-409E-9266-FCAB4CA0E578}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4924E9B1-8BB8-409E-9266-FCAB4CA0E578}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +98,7 @@ Global
 		{11E43A97-4EC4-4B1A-9DC7-EF12E501F9D5} = {DBEF1CBA-0482-440D-9765-A6D510D1960E}
 		{B894C641-4321-40A4-9CB9-047A9068670F} = {8E12ACC4-94A9-4543-A353-3C44E4D8ADB1}
 		{DB33D8D4-D055-4EC8-A402-5495FBB26238} = {8E12ACC4-94A9-4543-A353-3C44E4D8ADB1}
+		{4924E9B1-8BB8-409E-9266-FCAB4CA0E578} = {2809C9A7-0EE7-43A0-9A1F-15A1A905764B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5CB3F486-CE6E-47FB-A62F-70F307BC329E}
