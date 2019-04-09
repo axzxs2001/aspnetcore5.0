@@ -1,12 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
 
 <div class="row" style="margin-top:20px;">
     <div class="col-md-3">
@@ -21,7 +17,12 @@
         </form>
     </div>
 </div>
-<h2>View:@Localizer["index_test"]</h2>
+<hr />
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<h2>Controller资源</h2>
 <div class="row">
     <div class="col-md-3">
         <button class="btn btn-primary">@ViewData["ok"]</button>

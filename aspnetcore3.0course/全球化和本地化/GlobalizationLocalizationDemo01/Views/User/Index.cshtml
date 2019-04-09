@@ -1,0 +1,42 @@
+﻿@model IEnumerable<GlobalizationLocalizationDemo01.Models.UserViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">@Localizer["Create"].Value</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.ActionLink(Localizer["Edit"].Value, "Edit", new { username = item.UserName }) |
+                    @Html.ActionLink(Localizer["Details"].Value, "Details", new { username = item.UserName }) |
+                    @Html.ActionLink(Localizer["Delete"].Value, "Delete", new { username = item.UserName })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
