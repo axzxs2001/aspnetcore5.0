@@ -32,6 +32,9 @@ namespace ConfigrationDemo
             //热更新
             services.Configure<Appsetting>(Configuration.GetSection("Appsetting"));
 
+            //azure配置文件
+            Console.WriteLine($"Azure pgdb：{Configuration["pgdb"]}");
+
             services.AddMvc()
                   .AddNewtonsoftJson();
         }
