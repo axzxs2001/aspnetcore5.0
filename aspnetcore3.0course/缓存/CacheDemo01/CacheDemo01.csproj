@@ -10,4 +10,8 @@
     <PackageReference Include="Npgsql" Version="4.0.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DistributedPostgreCache\DistributedPostgreCache.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -8,11 +8,9 @@ using System.Threading.Tasks;
 using Npgsql;
 using System.Data;
 
-namespace CacheDemo01
+namespace DistributedPostgreCache
 {
-    /// <summary>
-    /// Distributed cache implementation using Microsoft SQL Server database.
-    /// </summary>
+
     public class PostgreCache : IDistributedCache
     {
         readonly PostgreCacheOptions _options;
@@ -28,8 +26,7 @@ namespace CacheDemo01
                 con.Open();
                 var cmd = new NpgsqlCommand();
                 cmd.Connection = con;
-                cmd.CommandText = $"select id,value,expiresattime,slidingexpirationinseconds,absoluteexpiration from @tablename where id=@id";
-                cmd.Parameters.Add(new NpgsqlParameter("tablename", _options.TableName));
+                cmd.CommandText = $"select id,value,expiresattime,slidingexpirationinseconds,absoluteexpiration from {_options.TableName} where id=@id";
                 cmd.Parameters.Add(new NpgsqlParameter("id", key));
                 var reader = cmd.ExecuteReader(
                     CommandBehavior.SequentialAccess | CommandBehavior.SingleRow | CommandBehavior.SingleResult);
@@ -52,8 +49,7 @@ namespace CacheDemo01
                 await con.OpenAsync();
                 var cmd = new NpgsqlCommand();
                 cmd.Connection = con;
-                cmd.CommandText = $"select value from @tablename where id=@id";
-                cmd.Parameters.Add(new NpgsqlParameter("tablename", _options.TableName));
+                cmd.CommandText = $"select id,value,expiresattime,slidingexpirationinseconds,absoluteexpiration from {_options.TableName} where id=@id";
                 cmd.Parameters.Add(new NpgsqlParameter("id", key));
                 var reader = await cmd.ExecuteReaderAsync();
                 if (reader.Read())
@@ -65,9 +61,7 @@ namespace CacheDemo01
                     return null;
                 }
             }
-
         }
-
         public void Refresh(string key)
         {
             Get(key);
@@ -92,7 +86,6 @@ namespace CacheDemo01
                 cmd.ExecuteNonQuery();
             }
         }
-
         public async Task RemoveAsync(string key, CancellationToken token = default)
         {
             token.ThrowIfCancellationRequested();
@@ -120,22 +113,69 @@ namespace CacheDemo01
                 con.Open();
                 var cmd = new NpgsqlCommand();
                 cmd.Connection = con;
-                cmd.CommandText = $"select id,value,expiresattime,slidingexpirationinseconds,absoluteexpiration from @tablename where id=@id";
-                cmd.Parameters.Add(new NpgsqlParameter("tablename", _options.TableName));
+                cmd.CommandText = $"update {_options.TableName} set value=@value,expiresattime=CASE  WHEN @slidingexpirationinseconds IS NUll THEN @absoluteexpiration ELSE floor(extract(epoch FROM (current_timestamp at time zone 'UTC' +(@slidingexpirationinseconds||'second')::interval - to_date('0000-01-01', 'YYYY-MM-DD')))) END,slidingexpirationinseconds=@slidingexpirationinseconds,absoluteexpiration=@absoluteexpiration where id=@id;insert into {_options.TableName}(id,value,expiresattime,slidingexpirationinseconds,absoluteexpiration) select @id,@value,CASE  WHEN @slidingexpirationinseconds IS NUll THEN @absoluteexpiration ELSE floor(extract(epoch FROM (current_timestamp at time zone 'UTC' +(@slidingexpirationinseconds||'second')::interval - to_date('0000-01-01', 'YYYY-MM-DD')))) END,@slidingexpirationinseconds,@absoluteexpiration where not exists(select 1 from {_options.TableName} where id=@id)";
+
                 cmd.Parameters.Add(new NpgsqlParameter("id", key));
+                cmd.Parameters.Add(new NpgsqlParameter("value", value));
+                if (options.SlidingExpiration.HasValue)
+                {
+                    cmd.Parameters.Add(new NpgsqlParameter("slidingexpirationinseconds", options.SlidingExpiration.Value.TotalSeconds));
+                }
+                else
+                {
+                    cmd.Parameters.Add(new NpgsqlParameter("slidingexpirationinseconds", DbType.Int64){ Value = DBNull.Value });
+                }
+                if (absoluteExpiration == null)
+                {
+                    cmd.Parameters.Add(new NpgsqlParameter("absoluteexpiration", DBNull.Value));
+                }
+                else
+                {
+                    cmd.Parameters.Add(new NpgsqlParameter("absoluteexpiration", DbType.Int64){ Value = absoluteExpiration.Value.UtcTicks });
+                }
                 cmd.ExecuteNonQuery();
-             
+
             }
         }
 
-        public Task SetAsync(string key, byte[] value, DistributedCacheEntryOptions options, CancellationToken token = default)
+        public async Task SetAsync(string key, byte[] value, DistributedCacheEntryOptions options, CancellationToken token = default)
         {
-            throw new NotImplementedException();
+            DateTimeOffset utcNow = new SystemClock().UtcNow;
+
+            var absoluteExpiration = GetAbsoluteExpiration(utcNow, options);
+            ValidateOptions(options.SlidingExpiration, absoluteExpiration);
+
+            using (var con = new NpgsqlConnection(_options.ConnectionString))
+            {
+                await con.OpenAsync();
+                var cmd = new NpgsqlCommand();
+                cmd.Connection = con;
+                cmd.CommandText = $"update {_options.TableName} set value=@value,expiresattime=CASE  WHEN @slidingexpirationinseconds IS NUll THEN @absoluteexpiration ELSE floor(extract(epoch FROM (current_timestamp at time zone 'UTC' +(@slidingexpirationinseconds||'second')::interval - to_date('0000-01-01', 'YYYY-MM-DD')))) END,slidingexpirationinseconds=@slidingexpirationinseconds,absoluteexpiration=@absoluteexpiration where id=@id;insert into {_options.TableName}(id,value,expiresattime,slidingexpirationinseconds,absoluteexpiration) select @id,@value,CASE  WHEN @slidingexpirationinseconds IS NUll THEN @absoluteexpiration ELSE floor(extract(epoch FROM (current_timestamp at time zone 'UTC' +(@slidingexpirationinseconds||'second')::interval - to_date('0000-01-01', 'YYYY-MM-DD')))) END,@slidingexpirationinseconds,@absoluteexpiration where not exists(select 1 from {_options.TableName} where id=@id)";
+                cmd.Parameters.Add(new NpgsqlParameter("id", key));
+                cmd.Parameters.Add(new NpgsqlParameter("value", value));
+                if (options.SlidingExpiration.HasValue)
+                {
+                    cmd.Parameters.Add(new NpgsqlParameter("slidingexpirationinseconds", options.SlidingExpiration.Value.TotalSeconds));
+                }
+                else
+                {
+                    cmd.Parameters.Add(new NpgsqlParameter("slidingexpirationinseconds", DBNull.Value));
+                }
+                if (absoluteExpiration == null)
+                {
+                    cmd.Parameters.Add(new NpgsqlParameter("absoluteexpiration", DBNull.Value));
+                }
+                else
+                {
+                    cmd.Parameters.Add(new NpgsqlParameter("absoluteexpiration", absoluteExpiration.Value.UtcDateTime));
+                }
+                await cmd.ExecuteNonQueryAsync();
+
+            }
         }
 
         protected DateTimeOffset? GetAbsoluteExpiration(DateTimeOffset utcNow, DistributedCacheEntryOptions options)
         {
-            // calculate absolute expiration
             DateTimeOffset? absoluteExpiration = null;
             if (options.AbsoluteExpirationRelativeToNow.HasValue)
             {
@@ -160,82 +200,6 @@ namespace CacheDemo01
                 throw new InvalidOperationException("Either absolute or sliding expiration needs " +
                     "to be provided.");
             }
-        }
-    }
-
-    public static class PostgreCachingServicesExtensions
-    {
-        public static IServiceCollection AddDistributedPostgreCache(this IServiceCollection services, Action<PostgreCacheOptions> setupAction)
-        {
-            if (services == null)
-            {
-                throw new ArgumentNullException(nameof(services));
-            }
-
-            if (setupAction == null)
-            {
-                throw new ArgumentNullException(nameof(setupAction));
-            }
-
-            services.AddOptions();
-            AddPostgreCacheServices(services);
-            services.Configure(setupAction);
-
-            return services;
-        }
-
-        internal static void AddPostgreCacheServices(IServiceCollection services)
-        {
-            services.Add(ServiceDescriptor.Singleton<IDistributedCache, PostgreCache>());
-        }
-    }
-
-    public class PostgreCacheOptions : IOptions<PostgreCacheOptions>
-    {
-
-        public ISystemClock SystemClock { get; set; }
-
-
-        public TimeSpan? ExpiredItemsDeletionInterval { get; set; }
-
-
-        public string ConnectionString { get; set; }
-
-
-        public string SchemaName { get; set; }
-
-
-        public string TableName { get; set; }
-
-
-        public TimeSpan DefaultSlidingExpiration { get; set; } = TimeSpan.FromMinutes(20);
-
-        PostgreCacheOptions IOptions<PostgreCacheOptions>.Value
-        {
-            get
-            {
-                return this;
-            }
-        }
-    }
-    internal static class Columns
-    {
-        public static class Names
-        {
-            public const string CacheItemId = "Id";
-            public const string CacheItemValue = "Value";
-            public const string ExpiresAtTime = "ExpiresAtTime";
-            public const string SlidingExpirationInSeconds = "SlidingExpirationInSeconds";
-            public const string AbsoluteExpiration = "AbsoluteExpiration";
-        }
-
-        public static class Indexes
-        {
-            public const int CacheItemIdIndex = 0;
-            public const int CacheItemValueIndex = 1;
-            public const int ExpiresAtTimeIndex = 2;
-            public const int SlidingExpirationInSecondsIndex = 3;
-            public const int AbsoluteExpirationIndex = 4;
         }
     }
 }
