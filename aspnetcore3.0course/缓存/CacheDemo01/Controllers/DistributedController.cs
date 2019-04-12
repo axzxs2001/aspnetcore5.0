@@ -44,20 +44,35 @@ namespace CacheDemo01.Controllers
             var currentTimeUTC = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff");
             byte[] encodedCurrentTimeUTC = Encoding.UTF8.GetBytes(currentTimeUTC);
             var options = new DistributedCacheEntryOptions()
-                .SetAbsoluteExpiration(TimeSpan.FromSeconds(20))
-                //.SetSlidingExpiration(TimeSpan.FromSeconds(20))
+                .SetAbsoluteExpiration(TimeSpan.FromSeconds(10))
+                .SetSlidingExpiration(TimeSpan.FromSeconds(10))
                 ;
-             _cache.Set("cachedTimeUTC", encodedCurrentTimeUTC, options);
+            _cache.Set("cachedTimeUTC", encodedCurrentTimeUTC, options);
 
             return Ok();
         }
 
         [HttpGet("/delete")]
         public async Task<IActionResult> DeleteTime()
-        {         
+        {
             await _cache.RemoveAsync("cachedTimeUTC");
-
             return Ok();
+        }
+        [HttpGet("/getorcreate")]
+        public async Task<IActionResult> GetOrCreate()
+        {            
+            var result = await _cache.GetOrCreateAsync("cachedTimeUTC", cacheitem =>
+              {
+                  cacheitem.AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(10);
+               
+                  var currentTimeUTC = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                  var encodedCurrentTimeUTC = Encoding.UTF8.GetBytes(currentTimeUTC);
+                  cacheitem.Value = encodedCurrentTimeUTC;
+
+                  return encodedCurrentTimeUTC;
+              });
+            var cachedTimeUTC = Encoding.UTF8.GetString(result);
+            return Ok(cachedTimeUTC);
         }
     }
 

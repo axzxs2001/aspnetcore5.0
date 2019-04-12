@@ -26,7 +26,7 @@ namespace CacheDemo01
 
 
         public void ConfigureServices(IServiceCollection services)
-        {
+        {         
             services.AddMemoryCache();
             services.AddDistributedPostgreCache(options =>
             {
@@ -41,12 +41,7 @@ namespace CacheDemo01
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDistributedCache cache)
         {
-
-            var currentTimeUTC = DateTime.UtcNow.ToString();
-            byte[] encodedCurrentTimeUTC = Encoding.UTF8.GetBytes(currentTimeUTC);
-            var options = new DistributedCacheEntryOptions()
-                .SetSlidingExpiration(TimeSpan.FromSeconds(20));
-            cache.Set("cachedTimeUTC", encodedCurrentTimeUTC, options);
+           
 
             if (env.IsDevelopment())
             {

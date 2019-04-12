@@ -29,13 +29,14 @@ namespace CacheDemo01.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {        
+         
             var cacheEntry = _cache.GetOrCreate(CacheKeys.Entry, entry =>
             {                
                 //绝对5s后重新设置
                 entry.SetAbsoluteExpiration(TimeSpan.FromSeconds(10));
                 //无访问5s后重新设置
                 //entry.SlidingExpiration = TimeSpan.FromSeconds(5);
-                return DateTime.Now;
+                return  DateTime.Now;
             });
             return "Cache"+cacheEntry.ToString("  yyyy-MM-dd HH:mm:ss.fff");
         }

@@ -26,7 +26,7 @@ namespace DistributedPostgreCache
 
         internal static void AddPostgreCacheServices(IServiceCollection services)
         {
-            services.Add(ServiceDescriptor.Singleton<IDistributedCache, PostgreCache>());
+            services.Add(ServiceDescriptor.Singleton<IDistributedCache, DistributedPostgreCache>());
         }
     }
 }
