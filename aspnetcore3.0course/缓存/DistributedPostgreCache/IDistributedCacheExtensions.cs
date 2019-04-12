@@ -9,9 +9,19 @@ using System.Threading.Tasks;
 
 namespace DistributedPostgreCache
 {
+    /// <summary>
+    /// Postgre分布式缓存扩展
+    /// </summary>
     public static class IDistributedCacheExtensions
     {
         const int seconds = 20;
+        /// <summary>
+        /// 获取或创建分布式数据
+        /// </summary>
+        /// <param name="distributedCache">分布式缓存</param>
+        /// <param name="key">主键</param>
+        /// <param name="factory">回调方法</param>  
+        /// <returns></returns>
         public static byte[] GetOrCreate(this IDistributedCache distributedCache, string key, Func<CacheItem, byte[]> factory)
         {
             var connectionString = (distributedCache as DistributedPostgreCache).ConnectionString;
@@ -91,7 +101,14 @@ namespace DistributedPostgreCache
             return value;
         }
 
-
+        /// <summary>
+        /// 获取或创建分布式数据
+        /// </summary>
+        /// <param name="distributedCache">分布式缓存</param>
+        /// <param name="key">主键</param>
+        /// <param name="factory">回调方法</param>
+        /// <param name="token">取消token</param>
+        /// <returns></returns>
         public static async Task<byte[]> GetOrCreateAsync(this IDistributedCache distributedCache, string key, Func<CacheItem, byte[]> factory, CancellationToken token = default)
         {
             var connectionString = (distributedCache as DistributedPostgreCache).ConnectionString;

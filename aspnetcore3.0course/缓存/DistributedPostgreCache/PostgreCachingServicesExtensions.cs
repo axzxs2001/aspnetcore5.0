@@ -6,6 +6,9 @@ using System.Text;
 
 namespace DistributedPostgreCache
 {
+    /// <summary>
+    /// 注入扩展
+    /// </summary>
     public static class PostgreCachingServicesExtensions
     {
         public static IServiceCollection AddDistributedPostgreCache(this IServiceCollection services, Action<PostgreCacheOptions> setupAction)

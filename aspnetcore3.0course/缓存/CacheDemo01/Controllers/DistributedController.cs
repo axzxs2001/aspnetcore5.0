@@ -61,6 +61,7 @@ namespace CacheDemo01.Controllers
         [HttpGet("/getorcreate")]
         public async Task<IActionResult> GetOrCreate()
         {            
+            //获取，如果不存在或过期就创建
             var result = await _cache.GetOrCreateAsync("cachedTimeUTC", cacheitem =>
               {
                   cacheitem.AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(10);

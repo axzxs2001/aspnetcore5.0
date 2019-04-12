@@ -12,24 +12,43 @@ using NpgsqlTypes;
 namespace DistributedPostgreCache
 {
 
+    /// <summary>
+    /// 基于postgresql的分布式缓丰
+    /// </summary>
     public class DistributedPostgreCache : IDistributedCache
     {
+        /// <summary>
+        /// 配置选项
+        /// </summary>
         readonly PostgreCacheOptions _options;
 
-
+        /// <summary>
+        /// 连接字符串
+        /// </summary>
         public string ConnectionString
         {
             get { return _options.ConnectionString; }
         }
+        /// <summary>
+        /// 表名
+        /// </summary>
         public string TableName
         {
             get { return _options.TableName; }
         }
-
+        /// <summary>
+        /// 构造
+        /// </summary>
+        /// <param name="options"></param>
         public DistributedPostgreCache(IOptions<PostgreCacheOptions> options)
         {
             _options = options.Value;
         }
+        /// <summary>
+        /// 获取值
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <returns></returns>
         public byte[] Get(string key)
         {
             using (var con = new NpgsqlConnection(_options.ConnectionString))
@@ -51,6 +70,12 @@ namespace DistributedPostgreCache
                 }
             }
         }
+        /// <summary>
+        /// 异常获取键
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <param name="token">取消异步token</param>
+        /// <returns></returns>
         public async Task<byte[]> GetAsync(string key, CancellationToken token = default)
         {
             token.ThrowIfCancellationRequested();
@@ -72,7 +97,6 @@ namespace DistributedPostgreCache
                 }
             }
         }
-
 
         public void Refresh(string key)
         {
