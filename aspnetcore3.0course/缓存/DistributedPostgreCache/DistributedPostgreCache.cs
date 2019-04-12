@@ -167,7 +167,7 @@ namespace DistributedPostgreCache
                 {
                     cmd.Parameters.Add(new NpgsqlParameter("absoluteexpiration", DBNull.Value));
                 }
-                cmd.Parameters.Add(new NpgsqlParameter("expiresattime", absoluteExpiration.HasValue ? absoluteExpiration.Value : DateTimeOffset.Now.Add(options.SlidingExpiration.Value)));
+                cmd.Parameters.Add(new NpgsqlParameter("expiresattime", absoluteExpiration.HasValue ? absoluteExpiration.Value : DateTimeOffset.UtcNow.Add(options.SlidingExpiration.Value)));
 
                 cmd.ExecuteNonQuery();
             }
@@ -205,7 +205,7 @@ namespace DistributedPostgreCache
                 {
                     cmd.Parameters.Add(new NpgsqlParameter("absoluteexpiration", DBNull.Value));
                 }
-                cmd.Parameters.Add(new NpgsqlParameter("expiresattime", absoluteExpiration.HasValue ? absoluteExpiration.Value : DateTimeOffset.Now.Add(options.SlidingExpiration.Value)));
+                cmd.Parameters.Add(new NpgsqlParameter("expiresattime", absoluteExpiration.HasValue ? absoluteExpiration.Value : DateTimeOffset.UtcNow.Add(options.SlidingExpiration.Value)));
 
                 await cmd.ExecuteNonQueryAsync();
 

@@ -64,9 +64,9 @@ namespace CacheDemo01.Controllers
             //获取，如果不存在或过期就创建
             var result = await _cache.GetOrCreateAsync("cachedTimeUTC", cacheitem =>
               {
-                  cacheitem.AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(10);
+                  cacheitem.AbsoluteExpiration = DateTimeOffset.UtcNow.AddSeconds(10);
                
-                  var currentTimeUTC = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                  var currentTimeUTC = DateTimeOffset.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff");
                   var encodedCurrentTimeUTC = Encoding.UTF8.GetBytes(currentTimeUTC);
                   cacheitem.Value = encodedCurrentTimeUTC;
 
