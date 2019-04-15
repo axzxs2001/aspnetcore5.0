@@ -10,8 +10,6 @@ namespace GlobalizationLocalizationDemo01.Controllers
 {
     public class UserController : Controller
     {
-
-
         readonly List<UserViewModel> _users;
         public UserController()
         {
