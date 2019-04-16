@@ -22,16 +22,17 @@ namespace ConfigrationDemo_Custom
 
         public IConfiguration Configuration { get; }
 
-      
+
         public void ConfigureServices(IServiceCollection services)
         {
             var appsetting = new Appsetting();
             Configuration.GetSection("Appsetting").Bind(appsetting);
+            Console.WriteLine($"yaml∂¡»°≈‰÷√Œƒº˛   key={appsetting.Key},name={appsetting.Name}");
             services.AddMvc()
                 .AddNewtonsoftJson();
         }
 
-   
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
