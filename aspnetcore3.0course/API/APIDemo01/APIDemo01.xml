@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>APIDemo01</name>
+    </assembly>
+    <members>
+        <member name="T:APIDemo01.Controllers.ValuesController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:APIDemo01.Controllers.ValuesController.Get">
+            <summary>
+            get values
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:APIDemo01.Controllers.ValuesController.Get(System.Int32)">
+            <summary>
+            get value by id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:APIDemo01.Controllers.ValuesController.Post(System.String)">
+            <summary>
+            add value
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:APIDemo01.Controllers.ValuesController.Put(System.Int32,System.String)">
+            <summary>
+            modify value
+            </summary>
+            <param name="id"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:APIDemo01.Controllers.ValuesController.Delete(System.Int32)">
+            <summary>
+            remove value by id 
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="T:APIDemo01.Program">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:APIDemo01.Program.Main(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:APIDemo01.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:APIDemo01.Startup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:APIDemo01.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:APIDemo01.Startup.Configuration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:APIDemo01.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:APIDemo01.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+    </members>
+</doc>

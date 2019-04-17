@@ -30,26 +30,7 @@ namespace QuartzNetDemo01.Model
                 scheduler.JobFactory = provider.GetService<IJobFactory>();
                 scheduler.Start();
                 return scheduler;
-            });
-
-            //services.AddTransient<IJobFactory, QuartzJonFactory>();
-            //foreach (var serviceDescriptor in jobs.Select(jobType => new ServiceDescriptor(jobType, jobType, ServiceLifetime.Transient)))
-            //{
-            //    services.Add(serviceDescriptor);
-            //}
-
-            //services.AddTransient(provider =>
-            //{
-            //    var props = new NameValueCollection
-            //    {
-            //        { "quartz.serializer.type", "binary" }
-            //    };
-            //    var schedulerFactory = new StdSchedulerFactory(props);
-            //    var scheduler = schedulerFactory.GetScheduler().Result;
-            //    scheduler.JobFactory = provider.GetService<IJobFactory>();
-            //    scheduler.Start();
-            //    return scheduler;
-            //});
+            });    
 
         }
     }
