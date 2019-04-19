@@ -35,6 +35,7 @@ namespace AuthenticationAuthorization_Cookie_01
 
             services.AddMvc()
                 .AddNewtonsoftJson();
+            services.AddRazorPages();
 
             //添加认证Cookie信息
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

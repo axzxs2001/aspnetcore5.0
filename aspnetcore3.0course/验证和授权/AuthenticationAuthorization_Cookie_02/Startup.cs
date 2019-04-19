@@ -38,7 +38,7 @@ namespace AuthenticationAuthorization_Cookie_02
 
             services.AddMvc()
                 .AddNewtonsoftJson();
-
+            services.AddRazorPages();
             services.AddAuthorization(options =>
             {
                 //自定义Requirement，userPermission可从数据库中获得

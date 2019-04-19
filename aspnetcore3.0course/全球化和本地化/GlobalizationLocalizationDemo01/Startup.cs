@@ -40,6 +40,7 @@ namespace GlobalizationLocalizationDemo01
                 .AddViewLocalization()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization();
+            services.AddRazorPages();
         }
 
       
