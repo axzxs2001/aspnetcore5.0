@@ -47,11 +47,7 @@ namespace APIDemo02
         /// </summary>
         public SigningCredentials SigningCredentials { get; set; }
 
-        /// <summary>
-        /// 构造
-        /// </summary>
-        /// <param name="deniedAction">无权限action</param>
-        /// <param name="userPermissions">用户权限集合</param>
+
 
         /// <summary>
         /// 构造
@@ -62,6 +58,7 @@ namespace APIDemo02
         /// <param name="issuer">发行人</param>
         /// <param name="audience">订阅人</param>
         /// <param name="signingCredentials">签名验证实体</param>
+        /// <param name="expiration">过期</param>
         public PermissionRequirement(string deniedAction, List<Permission> permissions, string claimType, string issuer, string audience, SigningCredentials signingCredentials, TimeSpan expiration)
         {
             ClaimType = claimType;

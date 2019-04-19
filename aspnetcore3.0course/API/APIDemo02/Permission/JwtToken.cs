@@ -7,12 +7,16 @@ using System.Threading.Tasks;
 
 namespace APIDemo02
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class JwtToken
     {
         /// <summary>
         /// 获取基于JWT的Token
         /// </summary>
-        /// <param name="username"></param>
+        /// <param name="claims"></param>
+        /// <param name="permissionRequirement"></param>
         /// <returns></returns>
         public static dynamic BuildJwtToken(Claim[] claims, PermissionRequirement permissionRequirement)
         {

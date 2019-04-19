@@ -65,7 +65,6 @@ namespace APIDemo01
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseStaticFiles(); 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

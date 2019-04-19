@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace APIDemo02.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Authorize("Permission")]
     [ApiController]
     public class ValuesController : ControllerBase

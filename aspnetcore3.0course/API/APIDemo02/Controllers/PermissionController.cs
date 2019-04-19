@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace APIDemo02.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Authorize("Permission")]
     public class PermissionController : Controller
 
@@ -14,13 +17,22 @@ namespace APIDemo02.Controllers
         /// 自定义策略参数
         /// </summary>
         readonly PermissionRequirement _requirement;
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="requirement"></param>
         public PermissionController(PermissionRequirement requirement)
         {
             _requirement = requirement;
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="role"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("/api/login")]
         public  IActionResult Login(string username, string password, string role)
@@ -50,14 +62,20 @@ namespace APIDemo02.Controllers
             }
         }
 
-        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
 
         [HttpPost("/api/logout")]
         public IActionResult Logout()
         {
             return Ok();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet("/api/denied")]
         public IActionResult Denied()

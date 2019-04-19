@@ -1,0 +1,265 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>APIDemo02</name>
+    </assembly>
+    <members>
+        <member name="T:APIDemo02.Controllers.PermissionController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:APIDemo02.Controllers.PermissionController._requirement">
+            <summary>
+            自定义策略参数
+            </summary>
+        </member>
+        <member name="M:APIDemo02.Controllers.PermissionController.#ctor(APIDemo02.PermissionRequirement)">
+            <summary>
+            
+            </summary>
+            <param name="requirement"></param>
+        </member>
+        <member name="M:APIDemo02.Controllers.PermissionController.Login(System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
+        <member name="M:APIDemo02.Controllers.PermissionController.Logout">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:APIDemo02.Controllers.PermissionController.Denied">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:APIDemo02.Controllers.ValuesController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:APIDemo02.Controllers.ValuesController.Products">
+            <summary>
+            查询产品列表
+            </summary>
+            <returns>产品列表</returns>
+        </member>
+        <member name="M:APIDemo02.Controllers.ValuesController.Product(System.Int32)">
+            <summary>
+            按照ID查询产品
+            </summary>
+            <param name="id">产品ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:APIDemo02.Controllers.ValuesController.AddProduct(APIDemo02.ProductModel)">
+            <summary>
+            添加产品
+            </summary>
+            <param name="product">产品</param>
+            <returns>新增产品</returns>
+        </member>
+        <member name="M:APIDemo02.Controllers.ValuesController.ModifyProduct(APIDemo02.ProductModel)">
+            <summary>
+            修改产品
+            </summary>
+            <param name="product">产品</param>
+            <returns>结果</returns>
+        </member>
+        <member name="M:APIDemo02.Controllers.ValuesController.RemoveProduct(System.Int32)">
+            <summary>
+            删除产品
+            </summary>
+            <param name="id">产品ID</param>
+            <returns>结果</returns>
+        </member>
+        <member name="T:APIDemo02.JwtToken">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:APIDemo02.JwtToken.BuildJwtToken(System.Security.Claims.Claim[],APIDemo02.PermissionRequirement)">
+            <summary>
+            获取基于JWT的Token
+            </summary>
+            <param name="claims"></param>
+            <param name="permissionRequirement"></param>
+            <returns></returns>
+        </member>
+        <member name="T:APIDemo02.Permission">
+            <summary>
+            用户或角色或其他凭据实体
+            </summary>
+        </member>
+        <member name="P:APIDemo02.Permission.Name">
+            <summary>
+            用户或角色或其他凭据名称
+            </summary>
+        </member>
+        <member name="P:APIDemo02.Permission.Url">
+            <summary>
+            请求Url
+            </summary>
+        </member>
+        <member name="T:APIDemo02.PermissionHandler">
+            <summary>
+            权限授权Handler
+            </summary>
+        </member>
+        <member name="P:APIDemo02.PermissionHandler.Schemes">
+            <summary>
+            验证方案提供对象
+            </summary>
+        </member>
+        <member name="M:APIDemo02.PermissionHandler.#ctor(Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider)">
+            <summary>
+            构造
+            </summary>
+            <param name="schemes"></param>
+        </member>
+        <member name="M:APIDemo02.PermissionHandler.HandleRequirementAsync(Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext,APIDemo02.PermissionRequirement)">
+            <summary>
+            验证每次请求
+            </summary>
+            <param name="context"></param>
+            <param name="requirement"></param>
+            <returns></returns>
+        </member>
+        <member name="T:APIDemo02.PermissionRequirement">
+            <summary>
+            必要参数类
+            </summary>
+        </member>
+        <member name="P:APIDemo02.PermissionRequirement.Permissions">
+            <summary>
+            用户权限集合
+            </summary>
+        </member>
+        <member name="P:APIDemo02.PermissionRequirement.DeniedAction">
+            <summary>
+            无权限action
+            </summary>
+        </member>
+        <member name="P:APIDemo02.PermissionRequirement.ClaimType">
+            <summary>
+            认证授权类型
+            </summary>
+        </member>
+        <member name="P:APIDemo02.PermissionRequirement.LoginPath">
+            <summary>
+            请求路径
+            </summary>
+        </member>
+        <member name="P:APIDemo02.PermissionRequirement.Issuer">
+            <summary>
+            发行人
+            </summary>
+        </member>
+        <member name="P:APIDemo02.PermissionRequirement.Audience">
+            <summary>
+            订阅人
+            </summary>
+        </member>
+        <member name="P:APIDemo02.PermissionRequirement.Expiration">
+            <summary>
+            过期时间
+            </summary>
+        </member>
+        <member name="P:APIDemo02.PermissionRequirement.SigningCredentials">
+            <summary>
+            签名验证
+            </summary>
+        </member>
+        <member name="M:APIDemo02.PermissionRequirement.#ctor(System.String,System.Collections.Generic.List{APIDemo02.Permission},System.String,System.String,System.String,Microsoft.IdentityModel.Tokens.SigningCredentials,System.TimeSpan)">
+            <summary>
+            构造
+            </summary>
+            <param name="deniedAction">拒约请求的url</param>
+            <param name="permissions">权限集合</param>
+            <param name="claimType">声明类型</param>
+            <param name="issuer">发行人</param>
+            <param name="audience">订阅人</param>
+            <param name="signingCredentials">签名验证实体</param>
+            <param name="expiration">过期</param>
+        </member>
+        <member name="T:APIDemo02.ProductModel">
+            <summary>
+            产品
+            </summary>
+        </member>
+        <member name="P:APIDemo02.ProductModel.ID">
+            <summary>
+            编号
+            </summary>
+        </member>
+        <member name="P:APIDemo02.ProductModel.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:APIDemo02.ProductModel.Price">
+            <summary>
+            单价
+            </summary>
+        </member>
+        <member name="P:APIDemo02.ProductModel.Quantity">
+            <summary>
+            数量
+            </summary>
+        </member>
+        <member name="T:APIDemo02.Program">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:APIDemo02.Program.Main(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:APIDemo02.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:APIDemo02.Startup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:APIDemo02.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:APIDemo02.Startup.Configuration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:APIDemo02.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:APIDemo02.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+    </members>
+</doc>
