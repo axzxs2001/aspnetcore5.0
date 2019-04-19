@@ -13,6 +13,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.OpenApi.Models;
+using System.IO;
 
 namespace APIDemo02
 {
@@ -98,6 +100,22 @@ namespace APIDemo02
             services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
             services.AddSingleton(permissionRequirement);
 
+
+            var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath;
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "APIDemo01", Version = "v1", Contact = new OpenApiContact { Email = "", Name = "APIDemo01" }, Description = "APIDemo01 Details" });
+                var xmlPath = Path.Combine(basePath, "APIDemo01.xml");
+                options.IncludeXmlComments(xmlPath, true);
+                options.DocInclusionPredicate((docName, description) => true);
+
+                //如果用Token验证，会在Swagger界面上有验证
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme { In = ParameterLocation.Header, Description = "请输入带有Bearer的Token", Name = "Authorization", Type = SecuritySchemeType.ApiKey });
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement() { });
+
+            });
+
+
             services.AddMvc()
                 .AddNewtonsoftJson();
         }
@@ -116,7 +134,14 @@ namespace APIDemo02
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
-            
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.DocumentTitle = "APIDemo01";
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "APIDemo01");
+            });
+
             app.UseRouting();
 
             app.UseAuthorization();
