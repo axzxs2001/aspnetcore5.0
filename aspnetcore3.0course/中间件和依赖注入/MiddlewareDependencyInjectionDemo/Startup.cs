@@ -84,11 +84,15 @@ namespace MiddlewareDependencyInjectionDemo
                 }))
             });
             app.UseRequestCenter();
-            app.UseRouting(routes =>
-            {
-                routes.MapControllers();
-            });
+            app.UseRouting();
+
             app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+      
         }
 
     }

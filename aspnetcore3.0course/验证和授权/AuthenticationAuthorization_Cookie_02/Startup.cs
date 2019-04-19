@@ -82,17 +82,18 @@ namespace AuthenticationAuthorization_Cookie_02
             app.UseStaticFiles();
             //Ìí¼ÓÑéÖ¤
             app.UseAuthentication();
-            app.UseRouting(routes =>
-            {
-                routes.MapControllerRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-                routes.MapRazorPages();
-            });
-
-            app.UseCookiePolicy();
+            app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
+            });
+            app.UseCookiePolicy();   
         }
     }
 }

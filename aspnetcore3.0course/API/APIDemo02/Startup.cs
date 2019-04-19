@@ -116,14 +116,15 @@ namespace APIDemo02
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
-            //MVC的方式才能把正确的httpcontext送到自定义策略的AuthorizationHandler.HandleRequirementAsync中
-            app.UseMvc();
-            //app.UseRouting(routes =>
-            //{
-            //    routes.MapControllers();
-            //});
+            
+            app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

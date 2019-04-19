@@ -87,7 +87,7 @@ namespace AuthenticationAuthorization_Token_03_Client
             var request = new RestRequest("/adminapi", Method.GET);
             IRestResponse response = client.Execute(request);
             var content = response.Content;
-            Console.WriteLine($"状态：{response.StatusCode}  返回结果：{content}");
+            Console.WriteLine($"状态：{response.StatusCode}  {(int)response.StatusCode}返回结果：{content}");
         }
     }
 }

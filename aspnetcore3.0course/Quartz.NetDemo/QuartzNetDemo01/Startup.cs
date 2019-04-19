@@ -53,12 +53,14 @@ namespace QuartzNetDemo01
             {
                 QuartzServicesUtilities.StartJob<BackgroundJob>(scheduler, cronJob.CronExpression, cronJob.MethodName);
             }
-            app.UseRouting(routes =>
-            {
-                routes.MapControllers();
-            });
+            app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

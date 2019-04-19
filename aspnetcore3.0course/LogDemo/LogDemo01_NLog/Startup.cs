@@ -40,14 +40,15 @@ namespace LogDemo01_NLog
             else
             {
              
-            }          
-
-            app.UseRouting(routes =>
-            {
-                routes.MapControllers();
-            });
+            }
+            app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

@@ -67,18 +67,21 @@ namespace GlobalizationLocalizationDemo01
             });
 
             app.UseStaticFiles();
+            app.UseRouting();
 
-            app.UseRouting(routes =>
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapControllerRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-                routes.MapRazorPages();
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
 
             app.UseCookiePolicy();
 
-            app.UseAuthorization();
+   
         }
     }
 }

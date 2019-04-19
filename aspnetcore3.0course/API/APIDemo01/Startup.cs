@@ -70,20 +70,22 @@ namespace APIDemo01
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseStaticFiles();
-            app.UseRouting(routes =>
-            {
-                routes.MapControllers();
-            });
-
+            app.UseStaticFiles(); 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.DocumentTitle = "APIDemo01";
-                //ÓÃhttp://localhost:5000/swagger/index.html   ·ÃÎÊAPI UI
+                c.DocumentTitle = "APIDemo01";         
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "APIDemo01");
-            });
+            });    
+
+            app.UseRouting();
+
             app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

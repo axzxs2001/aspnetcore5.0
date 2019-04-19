@@ -58,13 +58,14 @@ namespace HttpClientDemo001
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseRouting(routes =>
-            {
-                routes.MapControllers();
-            });
+            app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }
