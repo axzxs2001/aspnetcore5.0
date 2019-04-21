@@ -6,8 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.60.6" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0-preview3-19153-02" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="3.0.0-preview3.19153.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0-preview4-19216-03" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="3.0.0-preview4.19216.3" />
   </ItemGroup>
 
   <ItemGroup>
