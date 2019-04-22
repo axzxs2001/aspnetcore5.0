@@ -33,7 +33,7 @@ namespace AuthenticationAuthorization_Cookie_01
             });
 
 
-            services.AddMvc()
+            services.AddControllersWithViews()
                 .AddNewtonsoftJson();
             services.AddRazorPages();
 

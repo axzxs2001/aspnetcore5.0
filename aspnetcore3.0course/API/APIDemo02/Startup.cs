@@ -148,7 +148,7 @@ namespace APIDemo02
                 });
             });
 
-            services.AddMvc()
+            services.AddControllers()
                 .AddNewtonsoftJson();
         }
 

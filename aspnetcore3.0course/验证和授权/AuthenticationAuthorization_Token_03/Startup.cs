@@ -93,7 +93,7 @@ namespace AuthenticationAuthorization_Token_03
             services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
             services.AddSingleton(permissionRequirement);
 
-            services.AddMvc()
+            services.AddControllers()
                 .AddNewtonsoftJson();
         }
 

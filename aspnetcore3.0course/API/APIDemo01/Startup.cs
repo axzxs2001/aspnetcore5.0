@@ -49,7 +49,7 @@ namespace APIDemo01
 
             });
 
-            services.AddMvc()
+            services.AddControllers()
              .AddNewtonsoftJson();
         }
 

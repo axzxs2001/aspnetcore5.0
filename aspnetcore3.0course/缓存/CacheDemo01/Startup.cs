@@ -34,7 +34,7 @@ namespace CacheDemo01
                     Configuration.GetConnectionString("DefaultConnectionString");
                 options.TableName = "cachetable";
             });
-            services.AddMvc()
+            services.AddControllers()
                 .AddNewtonsoftJson();
         }
 

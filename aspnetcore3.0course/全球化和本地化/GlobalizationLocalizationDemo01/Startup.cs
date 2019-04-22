@@ -35,7 +35,7 @@ namespace GlobalizationLocalizationDemo01
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-            services.AddMvc()
+            services.AddControllersWithViews()
                 .AddNewtonsoftJson()
                 .AddViewLocalization()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)

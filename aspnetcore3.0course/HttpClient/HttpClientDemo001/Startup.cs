@@ -48,7 +48,7 @@ namespace HttpClientDemo001
 
 
 
-            services.AddMvc()
+            services.AddControllers()
                 .AddNewtonsoftJson();
         }
 

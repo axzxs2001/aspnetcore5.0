@@ -35,7 +35,7 @@ namespace ConfigrationDemo
             //azure配置文件
             Console.WriteLine($"Azure pgdb：{Configuration["pgdb"]}");
 
-            services.AddMvc()
+            services.AddControllers()
                   .AddNewtonsoftJson();
         }
 

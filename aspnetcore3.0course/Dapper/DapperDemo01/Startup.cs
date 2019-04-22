@@ -30,7 +30,7 @@ namespace DapperDemo01
             services.AddScoped<IDapperPlusDB, DapperPlusDB>();
             services.AddScoped<IDbConnection, SqliteConnection>();
             
-            services.AddMvc()
+            services.AddControllers()
                 .AddNewtonsoftJson();
         }
 

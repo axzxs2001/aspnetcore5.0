@@ -36,7 +36,7 @@ namespace QuartzNetDemo01
 
             services.AddQuartz(typeof(BackgroundJob));
 
-            services.AddMvc()
+            services.AddControllers()
                 .AddNewtonsoftJson();
 
           

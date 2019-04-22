@@ -32,7 +32,7 @@ namespace MiddlewareDependencyInjectionDemo
             services.AddSingleton<IRequeryCountRepository, RequeryCountRepository>();
 
 
-            services.AddMvc().AddNewtonsoftJson();
+            services.AddControllers().AddNewtonsoftJson();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)

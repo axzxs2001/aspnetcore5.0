@@ -26,7 +26,7 @@ namespace LogDemo01
     
         public void ConfigureServices(IServiceCollection services)
         {    
-            services.AddMvc()
+            services.AddControllers()
                 .AddNewtonsoftJson();
         }
 

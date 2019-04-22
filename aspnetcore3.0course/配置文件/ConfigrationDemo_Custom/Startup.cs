@@ -28,7 +28,7 @@ namespace ConfigrationDemo_Custom
             var appsetting = new Appsetting();
             Configuration.GetSection("Appsetting").Bind(appsetting);
             Console.WriteLine($"yaml∂¡»°≈‰÷√Œƒº˛   key={appsetting.Key},name={appsetting.Name}");
-            services.AddMvc()
+            services.AddControllers()
                 .AddNewtonsoftJson();
         }
 
