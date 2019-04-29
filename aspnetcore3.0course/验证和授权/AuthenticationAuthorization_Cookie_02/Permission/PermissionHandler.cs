@@ -21,10 +21,10 @@ namespace PolicyPrivilegeManagement.Models
         {
             var route = (context.Resource as Microsoft.AspNetCore.Routing.RouteEndpoint);
             var questUrl = "";
-            if (route.RoutePattern.RawText.Contains("{controller") && route.RoutePattern.RawText.Contains("{action"))
+
+            if (route.RoutePattern.Parameters.Count > 0)
             {
                 questUrl = $"{route.RoutePattern.Defaults["controller"].ToString().ToLower() }/{route.RoutePattern.Defaults["action"].ToString().ToLower()}";
-
             }
             else
             {
@@ -47,7 +47,7 @@ namespace PolicyPrivilegeManagement.Models
                     else
                     {
                         //无权限跳转到拒绝页面
-                        context.Fail();                       
+                        context.Fail();
                     }
                 }
                 else
