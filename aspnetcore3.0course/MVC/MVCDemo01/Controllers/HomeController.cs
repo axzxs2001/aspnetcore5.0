@@ -12,7 +12,7 @@ namespace MVCDemo01.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return View(new MainPageModel { Title="主页", Content= "Free. Cross-platform. Open source.A framework for building web apps and services with.NET and C#.", CopyRight= "2019©" });
         }
 
         public IActionResult Privacy()
