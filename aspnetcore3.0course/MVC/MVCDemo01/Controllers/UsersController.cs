@@ -4,15 +4,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MVCDemo01.Models;
+using MVCDemo01.Services;
 
 namespace MVCDemo01.Controllers
 {
     public class UsersController : Controller
     {
+        readonly IUsersService _usersService;
+        public UsersController(IUsersService userService)
+        {
+            _usersService = userService;
+        }
+
         #region list
         public IActionResult Index()
         {
-            return View(new List<UserViewModel>() { new UserViewModel { UserName = "gsw", Password = "123456" } });
+            return View(new List<UserViewModel>() { new UserViewModel { ID = 1, UserName = "gsw", Password = "123456" } });
         }
         #endregion
 
@@ -36,9 +43,9 @@ namespace MVCDemo01.Controllers
         #endregion
 
         #region  delete
-        public IActionResult Delete()
+        public IActionResult Delete(int id)
         {
-            return View(new UserViewModel { UserName = "gsw", Password = "123456" });
+            return View(new UserViewModel { ID = id, UserName = "gsw", Password = "123456" });
         }
         [HttpPost]
         public IActionResult Delete(UserViewModel userViewModel)
@@ -55,9 +62,9 @@ namespace MVCDemo01.Controllers
         #endregion
 
         #region edit
-        public IActionResult Edit()
+        public IActionResult Edit(int id)
         {
-            return View(new UserViewModel { UserName = "gsw", Password = "123456" });
+            return View(new UserViewModel { ID = id, UserName = "gsw", Password = "123456" });
         }
         [HttpPost]
         public IActionResult Edit(UserViewModel userViewModel)
@@ -74,9 +81,9 @@ namespace MVCDemo01.Controllers
         #endregion
 
         #region details
-        public IActionResult Details()
+        public IActionResult Details(int id)
         {
-            return View(new UserViewModel { UserName = "gsw", Password = "123456" });
+            return View(new UserViewModel { ID = id, UserName = "gsw", Password = "123456" });
         }
         #endregion
     }

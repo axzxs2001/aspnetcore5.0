@@ -9,6 +9,9 @@ namespace MVCDemo01.Models
     public class UserViewModel
     {
         [Key]
+        [Display(Name = "编号")]
+        public int ID { get; set; }
+   
         [Required(ErrorMessage = "用户名不能为空")]
         [Display(Name = "用户名")]
         public string UserName { get; set; }
