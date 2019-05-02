@@ -9,10 +9,14 @@ namespace MVCDemo01.Controllers
 {
     public class UsersController : Controller
     {
+        #region list
         public IActionResult Index()
         {
-            return View(new List<UserViewModel>() { new UserViewModel { UserName="gsw",Password="123456" } });
+            return View(new List<UserViewModel>() { new UserViewModel { UserName = "gsw", Password = "123456" } });
         }
+        #endregion
+
+        #region create
         public IActionResult Create()
         {
             return View();
@@ -20,29 +24,60 @@ namespace MVCDemo01.Controllers
         [HttpPost]
         public IActionResult Create(UserViewModel userViewModel)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                return Redirect("/users");
+            }
+            else
+            {
+                return View();
+            }
         }
+        #endregion
+
+        #region  delete
         public IActionResult Delete()
         {
-            return View( new UserViewModel { UserName = "gsw", Password = "123456" });
+            return View(new UserViewModel { UserName = "gsw", Password = "123456" });
         }
         [HttpPost]
         public IActionResult Delete(UserViewModel userViewModel)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                return Redirect("/users");
+            }
+            else
+            {
+                return View();
+            }
+        }
+        #endregion
+
+        #region edit
+        public IActionResult Edit()
+        {
+            return View(new UserViewModel { UserName = "gsw", Password = "123456" });
         }
         [HttpPost]
         public IActionResult Edit(UserViewModel userViewModel)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                return Redirect("/users");
+            }
+            else
+            {
+                return View();
+            }
         }
-        public IActionResult Edit()
-        {
-             return View(new UserViewModel { UserName = "gsw", Password = "123456" });
-        }
+        #endregion
+
+        #region details
         public IActionResult Details()
         {
             return View(new UserViewModel { UserName = "gsw", Password = "123456" });
         }
+        #endregion
     }
 }
