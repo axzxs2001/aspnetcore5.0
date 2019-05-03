@@ -56,6 +56,10 @@ namespace MVCDemo01
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapAreaControllerRoute(
+                    name: "ProductsArea",
+                    areaName:"Products",
+                    pattern: "Products/{controller=Home}/{action=Index}/{id?}");                    
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
