@@ -4,19 +4,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MVCDemo01.Areas.Products.Models;
+using MVCDemo01.Areas.Products.Services;
 
 namespace MVCDemo01.Areas.Products.Controllers
 {
     [Area("Products")]
     public class HomeController : Controller
     {
+        readonly IProductService _productService;
+        public HomeController(IProductService productService)
+        {
+            _productService = productService;
+        }
         public IActionResult Index()
         {
-            return View(new List<ProductViewModel> {
-                new ProductViewModel { ID=1, Name="产品A",Price=3.5m, Quantity=10 },
-                new ProductViewModel { ID=2, Name="产品B",Price=4.5m, Quantity=20 },
-                new ProductViewModel { ID=3, Name="产品C",Price=5.5m, Quantity=30 }
-            });
+            return View(_productService.GetProducts());
         }
     }
 }

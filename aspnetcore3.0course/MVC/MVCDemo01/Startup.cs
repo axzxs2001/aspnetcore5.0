@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MVCDemo01.Areas.Products.Services;
 using MVCDemo01.Services;
 
 namespace MVCDemo01
@@ -29,7 +30,7 @@ namespace MVCDemo01
             });
 
             services.AddScoped<IUsersService, UsersService>();
-
+            services.AddScoped<IProductService, ProductService>();
             services.AddControllersWithViews()
                 .AddNewtonsoftJson();
             services.AddRazorPages();
