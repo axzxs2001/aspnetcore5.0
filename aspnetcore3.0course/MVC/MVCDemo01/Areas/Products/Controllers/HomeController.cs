@@ -20,5 +20,22 @@ namespace MVCDemo01.Areas.Products.Controllers
         {
             return View(_productService.GetProducts());
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+        public IActionResult Edit(int id)
+        {
+            return View(_productService.GetProduct(id));
+        }
+        public IActionResult Delete(int id)
+        {
+            return View(_productService.GetProduct(id));
+        }
+        public IActionResult Details(int id)
+        {
+            return View(_productService.GetProduct(id));
+        }
     }
 }

@@ -9,5 +9,6 @@ namespace MVCDemo01.Areas.Products.Services
     public interface IProductService
     {
         IEnumerable<ProductViewModel> GetProducts();
+        ProductViewModel GetProduct(int id);
     }
 }
