@@ -23,22 +23,26 @@ namespace FilterDemo02
 
 
         public void ConfigureServices(IServiceCollection services)
-        {            
-            services.AddControllers(config=> {
+        {
+            services.AddControllers(config =>
+            {
                 config.Filters.Add(typeof(MyActionFilter));
                 config.Filters.Add(typeof(MyAuthorizationFilter));
+                config.Filters.Add(typeof(MyResourceFilter));
+                config.Filters.Add(typeof(MyExceptionFilter));
+                config.Filters.Add(typeof(MyResultFilter));
             })
                 .AddNewtonsoftJson();
         }
 
-     
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app.UseRouting();
 
             app.UseAuthorization();

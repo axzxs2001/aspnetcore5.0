@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +11,23 @@ namespace FilterDemo02.Filters
     {
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            Console.WriteLine($"--------------------Action---------------------");
-            Console.WriteLine($"*****  MyActionFilter.OnActionExecuted");
+            Console.WriteLine($"-------------------- Action---------------------");
+            Console.WriteLine($"***** {context.ActionDescriptor.DisplayName}  MyActionFilter.OnActionExecuted");
             Console.WriteLine($"-----------------------------------------------");
         }
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
             Console.WriteLine($"--------------------Action---------------------");
-            Console.WriteLine($"*****  MyActionFilter.OnActionExecuting");
+            Console.WriteLine($"***** {context.ActionDescriptor.DisplayName}  MyActionFilter.OnActionExecuting");
             Console.WriteLine($"-----------------------------------------------");
+            if (context.ActionDescriptor.Parameters.Count > 0 && context.ActionDescriptor.Parameters[0].Name.ToLower() == "id" && context.RouteData.Values["id"].ToString() == "5")
+            {
+                context.Result = new ContentResult()
+                {
+                    Content = "这里是Action的取消"
+                };
+            }
         }
     }
 
@@ -28,7 +36,7 @@ namespace FilterDemo02.Filters
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             Console.WriteLine($"--------------------Action---------------------");
-            Console.WriteLine($"*****  MyAsyncActionFilter.OnActionExecutionAsync");
+            Console.WriteLine($"***** {context.ActionDescriptor.DisplayName}  MyAsyncActionFilter.OnActionExecutionAsync");
             Console.WriteLine($"-----------------------------------------------");
             var resultContext = await next();
         }

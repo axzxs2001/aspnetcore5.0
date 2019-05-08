@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,18 @@ namespace FilterDemo02.Filters
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
+
             Console.WriteLine($"-----------------Authorization-----------------");
             Console.WriteLine($"*****  MyAuthorizationFilter.OnAuthorization");
             Console.WriteLine($"-----------------------------------------------");
+            if (context.ActionDescriptor.Parameters.Count > 0 && context.ActionDescriptor.Parameters[0].Name.ToLower() == "id" && context.RouteData.Values["id"].ToString() == "3")
+            {
+                context.Result = new ContentResult()
+                {
+                    Content = "这里是Authorization的取消"
+                };
+            }
+
         }
     }
 

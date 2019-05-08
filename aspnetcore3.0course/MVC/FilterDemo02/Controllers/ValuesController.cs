@@ -16,6 +16,7 @@ namespace FilterDemo02.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
+            Console.WriteLine("=========================get===========================");
             return new string[] { "value1", "value2" };
         }
 
@@ -23,6 +24,10 @@ namespace FilterDemo02.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
+            if(id==2)
+            {
+                throw new Exception("这里有异常");
+            }
             return "value";
         }
 
