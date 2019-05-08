@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,16 @@ namespace FilterDemo02.Filters
 
         public override void OnResultExecuting(ResultExecutingContext context)
         {
-            Console.WriteLine($"-----------------ResultFilterAttribute-----------------");         
+            Console.WriteLine($"-----------------ResultFilterAttribute-----------------");
             Console.WriteLine($"*****  name={_name},value={_value}  MyFilterAttribute.OnResultExecuting");
             Console.WriteLine($"-----------------------------------------------");
+            if (_name == "cancel")
+            {
+                context.Result = new ContentResult()
+                {
+                    Content = "这里是Resource的取消"
+                };
+            }
         }
         public override void OnResultExecuted(ResultExecutedContext context)
         {

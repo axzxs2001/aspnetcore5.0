@@ -19,8 +19,8 @@ namespace FilterDemo02.Controllers
             Console.WriteLine("=========================get===========================");
             return new string[] { "value1", "value2" };
         }
-
-
+        [TypeFilter(typeof(MyResourceFilter))]
+        [ServiceFilter(typeof(MyExceptionFilter))]
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {

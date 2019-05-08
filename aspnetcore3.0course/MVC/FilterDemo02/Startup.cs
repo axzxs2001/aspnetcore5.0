@@ -28,11 +28,12 @@ namespace FilterDemo02
             {
                 config.Filters.Add(typeof(MyActionFilter));
                 config.Filters.Add(typeof(MyAuthorizationFilter));
-                config.Filters.Add(typeof(MyResourceFilter));
-                config.Filters.Add(typeof(MyExceptionFilter));
+                //config.Filters.Add(typeof(MyResourceFilter));
+               // config.Filters.Add(typeof(MyExceptionFilter));
                 config.Filters.Add(typeof(MyResultFilter));
             })
                 .AddNewtonsoftJson();
+            services.AddScoped<MyExceptionFilter>();
         }
 
 
