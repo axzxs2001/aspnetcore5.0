@@ -35,13 +35,13 @@ namespace MiddlewareDependencyInjectionDemo
             services.AddControllers().AddNewtonsoftJson();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
-        {         
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {           
             app.UseExceptionHandler(new ExceptionHandlerOptions()
-            {
+            {               
                 ExceptionHandler = new RequestDelegate((context =>
-                {
-                    var requeryCountRepository = serviceProvider.GetService<IRequeryCountRepository>();
+                {                   
+                    var requeryCountRepository = context.RequestServices.GetService<IRequeryCountRepository>();
                     requeryCountRepository.RequestCount[context.TraceIdentifier] = false;
                     var content = @"
                                         ,.
@@ -92,7 +92,7 @@ namespace MiddlewareDependencyInjectionDemo
             {
                 endpoints.MapControllers();
             });
-      
+
         }
 
     }
