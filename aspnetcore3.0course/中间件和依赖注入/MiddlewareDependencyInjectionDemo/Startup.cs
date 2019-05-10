@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -36,14 +39,16 @@ namespace MiddlewareDependencyInjectionDemo
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {           
+        {
             app.UseExceptionHandler(new ExceptionHandlerOptions()
-            {               
-                ExceptionHandler = new RequestDelegate((context =>
-                {                   
-                    var requeryCountRepository = context.RequestServices.GetService<IRequeryCountRepository>();
-                    requeryCountRepository.RequestCount[context.TraceIdentifier] = false;
-                    var content = @"
+            {
+                ExceptionHandler = new RequestDelegate((async context =>
+               {
+                   Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                   var exception = context.Features.Get<IExceptionHandlerFeature>();
+                   var requeryCountRepository = context.RequestServices.GetService<IRequeryCountRepository>();
+                   requeryCountRepository.RequestCount[context.TraceIdentifier] = false;
+                   var content = @"
                                         ,.
                                       ,_> `.   ,';
                                   ,-`'      `'   '`'._
@@ -80,8 +85,9 @@ namespace MiddlewareDependencyInjectionDemo
                                           \   /\(
                                            `;/  `
 ";
-                    return context.Response.WriteAsync($"this is a lion! \r\n{content}");
-                }))
+                   context.Response.ContentType = "text/plain; charset=utf-8";
+                   await context.Response.WriteAsync($"Exception Message:{exception?.Error?.Message}\r\nthis is a lion! \r\n{content}");
+               }))
             });
             app.UseRequestCenter();
             app.UseRouting();
