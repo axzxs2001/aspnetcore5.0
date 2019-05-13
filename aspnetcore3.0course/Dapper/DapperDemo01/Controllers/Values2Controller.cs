@@ -71,17 +71,5 @@ namespace DapperDemo01.Controllers
                 db.Execute("delete from t1 where id=@id", new { id });
             }
         }
-
-
-    }
-
-    public class T1
-    {
-        public int ID { get; set; }
-        public string Name { get; set; }
-
-        public DateTime CreateTime { get; set; }
-
-        public DateTime? ModifyTime { get; set; }
     }
 }
