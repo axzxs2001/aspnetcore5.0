@@ -50,7 +50,7 @@ namespace AuthenticationAuthorization_Cookie_01.Controllers
                 }
                 if (returnUrl != null)
                 {
-                    return Redirect(returnUrl);
+                    return LocalRedirect(returnUrl);
                 }
                 else
                 {
