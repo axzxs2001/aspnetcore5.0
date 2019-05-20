@@ -54,8 +54,7 @@ namespace Project02
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,options =>
                 {
-                    options.Cookie.Name = ".AspNet.SharedCookie";
-                    //options.Cookie.Domain = "localhost:5000";
+                    options.Cookie.Name = ".AspNet.SharedCookie";                 
                     options.LoginPath = new PathString("/login");
                     options.AccessDeniedPath = new PathString("/denied");
                 });

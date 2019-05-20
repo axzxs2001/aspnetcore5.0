@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -27,6 +27,14 @@ namespace LoginProject
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAntiforgery(options =>
+            {
+                //options.Cookie
+                // Set Cookie properties using CookieBuilder propertiesâ€ .
+                options.FormFieldName = "GswAntiforgeryFieldname";
+                options.HeaderName = "X-CSRF-TOKEN-GSW";
+                options.SuppressXFrameOptionsHeader = false;
+            });
 
 
             services.AddControllersWithViews()
@@ -42,12 +50,11 @@ namespace LoginProject
             {
                 options.Cookie.Name = ".AspNet.SharedCookie";
             });
-            //Ìí¼ÓÈÏÖ¤CookieÐÅÏ¢
+            //æ·»åŠ è®¤è¯Cookieä¿¡æ¯
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
                 {
-                    options.Cookie.Name = ".AspNet.SharedCookie";
-                    //options.Cookie.Domain = "localhost";
+                    options.Cookie.Name = ".AspNet.SharedCookie";                 
                     options.LoginPath = new PathString("/login");
                     options.AccessDeniedPath = new PathString("/denied");
                 });

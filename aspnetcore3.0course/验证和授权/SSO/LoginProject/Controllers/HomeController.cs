@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using LoginProject.Models;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace LoginProject.Controllers
 {
@@ -86,6 +87,15 @@ namespace LoginProject.Controllers
         public IActionResult Denied()
         {
             return View();
+        }   
+        [IgnoreAntiforgeryToken]
+        [HttpPost("/adduser")]
+        public IActionResult AddUser([FromBody] UserModel userModel)
+        {
+            Console.WriteLine(userModel);
+            return Ok("添加成功");
         }
     }
+
+
 }
