@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using LoginProject.Models;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Antiforgery;
 
 namespace LoginProject.Controllers
 {
@@ -87,13 +88,18 @@ namespace LoginProject.Controllers
         public IActionResult Denied()
         {
             return View();
-        }   
-        [IgnoreAntiforgeryToken]
+        }
+        [HttpGet("/gettoken")]
+        public string GetToke([FromServices]Microsoft.AspNetCore.Antiforgery.IAntiforgery antiforgery)
+        {
+            var token = antiforgery.GetAndStoreTokens(HttpContext).RequestToken;
+            return token;
+        }
         [HttpPost("/adduser")]
         public IActionResult AddUser([FromBody] UserModel userModel)
         {
-            Console.WriteLine(userModel);
-            return Ok("添加成功");
+            Console.WriteLine($"  收到User信息   {userModel}");
+            return Ok("LoginProject返回 User 添加成功");
         }
     }
 

@@ -7,25 +7,31 @@
     <p>用户：@User.Identity.Name</p>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
-<button class="btn btn-primary" onclick="Sava()">添加用户</button>
+<input type="text" id="username" class="form-control" style="width:200px" />
+<br />
+<button class="btn btn-primary" id="adduser" onclick="adduser()">添加用户</button>
 @Html.AntiForgeryToken()
 <script>
-    function Sava() {
-
+    function adduser() {
         $.ajax({
-            type: "post",
-            dataType: "html",
+            type: "POST",
+            data: JSON.stringify({
+                "UserName": $("#username").val(),
+                "RoleName": "管理员"
+            }),
+            contentType: "application/json",
+            dataType: "json",
             headers:
             {
-                "X-CSRF-TOKEN-GSW": $("#GswAntiforgeryFieldname")
+                "X-CSRF-TOKEN-GSW": $("#GswAntiforgeryFieldname").val()
             },
             url: "/adduser",
             success: function (result) {
-                console.log("调用成功！");
+                console.log(result);
             },
             error: function (err, scnd) {
                 alert(err.statusText);
-             }
-            });
+            }
+        });
     }
 </script>

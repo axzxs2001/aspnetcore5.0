@@ -21,25 +21,37 @@ namespace Project01.Controllers
             return View();
         }
         [HttpPost("/adduser")]
-        public async Task<IActionResult> AddUser()
+        public async Task<IActionResult> AddUser([FromBody]UserModel userModel)
         {
-            var baseAddress = new Uri("http://192.168.252.41:5400");
-            var cookieContainer = new CookieContainer();
-            using (var handler = new HttpClientHandler() { CookieContainer = cookieContainer })
-            using (var client = new HttpClient(handler) { BaseAddress = baseAddress })
+            try
             {
-                var content = new StringContent("{\"username\":\"张三\",\"rolename\":\"管理员\"}", Encoding.UTF8, "application/json");
-                foreach (var cookie in Request.Cookies)
+                var baseAddress = new Uri("http://192.168.252.41:5400");
+                var cookieContainer = new CookieContainer();
+                using (var handler = new HttpClientHandler() { CookieContainer = cookieContainer })
                 {
-                    if (!cookie.Key.Contains(".AspNetCore.Antiforgery."))
+                    using (var client = new HttpClient(handler) { BaseAddress = baseAddress })
                     {
-                        cookieContainer.Add(baseAddress, new Cookie(cookie.Key, cookie.Value));
+                        var content = new StringContent("{\"username\":\"" + userModel.UserName + "\",\"rolename\":\"" + userModel.RoleName + "\"}", Encoding.UTF8, "application/json");
+                        foreach (var cookie in Request.Cookies)
+                        {
+                            if (!cookie.Key.Contains(".AspNetCore.Antiforgery."))
+                            {
+                                cookieContainer.Add(baseAddress, new Cookie(cookie.Key, cookie.Value));
+                            }
+                        }
+                        var tokenResponse = await client.GetAsync("/gettoken");
+                        var token = await tokenResponse.Content.ReadAsStringAsync();
+                        client.DefaultRequestHeaders.Add("X-CSRF-TOKEN-GSW", token);
+                        var result = client.PostAsync("/adduser", content).Result;
+                        Console.WriteLine($"  adduser返回值：{ await result.Content.ReadAsStringAsync()}");
                     }
                 }
-                var result = client.PostAsync("/adduser", content).Result;
-                Console.WriteLine($"LoginProject中adduser返回值：{ await result.Content.ReadAsStringAsync()}");
+                return Ok("添加用户成功");
             }
-            return Ok("添加用户成功");
+            catch (Exception exc)
+            {
+                return BadRequest(exc.Message);
+            }
         }
         public IActionResult Privacy()
         {
@@ -58,5 +70,10 @@ namespace Project01.Controllers
         {
             return Redirect("http://localhost:5400/login");
         }
+    }
+    public class UserModel
+    {
+        public string UserName { get; set; }
+        public string RoleName { get; set; }
     }
 }
