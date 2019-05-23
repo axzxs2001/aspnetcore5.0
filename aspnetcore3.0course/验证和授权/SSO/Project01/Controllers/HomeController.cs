@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project01.Models;
+using RestSharp;
 
 namespace Project01.Controllers
 {
-    //[AutoValidateAntiforgeryToken]
+    [AutoValidateAntiforgeryToken]
     [Authorize(Roles = "admin,system")]
     public class HomeController : Controller
     {
@@ -22,6 +23,11 @@ namespace Project01.Controllers
         }
         [HttpPost("/adduser")]
         public async Task<IActionResult> AddUser([FromBody]UserModel userModel)
+        {
+            return await Method1(userModel);
+        }
+
+        async Task<IActionResult> Method1(UserModel userModel)
         {
             try
             {
@@ -42,10 +48,42 @@ namespace Project01.Controllers
                         var tokenResponse = await client.GetAsync("/gettoken");
                         var token = await tokenResponse.Content.ReadAsStringAsync();
                         client.DefaultRequestHeaders.Add("X-CSRF-TOKEN-GSW", token);
-                        var result = client.PostAsync("/adduser", content).Result;
+                        var result = await client.PostAsync("/adduser", content);
                         Console.WriteLine($"  adduser返回值：{ await result.Content.ReadAsStringAsync()}");
                     }
                 }
+                return Ok("添加用户成功");
+            }
+            catch (Exception exc)
+            {
+                return BadRequest(exc.Message);
+            }
+        }
+        //[HttpPost("/adduser")]
+        //public IActionResult AddUser([FromBody]UserModel userModel)
+        //{
+        //    return Method2(userModel);
+        //}
+        IActionResult Method2(UserModel userModel)
+        {
+            try
+            {
+                var client = new RestClient("http://192.168.252.41:5400");
+                var request = new RestRequest("/gettoken", Method.GET);            
+                foreach (var cookie in Request.Cookies)
+                {
+                    request.AddCookie(cookie.Key, cookie.Value);
+                }
+                var response = client.Execute(request);
+                Console.WriteLine($"=============token:{response.Content}");
+                var token = response.Content.Trim('"');
+         
+                request.Resource = "/adduser";           
+                request.AddHeader("X-CSRF-TOKEN-GSW", token);
+                request.RequestFormat = DataFormat.Json;           
+                request.AddJsonBody(userModel);
+                response = client.Execute(request, Method.POST);
+                Console.WriteLine($"  adduser返回值：{ response.Content}");
                 return Ok("添加用户成功");
             }
             catch (Exception exc)
