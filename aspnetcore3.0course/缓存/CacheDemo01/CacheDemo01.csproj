@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0-preview5-19227-01" />
     <PackageReference Include="Microsoft.Extensions.Caching.SqlServer" Version="3.0.0-preview5.19227.9" />
-    <PackageReference Include="Npgsql" Version="4.0.6" />
+    <PackageReference Include="Npgsql" Version="4.0.7" />
   </ItemGroup>
 
   <ItemGroup>
