@@ -59,11 +59,11 @@ namespace Project01.Controllers
                 return BadRequest(exc.Message);
             }
         }
-        //[HttpPost("/adduser")]
-        //public IActionResult AddUser([FromBody]UserModel userModel)
-        //{
-        //    return Method2(userModel);
-        //}
+        [HttpPost("/newadduser")]
+        public IActionResult NowAddUser([FromBody]UserModel userModel)
+        {
+            return Method2(userModel);
+        }
         IActionResult Method2(UserModel userModel)
         {
             try
@@ -109,9 +109,5 @@ namespace Project01.Controllers
             return Redirect("http://localhost:5400/login");
         }
     }
-    public class UserModel
-    {
-        public string UserName { get; set; }
-        public string RoleName { get; set; }
-    }
+
 }

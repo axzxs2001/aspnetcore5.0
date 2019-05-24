@@ -7,13 +7,14 @@
     <p>用户：@User.Identity.Name</p>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
-<input type="text" id="username" class="form-control" style="width:200px" />
+<input type="text" id="username" class="form-control" style="width:200px" value="test" />
 <br />
-<button class="btn btn-primary" id="adduser" onclick="adduser()">添加用户</button>
+<button class="btn btn-primary" id="adduser" onclick="adduser()">添加用户1</button>
+<button class="btn btn-primary" id="newadduser" onclick="newadduser()">添加用户2</button>
 @Html.AntiForgeryToken()
 <script>
     function adduser() {
-   
+
         console.log($("input[name='GswAntiforgeryFieldname']").val())
         $.ajax({
             type: "POST",
@@ -32,7 +33,31 @@
                 console.log(result);
             },
             error: function (err, scnd) {
-                console.log(err.statusText);              
+                console.log(err.statusText);
+            }
+        });
+    }
+    function newadduser() {
+
+        console.log($("input[name='GswAntiforgeryFieldname']").val())
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify({
+                "UserName": $("#username").val(),
+                "RoleName": "管理员"
+            }),
+            contentType: "application/json",
+            dataType: "json",
+            headers:
+            {
+                "X-CSRF-TOKEN-GSW": $("input[name='GswAntiforgeryFieldname']").val()
+            },
+            url: "/newadduser",
+            success: function (result) {
+                console.log(result);
+            },
+            error: function (err, scnd) {
+                console.log(err.statusText);
             }
         });
     }
