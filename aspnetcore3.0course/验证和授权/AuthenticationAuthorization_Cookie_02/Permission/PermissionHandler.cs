@@ -18,8 +18,8 @@ namespace PolicyPrivilegeManagement.Models
         public List<UserPermission> UserPermissions { get; set; }
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
-        {
-            var route = (context.Resource as Microsoft.AspNetCore.Routing.RouteEndpoint);
+        {         
+            var route = (context.Resource as Microsoft.AspNetCore.Routing.RouteEndpoint);            
             var questUrl = "";
 
             if (route.RoutePattern.Parameters.Count > 0)
