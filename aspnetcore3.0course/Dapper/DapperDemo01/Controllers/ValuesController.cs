@@ -17,7 +17,7 @@ namespace DapperDemo01.Controllers
         SqliteConnection _sqliteConnection;
         public ValuesController(IConfiguration configuration)
         {
-            var connection = string.Format(configuration.GetConnectionString("DefaultConnection"), System.IO.Directory.GetCurrentDirectory());
+            var connection = string.Format(configuration.GetConnectionString("Sqlite"), System.IO.Directory.GetCurrentDirectory());
             _sqliteConnection = new SqliteConnection(connection);
         }
 

@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using static Dapper.SqlMapper;
 
-namespace DapperDemo01
+namespace DapperExtension
 {
     /// <summary>
     /// IDapperPlusDB数据库类型 
@@ -21,7 +21,11 @@ namespace DapperDemo01
         IDbConnection GetConnection();
 
 
-       
+        /// <summary>
+        /// 数据库类型
+        /// </summary>
+        DataBaseType DataBaseType { get; }
+
 
         /// <summary>
         /// 查询方法

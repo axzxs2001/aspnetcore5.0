@@ -1,20 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using DapperExtension;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Npgsql;
-namespace DapperDemo01
+
+namespace MuiltDIDemo
 {
     public class Startup
     {
@@ -27,19 +23,18 @@ namespace DapperDemo01
 
 
         public void ConfigureServices(IServiceCollection services)
-        { 
-            services.AddScoped<IDapperPlusDB, DapperPlusDB>(service =>
+        {
+            services.AddScoped<IDBService, DBService>(service =>
             {
-                return new DapperPlusDB(new SqliteConnection(string.Format(Configuration.GetConnectionString("Sqlite"), System.IO.Directory.GetCurrentDirectory())), DataBaseType.Sqlite);
+                return new DBService("postgresql连接字符", DBType.PostgreSql);
             });
-            services.AddScoped<IDapperPlusDB, DapperPlusDB>(service =>
+            services.AddScoped<IDBService, DBService>(service =>
             {
-                return new DapperPlusDB(new NpgsqlConnection(Configuration.GetConnectionString("Postgre")), DataBaseType.Postgre);
+                return new DBService("serversql连接字符", DBType.SqlServer);
             });
-            services.AddControllers()
-                .AddNewtonsoftJson();
+            services.AddControllers();
         }
-
+               
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -47,7 +42,6 @@ namespace DapperDemo01
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseRouting();
 
             app.UseAuthorization();

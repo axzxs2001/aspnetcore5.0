@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.Sqlite;
-using Microsoft.Extensions.Configuration;
-using Dapper;
+using DapperExtension;
 
 namespace DapperDemo01.Controllers
 {
@@ -13,20 +11,31 @@ namespace DapperDemo01.Controllers
     [ApiController]
     public class Values2Controller : ControllerBase
     {
-
-        readonly IDapperPlusDB _dapperPlusDB;
-        public Values2Controller(IDapperPlusDB  dapperPlusDB)
+        readonly IDapperPlusDB _sqliteDB;
+        readonly IDapperPlusDB _postgreDB;
+        public Values2Controller(IEnumerable<IDapperPlusDB> dapperPlusDBs)
         {
-            _dapperPlusDB = dapperPlusDB;        
+            foreach (var dapperPlusDB in dapperPlusDBs)
+            {
+                switch (dapperPlusDB.DataBaseType)
+                {
+                    case DataBaseType.Sqlite:
+                        _sqliteDB = dapperPlusDB;
+                        break;
+                    case DataBaseType.Postgre:
+                        _postgreDB = dapperPlusDB;
+                        break;
+                }
+            }
         }
 
 
         [HttpGet]
         public ActionResult<IEnumerable<T1>> Get()
         {
-            using (var db = _dapperPlusDB)
+            using (_sqliteDB)
             {
-                return db.Query<T1>("select * from t1").ToList();
+                return _sqliteDB.Query<T1>("select * from t1").ToList();
             }
         }
 
@@ -34,9 +43,9 @@ namespace DapperDemo01.Controllers
         [HttpGet("{id}")]
         public ActionResult<T1> Get(int id)
         {
-            using (var db = _dapperPlusDB)
+            using (_sqliteDB)
             {
-                return db.Query<T1>("select * from t1 where id=@id", new { id }).FirstOrDefault();
+                return _postgreDB.Query<T1>("select * from t1 where id=@id", new { id }).FirstOrDefault();
             }
         }
 
@@ -44,9 +53,9 @@ namespace DapperDemo01.Controllers
         [HttpPost]
         public void Post([FromBody] T1 t1)
         {
-            using (var db = _dapperPlusDB)
+            using (_sqliteDB)
             {
-                db.Execute("insert into t1(name) values(@Name)", t1);
+                _sqliteDB.Execute("insert into t1(name) values(@Name)", t1);
             }
         }
 
@@ -54,11 +63,11 @@ namespace DapperDemo01.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] T1 t1)
         {
-            using (var db = _dapperPlusDB)
+            using (_sqliteDB)
             {
                 t1.ID = id;
                 t1.ModifyTime = DateTime.UtcNow;
-                db.Execute("update t1 set name=@Name,modifytime=@ModifyTime where id=@ID", t1);
+                _sqliteDB.Execute("update t1 set name=@Name,modifytime=@ModifyTime where id=@ID", t1);
             }
         }
 
@@ -66,9 +75,9 @@ namespace DapperDemo01.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            using (var db = _dapperPlusDB)
+            using (_sqliteDB)
             {
-                db.Execute("delete from t1 where id=@id", new { id });
+                _sqliteDB.Execute("delete from t1 where id=@id", new { id });
             }
         }
     }

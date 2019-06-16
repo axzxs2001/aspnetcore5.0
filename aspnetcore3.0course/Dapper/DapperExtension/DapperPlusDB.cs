@@ -8,7 +8,7 @@ using System.Data;
 using System.Threading.Tasks;
 using static Dapper.SqlMapper;
 
-namespace DapperDemo01
+namespace DapperExtension
 {
     /// <summary>
     /// IDapperPlusDB数据库类型 
@@ -24,12 +24,19 @@ namespace DapperDemo01
         /// </summary>
         /// <param name="dbConnection">连接对象</param>
         /// <param name="connectionString">连接字符串</param>
-        public DapperPlusDB(IDbConnection dbConnection, IConfiguration configuration)
+        public DapperPlusDB(IDbConnection dbConnection, DataBaseType dataBaseType = DataBaseType.None)
         {
-            var connection = string.Format(configuration.GetConnectionString("DefaultConnection"), System.IO.Directory.GetCurrentDirectory());
+            DataBaseType = dataBaseType;
             _dbConnection = dbConnection;
-            _dbConnection.ConnectionString = connection;
         }
+
+        /// <summary>
+        /// 数据库类型
+        /// </summary>
+        public DataBaseType DataBaseType { get; }
+
+
+
         /// <summary>
         /// 连接对象
         /// </summary>
@@ -54,7 +61,7 @@ namespace DapperDemo01
             IEnumerable<T> result = null;
             PollyInvock(() =>
             {
-                result= _dbConnection.Query<T>(sql, param, transaction, buffered, commandTimeout, commandType);
+                result = _dbConnection.Query<T>(sql, param, transaction, buffered, commandTimeout, commandType);
             });
             return result;
         }
@@ -75,7 +82,7 @@ namespace DapperDemo01
                 result = await _dbConnection.QueryAsync<T>(sql, param, transaction, commandTimeout, commandType);
             });
             return result;
-        }    
+        }
 
 
         /// <summary>
@@ -115,7 +122,7 @@ namespace DapperDemo01
             });
             return result;
         }
-         
+
 
         /// <summary>
         /// 查询单值
@@ -132,7 +139,7 @@ namespace DapperDemo01
             var result = default(T);
             PollyInvock(() =>
             {
-                result =  _dbConnection.ExecuteScalar<T>(sql, param, transaction, commandTimeout, commandType);
+                result = _dbConnection.ExecuteScalar<T>(sql, param, transaction, commandTimeout, commandType);
             });
             return result;
         }
@@ -165,9 +172,9 @@ namespace DapperDemo01
         private void PollyInvock(Action action)
         {
             var policy = Policy
-                .Handle<Exception>()            
+                .Handle<Exception>()
                 .Retry(3, (excetpion, index, context) =>
-                {                   
+                {
                 });
             policy.Execute(() =>
             {
@@ -182,7 +189,7 @@ namespace DapperDemo01
         private async Task PollyInvockAsync(Func<Task> func)
         {
             var policy = Policy
-                .Handle<Exception>()               
+                .Handle<Exception>()
                 .RetryAsync(3, (excetpion, index, context) =>
                 { });
             await policy.ExecuteAsync(() =>
