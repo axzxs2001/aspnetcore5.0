@@ -9,6 +9,9 @@ using Dapper;
 
 namespace DapperDemo01.Controllers
 {
+    /// <summary>
+    /// 原生Dapper方式
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase

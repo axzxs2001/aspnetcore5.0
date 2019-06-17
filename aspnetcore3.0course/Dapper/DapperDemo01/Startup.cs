@@ -28,14 +28,14 @@ namespace DapperDemo01
 
         public void ConfigureServices(IServiceCollection services)
         {
-            #region SingleDatabase
+            #region SingleDatabase  注入连接字符串  注放IDapperPlusDB  注入IDbConnection
             var connection = string.Format(Configuration.GetConnectionString("Sqlite"), System.IO.Directory.GetCurrentDirectory());
             services.AddSingleton(connection);
             services.AddScoped<IDapperPlusDB, DapperPlusDB>();
             services.AddScoped<IDbConnection, SqliteConnection>();
             #endregion
 
-            #region MultiDatabase
+            #region MultiDatabase  注放各个数据库链接对象
             //services.AddScoped<IDapperPlusDB, DapperPlusDB>(service =>
             //{
             //    return new DapperPlusDB(new SqliteConnection(string.Format(Configuration.GetConnectionString("Sqlite"), System.IO.Directory.GetCurrentDirectory())));

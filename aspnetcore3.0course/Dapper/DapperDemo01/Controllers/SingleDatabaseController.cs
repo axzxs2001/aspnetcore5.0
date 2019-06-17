@@ -8,7 +8,7 @@ using DapperExtension;
 namespace DapperDemo01.Controllers
 {
     /// <summary>
-    /// 
+    /// 单数据库 SingleDatabase
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
