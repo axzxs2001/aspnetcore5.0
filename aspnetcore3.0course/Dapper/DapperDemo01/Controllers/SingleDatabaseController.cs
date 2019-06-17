@@ -7,28 +7,19 @@ using DapperExtension;
 
 namespace DapperDemo01.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class Values2Controller : ControllerBase
+    public class SingleDatabaseController : ControllerBase
     {
         readonly IDapperPlusDB _sqliteDB;
-        readonly IDapperPlusDB _postgreDB;
-        public Values2Controller(IEnumerable<IDapperPlusDB> dapperPlusDBs)
+      
+        public SingleDatabaseController(IDapperPlusDB dapperPlusDB)
         {
-            foreach (var dapperPlusDB in dapperPlusDBs)
-            {
-                switch (dapperPlusDB.DataBaseType)
-                {
-                    case DataBaseType.Sqlite:
-                        _sqliteDB = dapperPlusDB;
-                        break;
-                    case DataBaseType.Postgre:
-                        _postgreDB = dapperPlusDB;
-                        break;
-                }
-            }
+            _sqliteDB = dapperPlusDB;
         }
-
 
         [HttpGet]
         public ActionResult<IEnumerable<T1>> Get()
@@ -45,7 +36,7 @@ namespace DapperDemo01.Controllers
         {
             using (_sqliteDB)
             {
-                return _postgreDB.Query<T1>("select * from t1 where id=@id", new { id }).FirstOrDefault();
+                return _sqliteDB.Query<T1>("select * from t1 where id=@id", new { id }).FirstOrDefault();
             }
         }
 

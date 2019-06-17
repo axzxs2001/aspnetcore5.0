@@ -27,15 +27,24 @@ namespace DapperDemo01
 
 
         public void ConfigureServices(IServiceCollection services)
-        { 
-            services.AddScoped<IDapperPlusDB, DapperPlusDB>(service =>
-            {
-                return new DapperPlusDB(new SqliteConnection(string.Format(Configuration.GetConnectionString("Sqlite"), System.IO.Directory.GetCurrentDirectory())));
-            });
-            services.AddScoped<IDapperPlusDB, DapperPlusDB>(service =>
-            {
-                return new DapperPlusDB(new NpgsqlConnection(Configuration.GetConnectionString("Postgre")));
-            });
+        {
+            #region SingleDatabase
+            var connection = string.Format(Configuration.GetConnectionString("Sqlite"), System.IO.Directory.GetCurrentDirectory());
+            services.AddSingleton(connection);
+            services.AddScoped<IDapperPlusDB, DapperPlusDB>();
+            services.AddScoped<IDbConnection, SqliteConnection>();
+            #endregion
+
+            #region MultiDatabase
+            //services.AddScoped<IDapperPlusDB, DapperPlusDB>(service =>
+            //{
+            //    return new DapperPlusDB(new SqliteConnection(string.Format(Configuration.GetConnectionString("Sqlite"), System.IO.Directory.GetCurrentDirectory())));
+            //});
+            //services.AddScoped<IDapperPlusDB, DapperPlusDB>(service =>
+            //{
+            //    return new DapperPlusDB(new NpgsqlConnection(Configuration.GetConnectionString("Postgre")));
+            //});
+            #endregion
             services.AddControllers()
                 .AddNewtonsoftJson();
         }

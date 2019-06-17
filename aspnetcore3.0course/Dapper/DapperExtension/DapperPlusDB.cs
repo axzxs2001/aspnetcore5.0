@@ -24,7 +24,7 @@ namespace DapperExtension
         /// </summary>
         /// <param name="dbConnection">连接对象</param>
         /// <param name="connectionString">连接字符串</param>
-        public DapperPlusDB(IDbConnection dbConnection)
+        public DapperPlusDB(IDbConnection dbConnection, string connectionString = null)
         {
             switch (dbConnection.GetType().Name)
             {
@@ -44,7 +44,10 @@ namespace DapperExtension
                     DataBaseType = DataBaseType.MySql;
                     break;
             }
-
+            if (!string.IsNullOrEmpty(connectionString))
+            {
+                dbConnection.ConnectionString = connectionString;
+            }
             _dbConnection = dbConnection;
         }
 

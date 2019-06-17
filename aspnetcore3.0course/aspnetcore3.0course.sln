@@ -80,9 +80,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project01", "验证和授�
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project02", "验证和授权\SSO\Project02\Project02.csproj", "{59583435-3154-427D-B509-E67177718676}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuiltDIDemo", "中间件和依赖注入\MuiltDIDemo\MuiltDIDemo.csproj", "{61BF1EBF-00DF-4D43-8FC7-6618BFA19569}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MuiltDIDemo", "中间件和依赖注入\MuiltDIDemo\MuiltDIDemo.csproj", "{61BF1EBF-00DF-4D43-8FC7-6618BFA19569}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperExtension", "Dapper\DapperExtension\DapperExtension.csproj", "{08E16205-04E0-4415-A8C4-00378325BED9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DapperExtension", "Dapper\DapperExtension\DapperExtension.csproj", "{08E16205-04E0-4415-A8C4-00378325BED9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
