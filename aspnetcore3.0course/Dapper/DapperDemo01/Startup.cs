@@ -30,11 +30,11 @@ namespace DapperDemo01
         { 
             services.AddScoped<IDapperPlusDB, DapperPlusDB>(service =>
             {
-                return new DapperPlusDB(new SqliteConnection(string.Format(Configuration.GetConnectionString("Sqlite"), System.IO.Directory.GetCurrentDirectory())), DataBaseType.Sqlite);
+                return new DapperPlusDB(new SqliteConnection(string.Format(Configuration.GetConnectionString("Sqlite"), System.IO.Directory.GetCurrentDirectory())));
             });
             services.AddScoped<IDapperPlusDB, DapperPlusDB>(service =>
             {
-                return new DapperPlusDB(new NpgsqlConnection(Configuration.GetConnectionString("Postgre")), DataBaseType.Postgre);
+                return new DapperPlusDB(new NpgsqlConnection(Configuration.GetConnectionString("Postgre")));
             });
             services.AddControllers()
                 .AddNewtonsoftJson();
