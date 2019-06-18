@@ -26,8 +26,8 @@ namespace BaseDIDemo
             services.Configure<CookiePolicyOptions>(options =>
             {                
                 options.CheckConsentNeeded = context => true;
-            });
-
+            });   
+                
             services.AddScoped<IMyService, MyService>();
 
             services.AddControllersWithViews();
