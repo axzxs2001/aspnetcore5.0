@@ -37,7 +37,7 @@ namespace AuthenticationAuthorization_Cookie_01.Controllers
              };
             var user = list.SingleOrDefault(s => s.UserName == userName && s.Password == password);
             if (user != null)
-            {
+            {              
                 //用户标识
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                 identity.AddClaim(new Claim(ClaimTypes.Sid, userName));

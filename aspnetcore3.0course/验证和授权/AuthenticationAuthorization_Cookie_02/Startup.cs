@@ -51,15 +51,15 @@ namespace AuthenticationAuthorization_Cookie_02
                               new UserPermission {  Url="logout", UserName="aaa"}
 
                           };
-                options.AddPolicy("Permission",
-                          policy => policy.Requirements.Add(new PermissionRequirement("/denied", userPermission)));
+                options.AddPolicy("Permission", policy => policy.Requirements.Add(new PermissionRequirement("/denied", userPermission)));
 
-            }).AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
-            {
-                options.LoginPath = new PathString("/login");
-                options.AccessDeniedPath = new PathString("/denied");
-
-            });
+            })
+                .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = new PathString("/login");
+                    options.AccessDeniedPath = new PathString("/denied");
+                });
             //×¢ÈëÊÚÈ¨Handler
             services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
 

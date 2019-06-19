@@ -45,9 +45,9 @@ namespace Project01
                 .AddNewtonsoftJson();
             services.AddRazorPages();
 
-            var signingCertificate = new X509Certificate2("server.pfx", "ssssss");
+           // var signingCertificate = new X509Certificate2("server.pfx", "ssssss");
             services.AddDataProtection()
-            .ProtectKeysWithCertificate(signingCertificate)
+           // .ProtectKeysWithCertificate(signingCertificate)
             .PersistKeysToFileSystem(GetKeyRingDirInfo())
             .SetApplicationName("SharedCookieApp");
 

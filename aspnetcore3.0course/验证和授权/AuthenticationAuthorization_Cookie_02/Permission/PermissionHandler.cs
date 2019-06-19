@@ -33,8 +33,8 @@ namespace PolicyPrivilegeManagement.Models
             //赋值用户权限
             UserPermissions = requirement.UserPermissions;
             //是否经过验证
-            var isAuthenticated = context.User.Identity.IsAuthenticated;
-            if (isAuthenticated)
+            var isAuthenticated = context?.User?.Identity?.IsAuthenticated;
+            if (isAuthenticated.HasValue&&isAuthenticated.Value)
             {
                 if (UserPermissions.GroupBy(g => g.Url).Where(w => w.Key.ToLower() == questUrl).Count() > 0)
                 {
