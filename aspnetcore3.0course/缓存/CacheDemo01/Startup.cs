@@ -34,6 +34,12 @@ namespace CacheDemo01
                     Configuration.GetConnectionString("DefaultConnectionString");
                 options.TableName = "cachetable";
             });
+            //测试分布缓存用
+            //services.AddDistributedMemoryCache();
+            //基于sql的分布式缓存
+           // services.AddDistributedSqlServerCache()
+           //基于redis的分布式缓存
+           //services.AddStackExchangeRedisCache()
             services.AddControllers()
                 .AddNewtonsoftJson();
         }
