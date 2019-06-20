@@ -33,7 +33,7 @@ namespace CacheDemo01.Controllers
             var cacheEntry = _cache.GetOrCreate(CacheKeys.Entry, entry =>
             {                
                 //绝对5s后重新设置
-                entry.SetAbsoluteExpiration(TimeSpan.FromSeconds(10));
+                entry.SetAbsoluteExpiration(TimeSpan.FromSeconds(5));
                 //无访问5s后重新设置
                 //entry.SlidingExpiration = TimeSpan.FromSeconds(5);
                 return  DateTime.Now;
