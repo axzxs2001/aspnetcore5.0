@@ -266,7 +266,7 @@ namespace Working.Controllers
         #endregion
 
         #region 我的工作
-     
+
         [HttpGet("myworks")]
         public IActionResult MyWorks()
         {
@@ -445,12 +445,14 @@ namespace Working.Controllers
         /// </summary>
         /// <param name="user">用户</param>
         /// <returns></returns>
-        [Authorize(Roles = "Manager")]  
+        [Authorize(Roles = "Manager")]
         [HttpPost("adduser")]
         public IActionResult AddUser(User user)
         {
             try
             {
+                //集成测试，用户名添加登录人ID
+                user.UserName += "_" + UserID;
                 var result = _userRepository.AddUser(user);
                 _logger.LogInformation($"添加用户:{(result ? "添加成功" : "添加失败")}");
                 return ToJson(result ? BackResult.Success : BackResult.Fail, message: result ? "添加成功" : "添加失败");

@@ -128,6 +128,7 @@ namespace Working.XUnitTest
         {
             var cookies = Login();
             Assert.NotNull(cookies);
+            //登录成功后添加用户
             var request = "/adduser";
             var data = new Dictionary<string, string>();
             data.Add("ID", "1");
@@ -135,7 +136,7 @@ namespace Working.XUnitTest
             data.Add("RoleID", "1");
             data.Add("UserName", "wangwu");
             data.Add("Password", "wangwu");
-            data.Add("Name", "王五" + DateTime.Now.ToString("MMddHHmmss"));
+            data.Add("Name", $"王五{DateTime.Now.ToString("MMddHHmmss")}");
             var content = new FormUrlEncodedContent(data);
             var client = _factory.CreateClient();
             client.DefaultRequestHeaders.Add("Cookie", cookies);

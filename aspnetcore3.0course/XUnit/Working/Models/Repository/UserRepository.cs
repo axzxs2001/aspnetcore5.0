@@ -106,7 +106,7 @@ namespace Working.Models.Repository
             }
             else
             {
-                user.Password = user.UserName;
+                user.Password = user.Password==null? user.UserName:user.Password;
                 var result = _workingDB.Execute("insert into users(roleid,departmentid,name,username,password) values(@roleid,@departmentid,@name,@username,@password)", new { roleid = user.RoleID, departmentid = user.DepartmentID, name = user.Name, username = user.UserName, password = user.Password, });
                 return result > 0;
             }
