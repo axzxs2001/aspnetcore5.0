@@ -28,6 +28,11 @@ namespace Working.XUnitTest
             _factory = factory;       
             _client = _factory.CreateClient();
         }
+        /***************************
+         * 
+         * 注意，集成测试时，要把库放在Working.XunitTest bin dubge目录一份
+         * 
+         **************************/
 
         /// <summary>
         /// get请求
@@ -38,7 +43,7 @@ namespace Working.XUnitTest
             var request = "/userroles?departmentID=1";
             var response = _client.GetAsync(request).Result;
             response.EnsureSuccessStatusCode();
-            var responseJson = response.Content.ReadAsStringAsync().Result;
+            var responseJson = response.Content.ReadAsStringAsync().Result;         
             var backJson = Newtonsoft.Json.JsonConvert.DeserializeObject<ResponseJson>(responseJson);
             Assert.Equal(2, (backJson.data as IList)?.Count);
         }

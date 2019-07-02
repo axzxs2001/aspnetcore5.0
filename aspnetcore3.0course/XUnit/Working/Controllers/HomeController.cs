@@ -90,7 +90,7 @@ namespace Working.Controllers
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                 identity.AddClaims(claims);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
-                return new RedirectResult(string.IsNullOrEmpty(returnUrl) ? "/" : returnUrl);
+                return new LocalRedirectResult(string.IsNullOrEmpty(returnUrl) ? "/" : returnUrl);
 
             }
             catch (Exception exc)

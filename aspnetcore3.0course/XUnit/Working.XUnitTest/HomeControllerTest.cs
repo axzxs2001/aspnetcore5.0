@@ -77,8 +77,7 @@ namespace Working.XUnitTest
             _userMock.Setup(u => u.Login("a", "b")).Returns(new UserRole() { ID = 1, Name = "ÕÅÈý", RoleName = "Leader", DepartmentID = 1, UserName = "a", Password = "b" });
 
             var result = _homeController.Login("a", "b", null);
-            var redirectResult = Assert.IsType<RedirectResult>(result);
-
+            var redirectResult =Assert.IsType<Task<IActionResult>>(result).Result as LocalRedirectResult;
             Assert.Equal("/", redirectResult.Url);
 
         }
@@ -90,7 +89,7 @@ namespace Working.XUnitTest
         {
             _userMock.Setup(u => u.Login("a", "b")).Returns(value: null);
             var result = _homeController.Login("a", "b", null);
-            var viewResult = Assert.IsType<ViewResult>(result);
+            var viewResult = Assert.IsType<Task<IActionResult>>(result).Result as ViewResult;
             Assert.NotNull(viewResult);
         }
         #endregion
@@ -190,8 +189,8 @@ namespace Working.XUnitTest
         [InlineData(0)]
         public void AddDepartment_Default_Return(int result)
         {
-            var department = new Department { ID = 1, DepartmentName = "a", PDepartmentID = 0 } ;
-            _departmentMock.Setup(d => d.AddDepartment(department)).Returns(value: result==1);
+            var department = new Department { ID = 1, DepartmentName = "a", PDepartmentID = 0 };
+            _departmentMock.Setup(d => d.AddDepartment(department)).Returns(value: result == 1);
             var actionResult = _homeController.AddDepartment(department);
             var jsonResult = Assert.IsType<JsonResult>(actionResult);
             var jResult = jsonResult.GetValue("result");
