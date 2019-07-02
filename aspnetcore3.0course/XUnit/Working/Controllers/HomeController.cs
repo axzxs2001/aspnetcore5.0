@@ -78,6 +78,7 @@ namespace Working.Controllers
         {
             try
             {
+                Console.WriteLine($"-----------------{userName}---------------");
                 _logger.LogInformation($"登录：UserName={userName}");
                 var userRole = _userRepository.Login(userName, password);
                 var claims = new Claim[]
@@ -403,8 +404,7 @@ namespace Working.Controllers
         /// </summary>
         /// <param name="departmentID">部门ID</param>
         /// <returns></returns>
-        //[Authorize(Roles = "Manager")]
-        [AllowAnonymous]//集成测试时用
+        [Authorize(Roles = "Manager")]
         [HttpGet("userroles")]
         public IActionResult GetDepartmentUsers(int departmentID)
         {
@@ -445,8 +445,7 @@ namespace Working.Controllers
         /// </summary>
         /// <param name="user">用户</param>
         /// <returns></returns>
-        //[Authorize(Roles = "Manager")]
-        [AllowAnonymous]//集成测试用 
+        [Authorize(Roles = "Manager")]  
         [HttpPost("adduser")]
         public IActionResult AddUser(User user)
         {

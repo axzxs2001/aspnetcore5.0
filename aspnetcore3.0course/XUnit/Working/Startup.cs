@@ -27,13 +27,16 @@ namespace Working
             AddRepository(services);
             services.AddControllersWithViews()
               .AddNewtonsoftJson();
-            services.AddRazorPages();
+            services.AddRazorPages(options =>
+            {
+               // options.Conventions.AllowAnonymousToPage("/userindex");
+            });
             //验证注放
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                {
                    options.LoginPath = new PathString("/login");
-                   options.Cookie.Path = "/";
+                   options.AccessDeniedPath = new PathString("/denied");
                });
         }
 
