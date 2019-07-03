@@ -45,12 +45,12 @@ namespace Working.XUnitTest
             };
             var authServiceMock = new Mock<IAuthenticationService>();
             authServiceMock
-                .Setup(_ => _.SignInAsync(It.IsAny<HttpContext>(), It.IsAny<string>(), It.IsAny<ClaimsPrincipal>(), It.IsAny<AuthenticationProperties>()))
+                .Setup(authService => authService.SignInAsync(It.IsAny<HttpContext>(), It.IsAny<string>(), It.IsAny<ClaimsPrincipal>(), It.IsAny<AuthenticationProperties>()))
                 .Returns(Task.FromResult((object)null));
 
             var serviceProviderMock = new Mock<IServiceProvider>();
             serviceProviderMock
-                .Setup(_ => _.GetService(typeof(IAuthenticationService)))
+                .Setup(serviceProvider => serviceProvider.GetService(typeof(IAuthenticationService)))
                 .Returns(authServiceMock.Object);
 
             var claims = new Claim[]
@@ -77,7 +77,7 @@ namespace Working.XUnitTest
             _userMock.Setup(u => u.Login("a", "b")).Returns(new UserRole() { ID = 1, Name = "张三", RoleName = "Leader", DepartmentID = 1, UserName = "a", Password = "b" });
 
             var result = _homeController.Login("a", "b", null);
-            var redirectResult =Assert.IsType<Task<IActionResult>>(result).Result as LocalRedirectResult;
+            var redirectResult = Assert.IsType<Task<IActionResult>>(result).Result as LocalRedirectResult;
             Assert.Equal("/", redirectResult.Url);
 
         }
@@ -85,11 +85,11 @@ namespace Working.XUnitTest
         /// 测试空用户
         /// </summary>
         [Fact]
-        public void Login_NullUsert_ReturnView()
+        public async Task Login_NullUsert_ReturnView()
         {
             _userMock.Setup(u => u.Login("a", "b")).Returns(value: null);
             var result = _homeController.Login("a", "b", null);
-            var viewResult = Assert.IsType<Task<IActionResult>>(result).Result as ViewResult;
+            var viewResult = await Assert.IsType<Task<IActionResult>>(result) as ViewResult;
             Assert.NotNull(viewResult);
         }
         #endregion
