@@ -15,14 +15,16 @@ namespace ConfigrationDemo_Custom
     {
         public static void Main(string[] args)
         {
+            //创建Host
             CreateHostBuilder(args).Build().Run();
+            //创建WebHost
+            CreateWebHostBuilder(args).Build().Run();
         }
-
+       
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>//webBuilder是主机(host)配置构建对象
                 {
-
                     webBuilder.ConfigureAppConfiguration((context, config) => //config是应用(application)配置构建对象
                     {
                         config.SetBasePath(Directory.GetCurrentDirectory());
@@ -30,5 +32,14 @@ namespace ConfigrationDemo_Custom
                     });
                     webBuilder.UseStartup<Startup>();
                 });
+
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        WebHost.CreateDefaultBuilder(args)
+            .ConfigureAppConfiguration((context, config) =>
+            {
+                config.SetBasePath(Directory.GetCurrentDirectory());
+                config.AddYamlFile("appsettings.yaml");
+            })
+            .UseStartup<Startup>();
     }
 }

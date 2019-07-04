@@ -20,7 +20,7 @@ namespace ConfigrationDemo
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //机密文件          
+            //机密文件中的密码         
             var connectionStringBuilder = new Npgsql.NpgsqlConnectionStringBuilder(Configuration.GetConnectionString("DefaultConnectionString"));
             connectionStringBuilder.Password = Configuration["dbpassword"];
             Console.WriteLine(connectionStringBuilder.ToString());
@@ -33,7 +33,10 @@ namespace ConfigrationDemo
             services.Configure<Appsetting>(Configuration.GetSection("Appsetting"));
 
             //azure配置文件
-            Console.WriteLine($"Azure pgdb：{Configuration["pgdb"]}");
+            Console.WriteLine($"Azure pgdb：{Configuration["a"]}");
+
+            //环境变量 
+            Console.WriteLine($"环境变量Java_中的值：{Configuration["home"]}");
 
             services.AddControllers()
                   .AddNewtonsoftJson();
