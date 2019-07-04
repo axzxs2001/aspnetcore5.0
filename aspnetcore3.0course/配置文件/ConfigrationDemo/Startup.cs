@@ -33,7 +33,7 @@ namespace ConfigrationDemo
             services.Configure<Appsetting>(Configuration.GetSection("Appsetting"));
 
             //azure配置文件
-            Console.WriteLine($"Azure pgdb：{Configuration["a"]}");
+            Console.WriteLine($"Azure pgdb：{Configuration["pgpwd"]}");
 
             //环境变量 
             Console.WriteLine($"环境变量Java_中的值：{Configuration["home"]}");

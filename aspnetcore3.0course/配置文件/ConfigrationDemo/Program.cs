@@ -23,10 +23,11 @@ namespace ConfigrationDemo
         }  
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webBuilder =>
+            Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
-                {
+                {                  
                     //命令行配置
                     config.AddCommandLine(args);
                     //环境变量配置
@@ -37,7 +38,7 @@ namespace ConfigrationDemo
                         new KeyVaultClient.AuthenticationCallback(
                             azureServiceTokenProvider.KeyVaultTokenCallback));
                     config.AddAzureKeyVault(
-                        $"https://azurekeyvalue.vault.azure.net",
+                        $"https://gswsec.vault.azure.net",
                         keyVaultClient,
                         new DefaultKeyVaultSecretManager());
                 });

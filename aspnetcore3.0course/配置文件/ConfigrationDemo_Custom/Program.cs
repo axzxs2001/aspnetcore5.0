@@ -20,11 +20,15 @@ namespace ConfigrationDemo_Custom
             //创建WebHost
             CreateWebHostBuilder(args).Build().Run();
         }
-       
+
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>//webBuilder是主机(host)配置构建对象
                 {
+                    webBuilder.ConfigureKestrel(option =>
+                    {
+                        option.Limits.RequestHeadersTimeout = TimeSpan.FromSeconds(20);
+                    });
                     webBuilder.ConfigureAppConfiguration((context, config) => //config是应用(application)配置构建对象
                     {
                         config.SetBasePath(Directory.GetCurrentDirectory());

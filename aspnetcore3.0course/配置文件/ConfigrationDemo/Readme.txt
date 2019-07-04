@@ -13,6 +13,6 @@
 二、环境（Development,Staging,Production）
 	在运行前设置ASPNETCORE_ENVIRONMENT环境变量为Development,Staging,Production
 	
-	在开发环境中，项目“属性”-“调试”里设置ASPNETCORE_ENVIRONMENT为Development
-	Jenkins发布Docker状况下，会在dockefile设置环境变量为Staging
-	Linux环境下，在Service中配置：Environment=ASPNETCORE_ENVIRONMENT=Production
+	a、在开发环境中，项目“属性”-“调试”里设置ASPNETCORE_ENVIRONMENT为Development
+	b、Jenkins发布Docker状况下，会在dockefile设置环境变量为Staging
+	c、Linux环境下，在Linux的Service文件中配置：Environment=ASPNETCORE_ENVIRONMENT=Production
