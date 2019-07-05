@@ -52,6 +52,44 @@ namespace DapperExtension
         }
 
         /// <summary>
+        /// 构造
+        /// </summary>
+        /// <param name="dbConnection">连接对象</param>
+        /// <param name="dataBaseMark">数据库标志</param>
+        /// <param name="connectionString">连接字符串</param>
+        public DapperPlusDB(IDbConnection dbConnection, string dataBaseMark, string connectionString = null)
+        {
+            DataBaseMark = dataBaseMark;
+            switch (dbConnection.GetType().Name)
+            {
+                case "SqliteConnection":
+                    DataBaseType = DataBaseType.Sqlite;
+                    break;
+                case "NpgsqlConnection":
+                    DataBaseType = DataBaseType.Postgre;
+                    break;
+                case "SqlClientConnection":
+                    DataBaseType = DataBaseType.SqlServer;
+                    break;
+                case "OracleConnection":
+                    DataBaseType = DataBaseType.Oracle;
+                    break;
+                case "MySqlConnection":
+                    DataBaseType = DataBaseType.MySql;
+                    break;
+            }
+            if (!string.IsNullOrEmpty(connectionString))
+            {
+                dbConnection.ConnectionString = connectionString;
+            }
+            _dbConnection = dbConnection;
+        }
+        /// <summary>
+        /// 数据库标志
+        /// </summary>
+        public string DataBaseMark { get; }
+
+        /// <summary>
         /// 数据库类型
         /// </summary>
         public DataBaseType DataBaseType { get; }

@@ -45,6 +45,18 @@ namespace DapperDemo01
             //    return new DapperPlusDB(new NpgsqlConnection(Configuration.GetConnectionString("Postgre")));
             //});
             #endregion
+
+
+            #region MultiDatabase  注入相对类型数据库链接对象
+            //services.AddScoped<IDapperPlusDB, DapperPlusDB>(service =>
+            //{
+            //    return new DapperPlusDB(dbConnection: new NpgsqlConnection(Configuration.GetConnectionString("Postgre")), dataBaseMark: "pg");
+            //});
+            //services.AddScoped<IDapperPlusDB, DapperPlusDB>(service =>
+            //{
+            //    return new DapperPlusDB(dbConnection: new NpgsqlConnection(Configuration.GetConnectionString("Postgre_test")), dataBaseMark: "pgtest");
+            //});
+            #endregion
             services.AddControllers()
                 .AddNewtonsoftJson();
         }
