@@ -37,6 +37,8 @@ namespace ConfigrationDemo
                     var keyVaultClient = new KeyVaultClient(
                         new KeyVaultClient.AuthenticationCallback(
                             azureServiceTokenProvider.KeyVaultTokenCallback));
+     
+                  // var value=  keyVaultClient.GetSecretAsync($"https://gswsec.vault.azure.net/secrets/pgpwd/62baa83e46bd4cd498721b65f7570b25").Result.Value;
                     config.AddAzureKeyVault(
                         $"https://gswsec.vault.azure.net",
                         keyVaultClient,
