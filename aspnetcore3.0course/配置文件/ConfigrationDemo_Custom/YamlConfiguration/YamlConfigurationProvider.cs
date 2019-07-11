@@ -8,6 +8,9 @@ using YamlDotNet.Serialization;
 
 namespace ConfigrationDemo_Custom
 {
+    /// <summary>
+    /// Yaml配置文件的提供者
+    /// </summary>
     public class YamlConfigurationProvider : FileConfigurationProvider
     {
 

@@ -2,6 +2,9 @@
 
 namespace ConfigrationDemo_Custom
 {
+    /// <summary>
+    /// yaml配置源
+    /// </summary>
     public class YamlConfigurationSource : FileConfigurationSource
     {
         public override IConfigurationProvider Build(IConfigurationBuilder builder)
