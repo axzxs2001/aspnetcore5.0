@@ -18,7 +18,7 @@ namespace ConfigrationDemo_Custom
             //创建Host
             CreateHostBuilder(args).Build().Run();
             //创建WebHost
-            //CreateWebHostBuilder(args).Build().Run();
+            CreateWebHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
