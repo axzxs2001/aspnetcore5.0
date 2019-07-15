@@ -20,7 +20,7 @@ namespace LogDemo03_LoggerMessage.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            _logger.IndexPageRequested("----------get--------------");
+            _logger.LogTitle("----------get--------------");
             return new string[] { "value1", "value2" };
         }
 
@@ -35,24 +35,5 @@ namespace LogDemo03_LoggerMessage.Controllers
             return "value";
         }     
     }
-
-    public static class LogExt
-    {
-        public static void IndexPageRequested(this ILogger logger, string message)
-        {
-
-            _indexPageRequested(logger, message, null);
-        }
-        private static readonly Action<ILogger, string, Exception> _indexPageRequested = LoggerMessage.Define<string>(
-                 LogLevel.Information,
-                 new EventId(1),
-                 "自定义日志消息:{0}");
-
-        public static void DeleteLog(this ILogger logger, int id)
-        {
-            DeleteScope(logger, id);
-        }
-        private static Func<ILogger, int, IDisposable> DeleteScope = LoggerMessage.DefineScope<int>("删除了{id}");
-
-    }
+   
 }
