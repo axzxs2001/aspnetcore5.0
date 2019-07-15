@@ -1,0 +1,567 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RestfulAPIDemo</name>
+    </assembly>
+    <members>
+        <member name="T:RestfulAPIDemo.Controllers.AccountsController">
+            <summary>
+            用户Controller
+            </summary>  
+        </member>
+        <member name="F:RestfulAPIDemo.Controllers.AccountsController._logger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:RestfulAPIDemo.Controllers.AccountsController._accountRepository">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:RestfulAPIDemo.Controllers.AccountsController.#ctor(Microsoft.Extensions.Logging.ILogger{RestfulAPIDemo.Controllers.AccountsController},RestfulAPIDemo.Model.IAccountRepository)">
+            <summary>
+            
+            </summary>
+            <param name="logger"></param>
+            <param name="accountRepository"></param>
+        </member>
+        <member name="M:RestfulAPIDemo.Controllers.AccountsController.GetAccounts(System.Int32)">
+            <summary>
+            按用户获取帐号
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Controllers.AccountsController.GetAccount(System.Int32,System.Int32)">
+            <summary>
+            按用户ID和帐户ID查询帐户
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="accountId">帐户ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Controllers.AccountsController.AddAccount(System.Int32,RestfulAPIDemo.Model.Account)">
+            <summary>
+            添加帐户
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="account">帐户</param>
+            <returns></returns>         
+        </member>
+        <member name="M:RestfulAPIDemo.Controllers.AccountsController.AddAccount(System.Int32,System.Collections.Generic.IEnumerable{RestfulAPIDemo.Model.Account})">
+            <summary>
+            批量添加帐户
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="accounts">批量帐户</param>
+            <returns></returns>         
+        </member>
+        <member name="M:RestfulAPIDemo.Controllers.AccountsController.GetAccounts(System.String)">
+            <summary>
+            按照ids获取帐户
+            </summary>
+            <param name="ids">IDs</param>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Controllers.AccountsController.DeleteAccount(System.Int32,System.Int32)">
+            <summary>
+            删除帐户
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="accountId">帐户ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Controllers.AccountsController.UpdateAccount(System.Int32,System.Int32,RestfulAPIDemo.Model.Account)">
+            <summary>
+            修改帐户
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="accountId">帐户ID</param>
+            <param name="account">帐户</param>
+            <returns></returns>
+        </member>
+        <member name="T:RestfulAPIDemo.Controllers.UsersController">
+            <summary>
+            用户Controller
+            </summary>  
+        </member>
+        <member name="F:RestfulAPIDemo.Controllers.UsersController._logger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:RestfulAPIDemo.Controllers.UsersController._userRepository">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:RestfulAPIDemo.Controllers.UsersController.#ctor(Microsoft.Extensions.Logging.ILogger{RestfulAPIDemo.Controllers.UsersController},RestfulAPIDemo.Model.IUserRepository,Microsoft.AspNetCore.Mvc.IUrlHelper)">
+            <summary>
+            
+            </summary>
+            <param name="logger"></param>
+            <param name="userRepository"></param>
+            <param name="urlHelper"></param>
+        </member>
+        <member name="M:RestfulAPIDemo.Controllers.UsersController.GetException">
+            <summary>
+            异常发生
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Controllers.UsersController.HandlerUser(System.Int32)">
+            <summary>
+            获取用户
+            资源应该使用名词, 它是个东西, 不是动作.
+            api/getusers 就是不正确的.
+            GET api/users 就是正确的
+            GET api/users/{userId}
+            </summary>
+            <param name="id">用户ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Controllers.UsersController.HandlerUser">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Controllers.UsersController.AddUser(RestfulAPIDemo.Model.User)">
+            <summary>
+            添加用户
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Controllers.UsersController.CreateUser(System.Int32)">
+            <summary>
+            如果POST到单个资源的地址 测试
+            </summary>
+            <param name="userid">用户ID=1时存在</param>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Controllers.UsersController.ModifyUser(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{RestfulAPIDemo.Model.User})">
+            <summary>
+            局部修改用户
+            </summary>
+            <param name="id">用户ID</param>
+            <param name="jsonPatchDocument">用户</param>
+            <returns></returns>   
+        </member>
+        <member name="M:RestfulAPIDemo.Controllers.UsersController.UpdateAccount(System.Int32,RestfulAPIDemo.Model.User)">
+            <summary>
+            修改帐户
+            </summary>
+            <param name="id">用户ID</param>
+            <param name="user">用户</param>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Controllers.UsersController.GetUsers(RestfulAPIDemo.Model.UserPagination)">
+            <summary>
+            获取分页数据
+            </summary>
+            <param name="userPagination">分页信息</param>
+            <returns></returns>
+        </member>
+        <member name="T:RestfulAPIDemo.Model.Account">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:RestfulAPIDemo.Model.Account.ID">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:RestfulAPIDemo.Model.Account.AccountType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:RestfulAPIDemo.Model.Account.AccountNo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:RestfulAPIDemo.Model.Account.UserID">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:RestfulAPIDemo.Model.PaginatedList`1">
+            <summary>
+            分页实体
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:RestfulAPIDemo.Model.PaginatedList`1.PaginationBase">
+            <summary>
+            分页参数
+            </summary>
+        </member>
+        <member name="P:RestfulAPIDemo.Model.PaginatedList`1.TotalItemCount">
+            <summary>
+            总记录数
+            </summary>
+        </member>
+        <member name="P:RestfulAPIDemo.Model.PaginatedList`1.PageCount">
+            <summary>
+            页数
+            </summary>
+        </member>
+        <member name="P:RestfulAPIDemo.Model.PaginatedList`1.HasPrevious">
+            <summary>
+            是否有上一页
+            </summary>
+        </member>
+        <member name="P:RestfulAPIDemo.Model.PaginatedList`1.HasNext">
+            <summary>
+            是否有下一页
+            </summary>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.PaginatedList`1.#ctor(System.Int32,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            构造分页实体
+            </summary>
+            <param name="pageIndex">页索引</param>
+            <param name="pageSize">页记录数</param>
+            <param name="totalItemCount">总记录数</param>
+            <param name="itmes">记录数</param>
+        </member>
+        <member name="T:RestfulAPIDemo.Model.PaginationBase">
+            <summary>
+            分页基类
+            </summary>
+        </member>
+        <member name="F:RestfulAPIDemo.Model.PaginationBase._maxPageSize">
+            <summary>
+            最每页记录数
+            </summary>
+        </member>
+        <member name="F:RestfulAPIDemo.Model.PaginationBase._pageSize">
+            <summary>
+            每页记录数
+            </summary>
+        </member>
+        <member name="P:RestfulAPIDemo.Model.PaginationBase.PageIndex">
+            <summary>
+            页索引
+            </summary>
+        </member>
+        <member name="P:RestfulAPIDemo.Model.PaginationBase.PageSize">
+            <summary>
+            每页记录数
+            </summary>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.PaginationBase.Clone">
+            <summary>
+            克隆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:RestfulAPIDemo.Model.User">
+            <summary>
+            web api验证是加在Modle上的
+            </summary>
+        </member>
+        <member name="P:RestfulAPIDemo.Model.User.ID">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:RestfulAPIDemo.Model.User.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:RestfulAPIDemo.Model.User.Password">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:RestfulAPIDemo.Model.User.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:RestfulAPIDemo.Model.User.UserType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:RestfulAPIDemo.Model.UserPagination">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:RestfulAPIDemo.Model.UserPagination.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:RestfulAPIDemo.Model.UserPagination.UserType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:RestfulAPIDemo.Model.PaginationResourceUriType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:RestfulAPIDemo.Model.PaginationResourceUriType.PreviousPage">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:RestfulAPIDemo.Model.PaginationResourceUriType.NextPage">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:RestfulAPIDemo.Model.PaginationResourceUriType.CurrentPage">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:RestfulAPIDemo.Model.AccountRepository">
+            <summary>
+            user仓储
+            </summary>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.AccountRepository.GetAccountsByUserID(System.Int32)">
+            <summary>
+            按用户ID获取帐号
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.AccountRepository.GetAccountByID(System.Int32,System.Int32)">
+            <summary>
+            按用户ID，帐户ID获取帐户
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="accountId">帐户ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.AccountRepository.AddAccount(RestfulAPIDemo.Model.Account)">
+            <summary>
+            添加帐户
+            </summary>
+            <param name="account">帐户</param>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.AccountRepository.AddAccounts(System.Int32,System.Collections.Generic.IEnumerable{RestfulAPIDemo.Model.Account})">
+            <summary>
+            添加帐户集合
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="accounts">帐户集合</param>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.AccountRepository.GetAccounts(System.Int32[])">
+            <summary>
+            按照ID获取帐户
+            </summary>
+            <param name="ids">IDs</param>
+            <returns></returns>
+        </member>
+        <member name="T:RestfulAPIDemo.Model.IAccountRepository">
+            <summary>
+            account仓储
+            </summary>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.IAccountRepository.GetAccountsByUserID(System.Int32)">
+            <summary>
+            按用户ID获取帐号
+            </summary>
+            <param name="userId">用户ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.IAccountRepository.GetAccountByID(System.Int32,System.Int32)">
+            <summary>
+            按用户ID，帐户ID获取帐户
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="accountId">帐户ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.IAccountRepository.AddAccount(RestfulAPIDemo.Model.Account)">
+            <summary>
+            添加帐户
+            </summary>
+            <param name="account">帐户</param>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.IAccountRepository.AddAccounts(System.Int32,System.Collections.Generic.IEnumerable{RestfulAPIDemo.Model.Account})">
+            <summary>
+            添加帐户集合
+            </summary>
+            <param name="userId">用户ID</param>
+            <param name="accounts">帐户集合</param>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.IAccountRepository.GetAccounts(System.Int32[])">
+            <summary>
+            按照ID获取帐户
+            </summary>
+            <param name="ids">IDs</param>
+            <returns></returns>
+        </member>
+        <member name="T:RestfulAPIDemo.Model.IUserRepository">
+            <summary>
+            user仓储
+            </summary>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.IUserRepository.GetUserByID(System.Int32)">
+            <summary>
+            按ID获取用户
+            </summary>
+            <param name="id">ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.IUserRepository.AddUser(RestfulAPIDemo.Model.User)">
+            <summary>
+            添加用户
+            </summary>
+            <param name="user">用户</param>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.IUserRepository.GetPagingUser(RestfulAPIDemo.Model.UserPagination)">
+            <summary>
+            返回分页数据
+            </summary>
+            <param name="userPagination"></param>
+            <returns></returns>
+        </member>
+        <member name="T:RestfulAPIDemo.Model.UserRepository">
+            <summary>
+            user仓储
+            </summary>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.UserRepository.#ctor(Microsoft.Extensions.Logging.ILogger{RestfulAPIDemo.Model.UserRepository})">
+            <summary>
+            
+            </summary>
+            <param name="logger"></param>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.UserRepository.GetUserByID(System.Int32)">
+            <summary>
+            按照ID获取用户
+            </summary>
+            <param name="id">ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.UserRepository.AddUser(RestfulAPIDemo.Model.User)">
+            <summary>
+            添加用户
+            </summary>
+            <param name="user">用户</param>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.UserRepository.GetPagingUser(RestfulAPIDemo.Model.UserPagination)">
+            <summary>
+            返回分页数据
+            </summary>
+            <param name="userPagination">分页</param>
+            <returns></returns>
+        </member>
+        <member name="T:RestfulAPIDemo.Model.UserNameEqualPasswordAttribute">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.UserNameEqualPasswordAttribute.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="errorMessage"></param>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.UserNameEqualPasswordAttribute.AddValidation(Microsoft.AspNetCore.Mvc.ModelBinding.Validation.ClientModelValidationContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.UserNameEqualPasswordAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="validationContext"></param>
+            <returns></returns>
+        </member>
+        <member name="T:RestfulAPIDemo.Model.XDocumentInputFormatter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.XDocumentInputFormatter.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.XDocumentInputFormatter.CanReadType(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Model.XDocumentInputFormatter.ReadRequestBodyAsync(Microsoft.AspNetCore.Mvc.Formatters.InputFormatterContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:RestfulAPIDemo.Program">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:RestfulAPIDemo.Program.Main(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:RestfulAPIDemo.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:RestfulAPIDemo.Startup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:RestfulAPIDemo.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:RestfulAPIDemo.Startup.Configuration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:RestfulAPIDemo.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:RestfulAPIDemo.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+    </members>
+</doc>
