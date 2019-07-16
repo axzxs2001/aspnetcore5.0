@@ -56,11 +56,14 @@ namespace RestfulAPIDemo
             });
 
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-            services.AddScoped<IUrlHelper>(factory =>
+
+
+            services.AddScoped<IUrlHelper>(serviceProvider =>
             {
-                var actionContext = factory.GetService<IActionContextAccessor>()
-                .ActionContext;
-                return new UrlHelper(actionContext);
+                // IActionContextAccessor actionContextAccessor, IUrlHelperFactory urlHelperFactory
+                var actionContext = serviceProvider.GetService<IActionContextAccessor>().ActionContext;
+                var factor = serviceProvider.GetService<IUrlHelperFactory>();
+                return factor.GetUrlHelper(actionContext);
             });
 
             services
@@ -70,6 +73,7 @@ namespace RestfulAPIDemo
                     configure.MaxModelValidationErrors = 200;
                     configure.ValidateComplexTypesIfChildValidationFails = false;
                 })
+                .AddNewtonsoftJson()
                 .AddXmlSerializerFormatters() //设置支持XML格式输入输出
                 .AddJsonOptions(op => op.JsonSerializerOptions.PropertyNameCaseInsensitive = true);//大小写不转换
 
@@ -87,24 +91,6 @@ namespace RestfulAPIDemo
             }
             else
             {
-                //用中间件来处理Action的异常
-                //app.Use(async (context, next) =>
-                //{
-                //    try
-                //    {
-                //        await next.Invoke();
-                //    }
-                //    catch (Exception exc)
-                //    {
-                //        var logger = app.ApplicationServices.GetService(typeof(ILogger<Startup>)) as ILogger;
-                //        logger.LogCritical(exc, exc.Message);
-                //        var result = "一个错误发生";
-                //        var data = Encoding.UTF8.GetBytes(result);
-                //        context.Response.StatusCode = 500;
-                //        context.Response.ContentType = "application/json";
-                //        context.Response.Body.Write(data, 0, data.Length);
-                //    }
-                //});
                 //通过异常处理机制
                 app.UseExceptionHandler(builder =>
                 {

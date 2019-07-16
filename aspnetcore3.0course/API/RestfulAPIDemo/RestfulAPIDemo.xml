@@ -101,7 +101,7 @@
             
             </summary>
             <param name="logger"></param>
-            <param name="userRepository"></param>
+            <param name="userRepository"></param>  
             <param name="urlHelper"></param>
         </member>
         <member name="M:RestfulAPIDemo.Controllers.UsersController.GetException">
@@ -136,7 +136,7 @@
         </member>
         <member name="M:RestfulAPIDemo.Controllers.UsersController.CreateUser(System.Int32)">
             <summary>
-            如果POST到单个资源的地址 测试
+            如果POST到单个资源的地址 测试发生冲突
             </summary>
             <param name="userid">用户ID=1时存在</param>
             <returns></returns>
@@ -144,6 +144,20 @@
         <member name="M:RestfulAPIDemo.Controllers.UsersController.ModifyUser(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{RestfulAPIDemo.Model.User})">
             <summary>
             局部修改用户
+            {
+            "Operations":
+             [
+                 {
+             "value": "222222",
+             "path": "password",
+              "op": "add"
+              },
+            {   
+             "path": "username",
+             "op": "remove"
+              }
+            ]
+             }
             </summary>
             <param name="id">用户ID</param>
             <param name="jsonPatchDocument">用户</param>
@@ -162,6 +176,14 @@
             获取分页数据
             </summary>
             <param name="userPagination">分页信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:RestfulAPIDemo.Controllers.UsersController.CreateUserUri(RestfulAPIDemo.Model.PaginationBase,RestfulAPIDemo.Model.PaginationResourceUriType)">
+            <summary>
+            创建向前向后url
+            </summary>
+            <param name="userPagination">分页实体</param>
+            <param name="paginationResourceUriType">分页url类型</param>
             <returns></returns>
         </member>
         <member name="T:RestfulAPIDemo.Model.Account">

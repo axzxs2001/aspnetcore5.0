@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.JsonPatch.Operations;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -36,7 +37,7 @@ namespace RestfulAPIDemo.Controllers
         /// 
         /// </summary>
         /// <param name="logger"></param>
-        /// <param name="userRepository"></param>
+        /// <param name="userRepository"></param>  
         /// <param name="urlHelper"></param>
         public UsersController(ILogger<UsersController> logger, IUserRepository userRepository, IUrlHelper urlHelper)
         {
@@ -67,10 +68,9 @@ namespace RestfulAPIDemo.Controllers
         [ProducesResponseType(typeof(User), 200)]
         [HttpGet("{id}")]
         [HttpHead("{id}")]
-       // [HttpOptions("{id}")]
         [HttpPost("{id}")]
         public ActionResult HandlerUser(int id)
-        {           
+        {
             var user = _userRepository.GetUserByID(id);
             if (user == null)
             {
@@ -87,7 +87,7 @@ namespace RestfulAPIDemo.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpOptions("{id}")]
-        [ProducesResponseType(typeof(User), 200)]      
+        [ProducesResponseType(typeof(User), 200)]
         public IActionResult HandlerUser()
         {
             Response.Headers.Add("Allow", "GET,POST,HEAD,OPTIONS");
@@ -119,7 +119,7 @@ namespace RestfulAPIDemo.Controllers
         }
 
         /// <summary>
-        /// 如果POST到单个资源的地址 测试
+        /// 如果POST到单个资源的地址 测试发生冲突
         /// </summary>
         /// <param name="userid">用户ID=1时存在</param>
         /// <returns></returns>
@@ -137,6 +137,20 @@ namespace RestfulAPIDemo.Controllers
         }
         /// <summary>
         /// 局部修改用户
+        /// {
+        ///   "Operations":
+        ///   [
+        ///     {
+        ///       "value": "222222",
+        ///       "path": "password",
+        ///       "op": "add"
+        ///     },
+        ///     {   
+        ///       "path": "username",
+        ///       "op": "remove"
+        ///     }
+        ///   ]
+        /// }
         /// </summary>
         /// <param name="id">用户ID</param>
         /// <param name="jsonPatchDocument">用户</param>
@@ -214,7 +228,12 @@ namespace RestfulAPIDemo.Controllers
             }
 
         }
-
+        /// <summary>
+        /// 创建向前向后url
+        /// </summary>
+        /// <param name="userPagination">分页实体</param>
+        /// <param name="paginationResourceUriType">分页url类型</param>
+        /// <returns></returns>
         string CreateUserUri(PaginationBase userPagination, PaginationResourceUriType paginationResourceUriType)
         {
 
