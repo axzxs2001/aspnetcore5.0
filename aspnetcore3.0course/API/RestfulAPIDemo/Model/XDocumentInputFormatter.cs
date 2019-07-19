@@ -10,21 +10,21 @@ using System.Xml.Linq;
 namespace RestfulAPIDemo.Model
 {
     /// <summary>
-    /// 
+    /// xml 转换
     /// </summary>
     public class XDocumentInputFormatter : InputFormatter, IInputFormatter, IApiRequestFormatMetadataProvider
     {
         /// <summary>
-        /// 
+        /// 构造
         /// </summary>
         public XDocumentInputFormatter()
         {
             SupportedMediaTypes.Add("application/xml");
         }
         /// <summary>
-        /// 
+        /// 是否可读类型
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name="type">类型</param>
         /// <returns></returns>
         protected override bool CanReadType(Type type)
         {
@@ -35,9 +35,9 @@ namespace RestfulAPIDemo.Model
             return base.CanReadType(type);
         }
         /// <summary>
-        /// 
+        /// 读取请求体
         /// </summary>
-        /// <param name="context"></param>
+        /// <param name="context">输入上下文</param>
         /// <returns></returns>
         public override async Task<InputFormatterResult> ReadRequestBodyAsync(InputFormatterContext context)
         {

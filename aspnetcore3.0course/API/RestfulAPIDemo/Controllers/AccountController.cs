@@ -18,19 +18,19 @@ namespace RestfulAPIDemo.Controllers
     public class AccountsController : ControllerBase
     {
         /// <summary>
-        /// 
+        /// 日志
         /// </summary>
         readonly ILogger<AccountsController> _logger;
         /// <summary>
-        /// 
+        /// 帐户仓储
         /// </summary>
         readonly IAccountRepository _accountRepository;
 
         /// <summary>
-        /// 
+        /// 帐户Controller
         /// </summary>
-        /// <param name="logger"></param>
-        /// <param name="accountRepository"></param>
+        /// <param name="logger">日志</param>
+        /// <param name="accountRepository">帐户仓储</param>
         public AccountsController(ILogger<AccountsController> logger, IAccountRepository accountRepository)
         {
             _accountRepository = accountRepository;
@@ -181,10 +181,6 @@ namespace RestfulAPIDemo.Controllers
             {
                 return NotFound();
             }
-        }
-
-
-        
+        }        
     }
-
 }

@@ -23,22 +23,24 @@ namespace RestfulAPIDemo.Controllers
     public class UsersController : ControllerBase
     {
         /// <summary>
-        /// 
+        /// 日志
         /// </summary>
         readonly ILogger<UsersController> _logger;
         /// <summary>
-        /// 
+        /// 用户仓储
         /// </summary>
         readonly IUserRepository _userRepository;
-
+        /// <summary>
+        /// url helper
+        /// </summary>
         readonly IUrlHelper _urlHelper;
 
         /// <summary>
-        /// 
+        /// 用户Controller
         /// </summary>
-        /// <param name="logger"></param>
-        /// <param name="userRepository"></param>  
-        /// <param name="urlHelper"></param>
+        /// <param name="logger">日志</param>
+        /// <param name="userRepository">用户仓储</param>  
+        /// <param name="urlHelper">url helper</param>
         public UsersController(ILogger<UsersController> logger, IUserRepository userRepository, IUrlHelper urlHelper)
         {
             _urlHelper = urlHelper;
@@ -83,7 +85,7 @@ namespace RestfulAPIDemo.Controllers
 
         }
         /// <summary>
-        /// 
+        /// 处理用户，返回可以操作的谓词
         /// </summary>
         /// <returns></returns>
         [HttpOptions("{id}")]
@@ -96,7 +98,7 @@ namespace RestfulAPIDemo.Controllers
         /// <summary>
         /// 添加用户
         /// </summary>
-        /// <param name="user"></param>
+        /// <param name="user">用户实体</param>
         /// <returns></returns>
         [ProducesResponseType(typeof(User), 200)]
         [HttpPost]
