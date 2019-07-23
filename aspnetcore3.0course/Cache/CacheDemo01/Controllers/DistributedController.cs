@@ -14,8 +14,14 @@ namespace CacheDemo01.Controllers
     [ApiController]
     public class DistributedController : ControllerBase
     {
+        /// <summary>
+        /// 分布式缓存
+        /// </summary>
         private IDistributedCache _cache;
-
+        /// <summary>
+        /// 构造
+        /// </summary>
+        /// <param name="distributedCache">缓存</param>
         public DistributedController(IDistributedCache distributedCache)
         {
             _cache = distributedCache;
@@ -42,7 +48,7 @@ namespace CacheDemo01.Controllers
         public IActionResult SetTime()
         {
             var currentTimeUTC = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff");
-            byte[] encodedCurrentTimeUTC = Encoding.UTF8.GetBytes(currentTimeUTC);
+            var encodedCurrentTimeUTC = Encoding.UTF8.GetBytes(currentTimeUTC);
             var options = new DistributedCacheEntryOptions()
                 .SetAbsoluteExpiration(TimeSpan.FromSeconds(10))
                 .SetSlidingExpiration(TimeSpan.FromSeconds(10))
@@ -76,6 +82,4 @@ namespace CacheDemo01.Controllers
             return Ok(cachedTimeUTC);
         }
     }
-
-
 }

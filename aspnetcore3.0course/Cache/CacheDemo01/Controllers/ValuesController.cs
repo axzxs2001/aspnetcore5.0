@@ -11,67 +11,39 @@ namespace CacheDemo01.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        /// <summary>
+        /// 缓存
+        /// </summary>
         private IMemoryCache _cache;
 
+        /// <summary>
+        /// 构造
+        /// </summary>
+        /// <param name="memoryCache">缓存</param>
         public ValuesController(IMemoryCache memoryCache)
         {
             _cache = memoryCache;
-        }
-
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
-        {            
-            return new string[] { "a", "b" };
-        }
-
-        // GET api/values/5
+        }   
+        
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {        
-         
+        public ActionResult<string> Get()
+        {
             var cacheEntry = _cache.GetOrCreate(CacheKeys.Entry, entry =>
-            {                
+            {
                 //绝对5s后重新设置
                 entry.SetAbsoluteExpiration(TimeSpan.FromSeconds(5));
                 //无访问5s后重新设置
                 //entry.SlidingExpiration = TimeSpan.FromSeconds(5);
-                return  DateTime.Now;
+                return DateTime.Now;
             });
-            return "Cache"+cacheEntry.ToString("  yyyy-MM-dd HH:mm:ss.fff");
+            return "Cache" + cacheEntry.ToString("  yyyy-MM-dd HH:mm:ss.fff");
         }
 
-        // POST api/values
-        [HttpGet("/refresh")]
-        public void Refresh()
+
+        [HttpGet("/setvalue")]
+        public void SetValue()
         {
             _cache.Set<DateTime>(CacheKeys.Entry, DateTime.Now);
-    }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
         }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
-    }
-
-    public static class CacheKeys
-    {
-        public static string Entry { get { return "_Entry"; } }
-        public static string CallbackEntry { get { return "_Callback"; } }
-        public static string CallbackMessage { get { return "_CallbackMessage"; } }
-        public static string Parent { get { return "_Parent"; } }
-        public static string Child { get { return "_Child"; } }
-        public static string DependentMessage { get { return "_DependentMessage"; } }
-        public static string DependentCTS { get { return "_DependentCTS"; } }
-        public static string Ticks { get { return "_Ticks"; } }
-        public static string CancelMsg { get { return "_CancelMsg"; } }
-        public static string CancelTokenSource { get { return "_CancelTokenSource"; } }
-    }
+    } 
 }

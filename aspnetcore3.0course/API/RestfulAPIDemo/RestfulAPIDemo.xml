@@ -11,20 +11,20 @@
         </member>
         <member name="F:RestfulAPIDemo.Controllers.AccountsController._logger">
             <summary>
-            
+            日志
             </summary>
         </member>
         <member name="F:RestfulAPIDemo.Controllers.AccountsController._accountRepository">
             <summary>
-            
+            帐户仓储
             </summary>
         </member>
         <member name="M:RestfulAPIDemo.Controllers.AccountsController.#ctor(Microsoft.Extensions.Logging.ILogger{RestfulAPIDemo.Controllers.AccountsController},RestfulAPIDemo.Model.IAccountRepository)">
             <summary>
-            
+            帐户Controller
             </summary>
-            <param name="logger"></param>
-            <param name="accountRepository"></param>
+            <param name="logger">日志</param>
+            <param name="accountRepository">帐户仓储</param>
         </member>
         <member name="M:RestfulAPIDemo.Controllers.AccountsController.GetAccounts(System.Int32)">
             <summary>
@@ -88,21 +88,26 @@
         </member>
         <member name="F:RestfulAPIDemo.Controllers.UsersController._logger">
             <summary>
-            
+            日志
             </summary>
         </member>
         <member name="F:RestfulAPIDemo.Controllers.UsersController._userRepository">
             <summary>
-            
+            用户仓储
+            </summary>
+        </member>
+        <member name="F:RestfulAPIDemo.Controllers.UsersController._urlHelper">
+            <summary>
+            url helper
             </summary>
         </member>
         <member name="M:RestfulAPIDemo.Controllers.UsersController.#ctor(Microsoft.Extensions.Logging.ILogger{RestfulAPIDemo.Controllers.UsersController},RestfulAPIDemo.Model.IUserRepository,Microsoft.AspNetCore.Mvc.IUrlHelper)">
             <summary>
-            
+            用户Controller
             </summary>
-            <param name="logger"></param>
-            <param name="userRepository"></param>  
-            <param name="urlHelper"></param>
+            <param name="logger">日志</param>
+            <param name="userRepository">用户仓储</param>  
+            <param name="urlHelper">url helper</param>
         </member>
         <member name="M:RestfulAPIDemo.Controllers.UsersController.GetException">
             <summary>
@@ -123,7 +128,7 @@
         </member>
         <member name="M:RestfulAPIDemo.Controllers.UsersController.HandlerUser">
             <summary>
-            
+            处理用户，返回可以操作的谓词
             </summary>
             <returns></returns>
         </member>
@@ -131,7 +136,7 @@
             <summary>
             添加用户
             </summary>
-            <param name="user"></param>
+            <param name="user">用户实体</param>
             <returns></returns>
         </member>
         <member name="M:RestfulAPIDemo.Controllers.UsersController.CreateUser(System.Int32)">
@@ -145,19 +150,19 @@
             <summary>
             局部修改用户
             {
-            "Operations":
-             [
-                 {
-             "value": "222222",
-             "path": "password",
-              "op": "add"
-              },
-            {   
-             "path": "username",
-             "op": "remove"
-              }
-            ]
-             }
+              "Operations":
+              [
+                {
+                  "value": "222222",
+                  "path": "password",
+                  "op": "add"
+                },
+                {   
+                  "path": "username",
+                  "op": "remove"
+                }
+              ]
+            }
             </summary>
             <param name="id">用户ID</param>
             <param name="jsonPatchDocument">用户</param>
@@ -188,27 +193,27 @@
         </member>
         <member name="T:RestfulAPIDemo.Model.Account">
             <summary>
-            
+            帐户
             </summary>
         </member>
         <member name="P:RestfulAPIDemo.Model.Account.ID">
             <summary>
-            
+            ID
             </summary>
         </member>
         <member name="P:RestfulAPIDemo.Model.Account.AccountType">
             <summary>
-            
+            帐户类型
             </summary>
         </member>
         <member name="P:RestfulAPIDemo.Model.Account.AccountNo">
             <summary>
-            
+            帐户号
             </summary>
         </member>
         <member name="P:RestfulAPIDemo.Model.Account.UserID">
             <summary>
-            
+            用户ID
             </summary>
         </member>
         <member name="T:RestfulAPIDemo.Model.PaginatedList`1">
@@ -289,42 +294,42 @@
         </member>
         <member name="P:RestfulAPIDemo.Model.User.ID">
             <summary>
-            
+            用户ID
             </summary>
         </member>
         <member name="P:RestfulAPIDemo.Model.User.UserName">
             <summary>
-            
+            用户名
             </summary>
         </member>
         <member name="P:RestfulAPIDemo.Model.User.Password">
             <summary>
-            
+            用户密码
             </summary>
         </member>
         <member name="P:RestfulAPIDemo.Model.User.Name">
             <summary>
-            
+            姓名
             </summary>
         </member>
         <member name="P:RestfulAPIDemo.Model.User.UserType">
             <summary>
-            
+            用户类型
             </summary>
         </member>
         <member name="T:RestfulAPIDemo.Model.UserPagination">
             <summary>
-            
+            用户分页实体
             </summary>
         </member>
         <member name="P:RestfulAPIDemo.Model.UserPagination.UserName">
             <summary>
-            
+            用户名
             </summary>
         </member>
         <member name="P:RestfulAPIDemo.Model.UserPagination.UserType">
             <summary>
-            
+            用户类型
             </summary>
         </member>
         <member name="T:RestfulAPIDemo.Model.PaginationResourceUriType">
@@ -334,17 +339,17 @@
         </member>
         <member name="F:RestfulAPIDemo.Model.PaginationResourceUriType.PreviousPage">
             <summary>
-            
+            上一页
             </summary>
         </member>
         <member name="F:RestfulAPIDemo.Model.PaginationResourceUriType.NextPage">
-            <summary>
-            
-            </summary>
+             <summary>
+            下一页
+             </summary>
         </member>
         <member name="F:RestfulAPIDemo.Model.PaginationResourceUriType.CurrentPage">
             <summary>
-            
+            当前页
             </summary>
         </member>
         <member name="T:RestfulAPIDemo.Model.AccountRepository">
@@ -491,51 +496,51 @@
         </member>
         <member name="T:RestfulAPIDemo.Model.UserNameEqualPasswordAttribute">
             <summary>
-            
+            用户名和密码相等特性  验证特性
             </summary>
         </member>
         <member name="M:RestfulAPIDemo.Model.UserNameEqualPasswordAttribute.#ctor(System.String)">
             <summary>
-            
+            构造
             </summary>
             <param name="errorMessage"></param>
         </member>
         <member name="M:RestfulAPIDemo.Model.UserNameEqualPasswordAttribute.AddValidation(Microsoft.AspNetCore.Mvc.ModelBinding.Validation.ClientModelValidationContext)">
             <summary>
-            
+            添加验证
             </summary>
             <param name="context"></param>
         </member>
         <member name="M:RestfulAPIDemo.Model.UserNameEqualPasswordAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
             <summary>
-            
+            验证结果
             </summary>
-            <param name="value"></param>
-            <param name="validationContext"></param>
+            <param name="value">值</param>
+            <param name="validationContext">验证上下文</param>
             <returns></returns>
         </member>
         <member name="T:RestfulAPIDemo.Model.XDocumentInputFormatter">
             <summary>
-            
+            xml 转换
             </summary>
         </member>
         <member name="M:RestfulAPIDemo.Model.XDocumentInputFormatter.#ctor">
             <summary>
-            
+            构造
             </summary>
         </member>
         <member name="M:RestfulAPIDemo.Model.XDocumentInputFormatter.CanReadType(System.Type)">
             <summary>
-            
+            是否可读类型
             </summary>
-            <param name="type"></param>
+            <param name="type">类型</param>
             <returns></returns>
         </member>
         <member name="M:RestfulAPIDemo.Model.XDocumentInputFormatter.ReadRequestBodyAsync(Microsoft.AspNetCore.Mvc.Formatters.InputFormatterContext)">
             <summary>
-            
+            读取请求体
             </summary>
-            <param name="context"></param>
+            <param name="context">输入上下文</param>
             <returns></returns>
         </member>
         <member name="T:RestfulAPIDemo.Program">
