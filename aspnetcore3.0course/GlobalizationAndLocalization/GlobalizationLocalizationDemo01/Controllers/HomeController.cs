@@ -9,8 +9,6 @@ using Microsoft.Extensions.Localization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
-using Microsoft.AspNetCore.Http.Internal;
-
 
 namespace GlobalizationLocalizationDemo01.Controllers
 {
@@ -55,19 +53,6 @@ namespace GlobalizationLocalizationDemo01.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-
-        //public IActionResult OnPostCreateEssentialAsync()
-        //{
-        //    HttpContext.Response.Cookies.Append(Constants.EssentialSec,
-        //        DateTime.Now.Second.ToString(),
-        //        new CookieOptions() { IsEssential = true });
-
-        //    ResponseCookies = Response.Headers[HeaderNames.SetCookie].ToString();
-
-        //    return RedirectToPage("./Index");
-        //}
-
 
     }
 }
