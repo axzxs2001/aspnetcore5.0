@@ -104,7 +104,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkyWorkingDemo", "Monitor\S
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HealthChecks", "HealthChecks", "{66C32FF2-5947-4287-8CBB-193C13C08250}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthChecksDemo01", "HealthChecks\HealthChecksDemo01\HealthChecksDemo01.csproj", "{F6DAD438-B2AA-48A7-A911-F764220A0532}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthChecksDemo01", "HealthChecks\HealthChecksDemo01\HealthChecksDemo01.csproj", "{F6DAD438-B2AA-48A7-A911-F764220A0532}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthChecksDemo02", "HealthChecks\HealthChecksDemo02\HealthChecksDemo02.csproj", "{CC40384F-649A-4C77-A523-E7D5C1EE226D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -248,6 +250,10 @@ Global
 		{F6DAD438-B2AA-48A7-A911-F764220A0532}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6DAD438-B2AA-48A7-A911-F764220A0532}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6DAD438-B2AA-48A7-A911-F764220A0532}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC40384F-649A-4C77-A523-E7D5C1EE226D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC40384F-649A-4C77-A523-E7D5C1EE226D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC40384F-649A-4C77-A523-E7D5C1EE226D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC40384F-649A-4C77-A523-E7D5C1EE226D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -288,6 +294,7 @@ Global
 		{2C25E570-C74C-415B-886D-E0A47CBDC0CF} = {2F456BFE-828F-4188-A80D-8F312E5E569E}
 		{454DC0BF-F871-447D-A3D7-76D215801E20} = {2F456BFE-828F-4188-A80D-8F312E5E569E}
 		{F6DAD438-B2AA-48A7-A911-F764220A0532} = {66C32FF2-5947-4287-8CBB-193C13C08250}
+		{CC40384F-649A-4C77-A523-E7D5C1EE226D} = {66C32FF2-5947-4287-8CBB-193C13C08250}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5CB3F486-CE6E-47FB-A62F-70F307BC329E}

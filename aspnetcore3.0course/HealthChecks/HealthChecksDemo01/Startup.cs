@@ -27,10 +27,8 @@ namespace HealthChecksDemo01
 
         public IConfiguration Configuration { get; }
 
-
         public void ConfigureServices(IServiceCollection services)
         {
-
             //最简单模式
             //services.AddHealthChecks();
             //自定义健康检查
@@ -73,8 +71,6 @@ namespace HealthChecksDemo01
                 //Predicate = (check) => check.Tags.Contains("pgsql")
             });
 
-
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -95,11 +91,9 @@ namespace HealthChecksDemo01
         /// <param name="httpContext">上下文</param>
         /// <param name="result">健康报表</param>
         /// <returns></returns>
-        private static Task WriteResponse(HttpContext httpContext,
-    HealthReport result)
+        private static Task WriteResponse(HttpContext httpContext, HealthReport result)
         {
             httpContext.Response.ContentType = "application/json";
-
             var json = new JObject(
                 new JProperty("status", result.Status.ToString()),
                 new JProperty("results", new JObject(result.Entries.Select(pair =>
