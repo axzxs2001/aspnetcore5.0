@@ -35,12 +35,18 @@ namespace HealthChecksDemo02
                     failureStatus: HealthStatus.Degraded,
                     tags: new[] { "ready" });
 
-
+            services.Configure<HealthCheckPublisherOptions>(options =>
+            {
+                options.Delay = TimeSpan.FromSeconds(20);
+                options.Period = TimeSpan.FromSeconds(35);
+                options.Predicate = (check) => check.Tags.Contains("ready");
+            });
+            services.AddSingleton<IHealthCheckPublisher, ReadinessPublisher>();
 
             services.AddControllers();
         }
 
-    
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
