@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LogLevelTest;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -12,12 +13,13 @@ namespace LogDemo01.Controllers
     public class ValuesController : ControllerBase
     {
         readonly ILogger<ValuesController> _logger;
-        public ValuesController(ILogger<ValuesController> logger)
+        public ValuesController(ILogger<ValuesController> logger, ITestLog testLog)
         {
+            testLog.Log();
             _logger = logger;
         }
 
-      
+
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
@@ -30,7 +32,7 @@ namespace LogDemo01.Controllers
                 _logger.LogDebug(new EventId(10002), "-----------------Get--------------------");
                 return new string[] { "value1", "value2" };
             }
-        }     
-    
+        }
+
     }
 }

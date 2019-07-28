@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LogLevelTest;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,8 @@ namespace LogDemo01
 
     
         public void ConfigureServices(IServiceCollection services)
-        {    
+        {
+            services.AddScoped<ITestLog, TestLog>();
             services.AddControllers()
                 .AddNewtonsoftJson();
         }
