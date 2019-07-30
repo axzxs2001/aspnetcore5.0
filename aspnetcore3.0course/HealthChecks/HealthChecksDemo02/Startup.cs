@@ -28,19 +28,20 @@ namespace HealthChecksDemo02
         {
             services.AddHostedService<DataBaseInitService>();
             services.AddSingleton<DataBaseInitServiceHealthCheck>();
-
+            //设置健康检查
             services.AddHealthChecks()
                 .AddCheck<DataBaseInitServiceHealthCheck>(
                     "hosted_service_startup",
                     failureStatus: HealthStatus.Degraded,
                     tags: new[] { "ready" });
-
+            //推送参数设置
             services.Configure<HealthCheckPublisherOptions>(options =>
             {
-                options.Delay = TimeSpan.FromSeconds(20);
-                options.Period = TimeSpan.FromSeconds(35);
+                options.Delay = TimeSpan.FromSeconds(5);
+                options.Period = TimeSpan.FromSeconds(10);
                 options.Predicate = (check) => check.Tags.Contains("ready");
             });
+            //注入推送
             services.AddSingleton<IHealthCheckPublisher, ReadinessPublisher>();
 
             services.AddControllers();

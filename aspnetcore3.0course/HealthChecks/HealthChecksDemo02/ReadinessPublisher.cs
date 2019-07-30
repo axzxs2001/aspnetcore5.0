@@ -25,15 +25,8 @@ namespace HealthChecksDemo02
         {
             _logger = logger;
         }
-        /// <summary>
-        /// 发布项
-        /// </summary>
-        public List<(HealthReport report, CancellationToken cancellationToken)> Entries
-        {
-            get;
-        } = new List<(HealthReport report, CancellationToken cancellationToken)>();
-
-        public Exception Exception { get; set; }
+  
+   
 
         /// <summary>
         /// 发布查看健康状态
@@ -42,15 +35,10 @@ namespace HealthChecksDemo02
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public Task PublishAsync(HealthReport report, CancellationToken cancellationToken)
-        {
-            Entries.Add((report, cancellationToken));
+        {        
 
-            _logger.LogInformation("{TIMESTAMP} 准备探针状态: {RESULT}", DateTime.UtcNow, report.Status);
-            if (Exception != null)
-            {
-                throw Exception;
-            }
-
+            _logger.LogInformation($"{ DateTime.UtcNow} 准备探针状态: {report.Status},{report.TotalDuration},{report.Entries.Count}");
+         
             cancellationToken.ThrowIfCancellationRequested();
 
             return Task.CompletedTask;
