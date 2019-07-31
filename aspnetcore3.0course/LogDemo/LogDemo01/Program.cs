@@ -15,6 +15,12 @@ namespace LogDemo01
     {
         public static void Main(string[] args)
         {
+            DateTime a = DateTime.Now;
+            if (a == null)
+            {
+
+            }
+       
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -31,7 +37,7 @@ namespace LogDemo01
                  logging.AddConfiguration(hostBuilderContext.Configuration.GetSection("Logging"));
                  logging.AddConsole(options => options.IncludeScopes = true);
                  //logging.AddDebug();  
-                 
+
                  logging.AddEventSourceLogger();
              });
     }
