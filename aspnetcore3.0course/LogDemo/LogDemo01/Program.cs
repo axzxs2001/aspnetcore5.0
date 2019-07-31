@@ -14,13 +14,7 @@ namespace LogDemo01
     public class Program
     {
         public static void Main(string[] args)
-        {
-            DateTime a = DateTime.Now;
-            if (a == null)
-            {
-
-            }
-       
+        { 
             CreateHostBuilder(args).Build().Run();
         }
 
