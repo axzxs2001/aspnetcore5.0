@@ -34,7 +34,9 @@ namespace HealthChecksDemo01
             //自定义健康检查
             services.AddScoped<IDbConnection, Npgsql.NpgsqlConnection>();
             services.AddHealthChecks()
+                //三方库
                 .AddNpgSql(Configuration.GetConnectionString("PostgreSql"), tags: new[] { "pgsql" })
+                //自定义
                 .AddPostgre(Configuration.GetConnectionString("Postgre"))
                 .AddCheck("health", () => HealthCheckResult.Healthy("Foo is OK!"), tags: new[] { "health" });
 

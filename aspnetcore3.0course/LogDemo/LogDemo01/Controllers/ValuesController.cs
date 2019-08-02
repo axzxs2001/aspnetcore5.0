@@ -28,7 +28,7 @@ namespace LogDemo01.Controllers
             {
                 _logger.LogInformation(new EventId(10000), "-----------------Get--------------------");
 
-
+                System.Threading.Thread.Sleep(5000);
                 _logger.LogDebug(new EventId(10002), "-----------------Get--------------------");
                 return new string[] { "value1", "value2" };
             }
