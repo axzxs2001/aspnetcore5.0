@@ -38,7 +38,7 @@ namespace GlobalizationLocalizationDemo01
             services.AddControllersWithViews()
                 .AddNewtonsoftJson()
                 .AddViewLocalization()
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+               // .AddViewLocalization(LanguageViewLocationExpanderFormat.SubFolder)
                 .AddDataAnnotationsLocalization();
             services.AddRazorPages();
         }
