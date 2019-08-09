@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -35,10 +36,6 @@ namespace AuthenticationAuthorization_Cookie_02
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
-            services.AddControllersWithViews()
-                .AddNewtonsoftJson();
-            services.AddRazorPages();
             services.AddAuthorization(options =>
             {
                 //自定义Requirement，userPermission可从数据库中获得
@@ -51,8 +48,10 @@ namespace AuthenticationAuthorization_Cookie_02
                               new UserPermission {  Url="logout", UserName="aaa"}
 
                           };
-                options.AddPolicy("Permission", policy => policy.Requirements.Add(new PermissionRequirement("/denied", userPermission)));
-
+                options.AddPolicy("Permission", policy =>
+                {
+                    policy.Requirements.Add(new PermissionRequirement("/denied", userPermission));
+                });
             })
                 .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
@@ -62,6 +61,13 @@ namespace AuthenticationAuthorization_Cookie_02
                 });
             //注入授权Handler
             services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
+            services.AddControllersWithViews(opt =>
+            {
+                opt.EnableEndpointRouting = false;
+               // opt.EnableEndpointRouting = true;
+            })
+            .AddNewtonsoftJson();
+            services.AddRazorPages();
 
         }
 
@@ -86,14 +92,16 @@ namespace AuthenticationAuthorization_Cookie_02
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
-            });
-            app.UseCookiePolicy();   
+            app.UseMvcWithDefaultRoute();
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllerRoute(
+            //        name: "default",
+            //        pattern: "{controller=Home}/{action=Index}/{id?}");
+            //    endpoints.MapRazorPages();
+            //});
+
+            app.UseCookiePolicy();
         }
     }
 }

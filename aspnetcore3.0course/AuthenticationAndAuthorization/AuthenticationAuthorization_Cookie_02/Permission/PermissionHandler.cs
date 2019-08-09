@@ -1,5 +1,9 @@
 ﻿using AuthenticationAuthorization_Cookie_02.Permission;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.SignalR;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -18,23 +22,32 @@ namespace PolicyPrivilegeManagement.Models
         public List<UserPermission> UserPermissions { get; set; }
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
-        {         
-            var route = (context.Resource as Microsoft.AspNetCore.Routing.RouteEndpoint);            
+        {
             var questUrl = "";
-
-            if (route.RoutePattern.Parameters.Count > 0)
+            var method = "";
+            if (context.Resource is RouteEndpoint)
             {
-                questUrl = $"{route.RoutePattern.Defaults["controller"].ToString().ToLower() }/{route.RoutePattern.Defaults["action"].ToString().ToLower()}";
+                var route = (context.Resource as Microsoft.AspNetCore.Routing.RouteEndpoint);
+                if (route.RoutePattern.Parameters.Count > 0)
+                {
+                    questUrl = $"{route.RoutePattern.Defaults["controller"].ToString().ToLower() }/{route.RoutePattern.Defaults["action"].ToString().ToLower()}";
+                }
+                else
+                {
+                    questUrl = route.RoutePattern.RawText;
+                }
             }
             else
             {
-                questUrl = route.RoutePattern.RawText;
+                var fileContext = (context.Resource as AuthorizationFilterContext);
+                questUrl = fileContext?.HttpContext?.Request?.Path.Value?.ToLower();
+                method = fileContext?.HttpContext?.Request?.Method;
             }
             //赋值用户权限
             UserPermissions = requirement.UserPermissions;
             //是否经过验证
             var isAuthenticated = context?.User?.Identity?.IsAuthenticated;
-            if (isAuthenticated.HasValue&&isAuthenticated.Value)
+            if (isAuthenticated.HasValue && isAuthenticated.Value)
             {
                 if (UserPermissions.GroupBy(g => g.Url).Where(w => w.Key.ToLower() == questUrl).Count() > 0)
                 {
