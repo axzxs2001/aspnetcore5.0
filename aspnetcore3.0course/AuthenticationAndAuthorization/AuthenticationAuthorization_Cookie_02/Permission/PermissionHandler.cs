@@ -23,7 +23,9 @@ namespace PolicyPrivilegeManagement.Models
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
         {
+            //请求的url
             var questUrl = "";
+            //请求谓词
             var method = "";
             if (context.Resource is RouteEndpoint)
             {

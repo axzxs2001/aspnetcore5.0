@@ -91,8 +91,9 @@ namespace AuthenticationAuthorization_Cookie_02
             app.UseRouting();
 
             app.UseAuthorization();
-
+            //普通模式
             app.UseMvcWithDefaultRoute();
+            //终端点模式
             //app.UseEndpoints(endpoints =>
             //{
             //    endpoints.MapControllerRoute(
