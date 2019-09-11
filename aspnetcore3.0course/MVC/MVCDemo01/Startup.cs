@@ -46,6 +46,7 @@ namespace MVCDemo01
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+          
 
             app.UseStaticFiles();
 

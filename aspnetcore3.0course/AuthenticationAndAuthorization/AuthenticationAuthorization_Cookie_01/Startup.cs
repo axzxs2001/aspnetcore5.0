@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
@@ -16,9 +18,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace AuthenticationAuthorization_Cookie_01
 {
@@ -35,34 +39,67 @@ namespace AuthenticationAuthorization_Cookie_01
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDataProtection().PersistKeysToPostgres(Configuration.GetConnectionString("Postgre"));
+            //services.AddDataProtection().PersistKeysToPostgres(Configuration.GetConnectionString("Postgre"));
 
 
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+
             });
-
-
             services.AddControllersWithViews()
                 .AddNewtonsoftJson();
             services.AddRazorPages();
-
+     
             //添加认证Cookie信息
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
                     options.LoginPath = new PathString("/login");
-                    options.AccessDeniedPath = new PathString("/denied");
+                    options.AccessDeniedPath = new PathString("/denied");            
+                    options.Cookie.HttpOnly = true;
+                    //options.Events = new CookieAuthenticationEvents()
+                    //{
+                    //    OnSignedIn = (context) =>
+                    //    {
+                    //        Console.WriteLine(context.Principal.Identity?.Name);
+                    //        Console.WriteLine(context.Principal.Identity?.IsAuthenticated);
+                    //        return Task.CompletedTask;
+                    //    },
+                    //    OnValidatePrincipal = (context) =>
+                    //    {
+                    //        Console.WriteLine(context.Principal.Identity?.Name);
+                    //        Console.WriteLine(context.Principal.Identity?.IsAuthenticated);
+                    //        var v = context;
+                    //        return Task.CompletedTask;
+                    //    }
+                    //};
+
                 });
 
 
         }
+        public class RequestCenterMiddleware
+        {
+            private readonly RequestDelegate _next;
+            public RequestCenterMiddleware(RequestDelegate next)
+            {
+                _next = next;
+            }
 
+            public async Task InvokeAsync(HttpContext context)
+            {
+               
+                await _next(context);
+   
+            }
+        }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+         
+            app.UseMiddleware<RequestCenterMiddleware>();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -75,7 +112,6 @@ namespace AuthenticationAuthorization_Cookie_01
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -106,7 +142,6 @@ namespace AuthenticationAuthorization_Cookie_01
             return builder;
         }
     }
-
     public class DataProtectionKeyRepository : IXmlRepository
     {
         readonly string _connectionString;
@@ -220,7 +255,7 @@ namespace AuthenticationAuthorization_Cookie_01
                 var sql = @"select ""XmlData"" from public.""DataProtectionKeys"" ";
                 using (var cmd = new Npgsql.NpgsqlCommand(sql, con))
                 {
-                    var elements = new List<XElement>(); 
+                    var elements = new List<XElement>();
                     con.Open();
                     using (var reader = cmd.ExecuteReader())
                     {
@@ -232,7 +267,7 @@ namespace AuthenticationAuthorization_Cookie_01
                     }
                     con.Close();
                     return elements;
-                } 
+                }
             }
         }
 
@@ -249,7 +284,7 @@ namespace AuthenticationAuthorization_Cookie_01
                     var result = cmd.ExecuteNonQuery() > 0;
                     con.Close();
                     return result;
-                }               
+                }
             }
         }
     }

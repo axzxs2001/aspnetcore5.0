@@ -10,7 +10,7 @@
   "profiles": {
     "AuthenticationAuthorization_Cookie_01": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
