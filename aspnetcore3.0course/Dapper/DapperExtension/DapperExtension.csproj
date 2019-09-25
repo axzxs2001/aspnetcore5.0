@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.4" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.0.0-preview9.19423.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3-beta1" />
     <PackageReference Include="Polly" Version="7.1.1" />
   </ItemGroup>
