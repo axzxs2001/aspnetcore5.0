@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace AuthenticationAuthorization_Cookie_01.Controllers
 {
@@ -16,14 +18,24 @@ namespace AuthenticationAuthorization_Cookie_01.Controllers
     public class HomeController : Controller
     {
 
+        public HomeController(IMemoryCache aaa)
+        {
+
+        }
+
+
         public IActionResult Index()
         {
+            var v = HttpContext.RequestServices;
+            Console.WriteLine("##################" + HttpContext.TraceIdentifier);
             return View();
         }
         [AllowAnonymous]
         [HttpGet("login")]
         public IActionResult Login(string returnUrl = null)
         {
+            Console.WriteLine("##################===============-------" + HttpContext.Request.Cookies[".AspNetCore.Cookies"]);
+            Console.WriteLine("##################" + HttpContext.TraceIdentifier);
             TempData["returnUrl"] = returnUrl;
             return View();
         }
@@ -31,13 +43,14 @@ namespace AuthenticationAuthorization_Cookie_01.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> LoginAsync(string userName, string password, string returnUrl = null)
         {
+            Console.WriteLine("##################" + HttpContext.TraceIdentifier);
             var list = new List<dynamic> {
                  new { UserName = "gsw", Password = "111111", Role = "admin",Name="桂素伟" },
                  new { UserName = "aaa", Password = "222222", Role = "system" ,Name="路人甲"}
              };
             var user = list.SingleOrDefault(s => s.UserName == userName && s.Password == password);
             if (user != null)
-            {              
+            {
                 //用户标识
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                 identity.AddClaim(new Claim(ClaimTypes.Sid, userName));
@@ -60,11 +73,13 @@ namespace AuthenticationAuthorization_Cookie_01.Controllers
             else
             {
                 return BadRequest("用户名或密码错误！");
-            }       
+            }
         }
-    
+
         public async Task<IActionResult> Logout()
         {
+
+            Console.WriteLine("##################" + HttpContext.TraceIdentifier);
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
         }
@@ -74,9 +89,12 @@ namespace AuthenticationAuthorization_Cookie_01.Controllers
         {
             return View();
         }
+      
         [Authorize(Roles = "admin")]
         public IActionResult AdminPage()
         {
+            Console.WriteLine("##################===============-------" + HttpContext.Request.Cookies[".AspNetCore.Cookies"]);
+            Console.WriteLine("##################" + HttpContext.TraceIdentifier);
             return View();
         }
         [Authorize(Roles = "system")]

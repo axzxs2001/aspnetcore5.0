@@ -22,6 +22,10 @@ namespace AuthenticationAuthorization_Cookie_01
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                   
+                    webBuilder.ConfigureKestrel(cfg => {
+                        cfg.AddServerHeader = false;
+                    });
                     webBuilder.UseStartup<Startup>();
                 });
     }
