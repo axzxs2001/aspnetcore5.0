@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webdemo
+spec:
+  selector:
+    matchLabels:
+      app: webdemo
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: webdemo
+    spec:
+      containers:
+      - name: webdemo
+        image: gsw/webdemo:v1.0.0
+        imagePullPolicy: IfNotPresent #从本地镜像里拉取
+        ports:
+        - containerPort: 80
