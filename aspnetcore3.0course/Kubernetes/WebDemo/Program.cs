@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-
+using System.IO;
 namespace WebDemo
 {
     public class Program
@@ -20,6 +20,10 @@ namespace WebDemo
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
+                    {
+                        config.AddJsonFile("configuration/appsettings.json", optional: true, reloadOnChange: true);
+                    });
                     webBuilder.UseStartup<Startup>();
                 });
     }
