@@ -115,24 +115,24 @@ namespace APIDemo02
             services.AddSingleton(permissionRequirement);
 
 
-            var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath;
+            var basePath = Environment.CurrentDirectory;
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "APIDemo02", Version = "v1", Contact = new OpenApiContact { Email = "", Name = "APIDemo02" }, Description = "APIDemo02 Details" });
                 var xmlPath = Path.Combine(basePath, "APIDemo02.xml");
-                options.IncludeXmlComments(xmlPath, true);            
+                options.IncludeXmlComments(xmlPath, true);
 
                 var schemeName = "Bearer";
                 //如果用Token验证，会在Swagger界面上有验证              
                 options.AddSecurityDefinition(schemeName, new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
-                    Description = "请输入带有Bearer的Token",
+                    Description = "请输入不带有Bearer的Token",
                     Name = "Authorization",
                     Type = SecuritySchemeType.Http,
                     Scheme = schemeName.ToLowerInvariant(),
                     BearerFormat = "JWT"
-                }); 
+                });
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement {
                     {
                         new OpenApiSecurityScheme
@@ -162,7 +162,7 @@ namespace APIDemo02
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }           
+            }
             app.UseAuthentication();
 
             app.UseSwagger();
