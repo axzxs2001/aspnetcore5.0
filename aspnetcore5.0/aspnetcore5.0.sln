@@ -110,7 +110,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogLevelTest", "LogDemo\Log
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kubernetes", "Kubernetes", "{7E90E829-3BA3-40D7-BD1C-C7B41238A528}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDemo", "Kubernetes\WebDemo\WebDemo.csproj", "{1A16BAA9-297F-49C9-AAA6-9758E817412B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebDemo", "Kubernetes\WebDemo\WebDemo.csproj", "{1A16BAA9-297F-49C9-AAA6-9758E817412B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

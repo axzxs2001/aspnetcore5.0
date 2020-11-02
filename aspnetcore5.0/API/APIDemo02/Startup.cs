@@ -17,6 +17,7 @@ using Microsoft.OpenApi.Models;
 using System.IO;
 using System.Linq;
 using System.Net;
+using APIDemo02.Models;
 
 namespace APIDemo02
 {
@@ -43,7 +44,7 @@ namespace APIDemo02
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            //¶ÁÈ¡ÅäÖÃÎÄ¼þ
+            //ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
             var audienceConfig = Configuration.GetSection("Audience");
             var symmetricKeyAsBase64 = audienceConfig["Secret"];
             var keyByteArray = Encoding.ASCII.GetBytes(symmetricKeyAsBase64);
@@ -53,33 +54,33 @@ namespace APIDemo02
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = signingKey,
                 ValidateIssuer = true,
-                ValidIssuer = audienceConfig["Issuer"],//·¢ÐÐÈË
+                ValidIssuer = audienceConfig["Issuer"],//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 ValidateAudience = true,
-                ValidAudience = audienceConfig["Audience"],//¶©ÔÄÈË
+                ValidAudience = audienceConfig["Audience"],//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 ValidateLifetime = true,
                 ClockSkew = TimeSpan.Zero,
                 RequireExpirationTime = true,
 
             };
             var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
-            //Õâ¸ö¼¯ºÏÄ£ÄâÓÃ»§È¨ÏÞ±í,¿É´ÓÊý¾Ý¿âÖÐ²éÑ¯³öÀ´
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½Ã»ï¿½È¨ï¿½Þ±ï¿½,ï¿½É´ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Ð²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
             var permission = new List<Permission> {
-                              new Permission {  Url="products", Name="admin"},
-                              new Permission {  Url="product/{id}", Name="admin"},
-                              new Permission {  Url="addproduct", Name="admin"},
-                              new Permission {  Url="modifyproduct", Name="admin"},
-                              new Permission {  Url="removeproduct/{id}", Name="admin"},
-                              new Permission {  Url="products", Name="system"},
-                              new Permission {  Url="product/{id}", Name="system"}
+                              new Permission {  Url="/products", Name="admin"},
+                              new Permission {  Url="/product/{id}", Name="admin"},
+                              new Permission {  Url="/addproduct", Name="admin"},
+                              new Permission {  Url="/modifyproduct", Name="admin"},
+                              new Permission {  Url="/removeproduct/{id}", Name="admin"},
+                              new Permission {  Url="/products", Name="system"},
+                              new Permission {  Url="/product/{id}", Name="system"}
                           };
-            //Èç¹ûµÚÈý¸ö²ÎÊý£¬ÊÇClaimTypes.Role£¬ÉÏÃæ¼¯ºÏµÄÃ¿¸öÔªËØµÄNameÎª½ÇÉ«Ãû³Æ£¬Èç¹ûClaimTypes.Name£¬¼´ÉÏÃæ¼¯ºÏµÄÃ¿¸öÔªËØµÄNameÎªÓÃ»§Ãû
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ClaimTypes.Roleï¿½ï¿½ï¿½ï¿½ï¿½æ¼¯ï¿½Ïµï¿½Ã¿ï¿½ï¿½Ôªï¿½Øµï¿½NameÎªï¿½ï¿½É«ï¿½ï¿½ï¿½Æ£ï¿½ï¿½ï¿½ï¿½ClaimTypes.Nameï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ¼¯ï¿½Ïµï¿½Ã¿ï¿½ï¿½Ôªï¿½Øµï¿½NameÎªï¿½Ã»ï¿½ï¿½ï¿½
             var permissionRequirement = new PermissionRequirement(
                 "/api/denied", permission,
                 ClaimTypes.Role,
                 audienceConfig["Issuer"],
                 audienceConfig["Audience"],
                 signingCredentials,
-                expiration: TimeSpan.FromSeconds(1000000)//ÉèÖÃToken¹ýÆÚÊ±¼ä
+                expiration: TimeSpan.FromSeconds(1000000)//ï¿½ï¿½ï¿½ï¿½Tokenï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
                 );
 
             services.AddAuthorization(options =>
@@ -94,7 +95,7 @@ namespace APIDemo02
             .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, o =>
              {
 
-                 //²»Ê¹ÓÃhttps
+                 //ï¿½ï¿½Ê¹ï¿½ï¿½https
                  o.RequireHttpsMetadata = false;
                  o.TokenValidationParameters = tokenValidationParameters;
 
@@ -110,7 +111,7 @@ namespace APIDemo02
                      }
                  };
              });
-            //×¢ÈëÊÚÈ¨Handler
+            //×¢ï¿½ï¿½ï¿½ï¿½È¨Handler
             services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
             services.AddSingleton(permissionRequirement);
 
@@ -123,11 +124,11 @@ namespace APIDemo02
                 options.IncludeXmlComments(xmlPath, true);
 
                 var schemeName = "Bearer";
-                //Èç¹ûÓÃTokenÑéÖ¤£¬»áÔÚSwagger½çÃæÉÏÓÐÑéÖ¤              
+                //ï¿½ï¿½ï¿½ï¿½ï¿½Tokenï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Swaggerï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤              
                 options.AddSecurityDefinition(schemeName, new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
-                    Description = "ÇëÊäÈë²»´øÓÐBearerµÄToken",
+                    Description = "ï¿½ï¿½ï¿½ï¿½ï¿½ë²»ï¿½ï¿½ï¿½ï¿½Bearerï¿½ï¿½Token",
                     Name = "Authorization",
                     Type = SecuritySchemeType.Http,
                     Scheme = schemeName.ToLowerInvariant(),

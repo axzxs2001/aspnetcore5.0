@@ -39,7 +39,7 @@ namespace APIDemo01
         {
 
 
-            var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath;
+            var basePath = Directory.GetCurrentDirectory();
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "APIDemo01", Version = "v1", Contact = new OpenApiContact { Email = "", Name = "APIDemo01" }, Description = "APIDemo01 Details" });
@@ -68,9 +68,9 @@ namespace APIDemo01
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.DocumentTitle = "APIDemo01";         
+                c.DocumentTitle = "APIDemo01";
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "APIDemo01");
-            });    
+            });
 
             app.UseRouting();
 
