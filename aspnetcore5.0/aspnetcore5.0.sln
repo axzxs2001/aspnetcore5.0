@@ -55,6 +55,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthChecksDemo02", "Healt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogLevelTest", "LogDemo\LogLevelTest\LogLevelTest.csproj", "{AEE86619-7EF3-48F3-B557-4903EB9E0216}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Prometheus", "Prometheus", "{040CCCB6-8092-4FBE-917D-E59550881133}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrometheusSample", "Prometheus\PrometheusSample.csproj", "{4815D18E-1FDD-41C0-8846-F7B3DACD26CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -137,6 +141,10 @@ Global
 		{AEE86619-7EF3-48F3-B557-4903EB9E0216}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEE86619-7EF3-48F3-B557-4903EB9E0216}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEE86619-7EF3-48F3-B557-4903EB9E0216}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4815D18E-1FDD-41C0-8846-F7B3DACD26CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4815D18E-1FDD-41C0-8846-F7B3DACD26CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4815D18E-1FDD-41C0-8846-F7B3DACD26CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4815D18E-1FDD-41C0-8846-F7B3DACD26CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -162,6 +170,7 @@ Global
 		{F6DAD438-B2AA-48A7-A911-F764220A0532} = {66C32FF2-5947-4287-8CBB-193C13C08250}
 		{CC40384F-649A-4C77-A523-E7D5C1EE226D} = {66C32FF2-5947-4287-8CBB-193C13C08250}
 		{AEE86619-7EF3-48F3-B557-4903EB9E0216} = {97953DEC-D4F0-438A-B565-C4DF888C85A6}
+		{4815D18E-1FDD-41C0-8846-F7B3DACD26CF} = {040CCCB6-8092-4FBE-917D-E59550881133}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5CB3F486-CE6E-47FB-A62F-70F307BC329E}
