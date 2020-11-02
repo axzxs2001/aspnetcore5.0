@@ -45,7 +45,7 @@ namespace RestfulAPIDemo
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
-            var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath;
+            var basePath = Directory.GetCurrentDirectory();
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "RestfulAPIDemo", Version = "v1", Contact = new OpenApiContact { Email = "", Name = "RestfulAPIDemo" }, Description = "RestfulAPIDemo Details" });
@@ -59,8 +59,7 @@ namespace RestfulAPIDemo
 
 
             services.AddScoped<IUrlHelper>(serviceProvider =>
-            {
-                // IActionContextAccessor actionContextAccessor, IUrlHelperFactory urlHelperFactory
+            {               
                 var actionContext = serviceProvider.GetService<IActionContextAccessor>().ActionContext;
                 var factor = serviceProvider.GetService<IUrlHelperFactory>();
                 return factor.GetUrlHelper(actionContext);
@@ -74,8 +73,8 @@ namespace RestfulAPIDemo
                     configure.ValidateComplexTypesIfChildValidationFails = false;
                 })
                 .AddNewtonsoftJson()
-                .AddXmlSerializerFormatters() //…Ë÷√÷ß≥÷XML∏Ò Ω ‰»Î ‰≥ˆ
-                .AddJsonOptions(op => op.JsonSerializerOptions.PropertyNameCaseInsensitive = true);//¥Û–°–¥≤ª◊™ªª
+                .AddXmlSerializerFormatters() //ËÆæÁΩÆÊîØÊåÅXMLÊ†ºÂºèËæìÂÖ•ËæìÂá∫
+                .AddJsonOptions(op => op.JsonSerializerOptions.PropertyNameCaseInsensitive = true);//Â§ßÂ∞èÂÜô‰∏çËΩ¨Êç¢
 
         }
         /// <summary>
@@ -91,7 +90,7 @@ namespace RestfulAPIDemo
             }
             else
             {
-                //Õ®π˝“Ï≥£¥¶¿Ìª˙÷∆
+                //ÈÄöËøáÂºÇÂ∏∏Â§ÑÁêÜÊú∫Âà∂
                 app.UseExceptionHandler(builder =>
                 {
                     builder.Run(async context =>
@@ -102,7 +101,7 @@ namespace RestfulAPIDemo
                             var logger = app.ApplicationServices.GetService(typeof(ILogger<Startup>)) as ILogger;
                             logger.LogError(exceptionHandlerFeature.Error.Message);
                         }
-                        var result = "“ª∏ˆ¥ÌŒÛ∑¢…˙";
+                        var result = "‰∏Ä‰∏™ÈîôËØØÂèëÁîü";
                         var data = Encoding.UTF8.GetBytes(result);
                         context.Response.StatusCode = 500;
                         context.Response.ContentType = "application/json";

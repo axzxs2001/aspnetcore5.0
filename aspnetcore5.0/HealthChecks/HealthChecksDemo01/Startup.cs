@@ -29,14 +29,14 @@ namespace HealthChecksDemo01
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //×î¼òµ¥Ä£Ê½
+            //æœ€ç®€å•æ¨¡å¼
             //services.AddHealthChecks();
-            //×Ô¶¨Òå½¡¿µ¼ì²é
+            //è‡ªå®šä¹‰å¥åº·æ£€æŸ¥
             services.AddScoped<IDbConnection, Npgsql.NpgsqlConnection>();
             services.AddHealthChecks()
-                //Èı·½¿â
+                //ä¸‰æ–¹åº“
                 .AddNpgSql(Configuration.GetConnectionString("PostgreSql"), tags: new[] { "pgsql" })
-                //×Ô¶¨Òå
+                //è‡ªå®šä¹‰
                 .AddPostgre(Configuration.GetConnectionString("Postgre"))
                 .AddCheck("health", () => HealthCheckResult.Healthy("Foo is OK!"), tags: new[] { "health" });
 
@@ -46,13 +46,13 @@ namespace HealthChecksDemo01
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //×î¼òµ¥Ä£Ê½
+            //æœ€ç®€å•æ¨¡å¼
             //app.UseHealthChecks("/health");
 
-            //¼Ó¶Ë¿Ú
+            //åŠ ç«¯å£
             //app.UseHealthChecks("/health", 8800);
 
-            //±êÇ©
+            //æ ‡ç­¾
             app.UseHealthChecks("/health", 5000, new HealthCheckOptions()
             {
                 //ResultStatusCodes =
@@ -67,9 +67,9 @@ namespace HealthChecksDemo01
             });
             app.UseHealthChecks("/readiness", 8800, new HealthCheckOptions
             {
-                //ÓÃ±êÇ©¿¨ÊÇÑé²ÉÓÃ×ÓÑéÖ¤
+                //ç”¨æ ‡ç­¾éªŒè¯
                 Predicate = (check) => check.Tags.Contains("pg") || check.Tags.Contains("pgsql")
-                //²»°üº¬£¬³É¹¦
+                //ä¸åŒ…å«ï¼ŒæˆåŠŸ
                 //Predicate = (check) => check.Tags.Contains("pgsql")
             });
 
@@ -88,10 +88,10 @@ namespace HealthChecksDemo01
             });
         }
         /// <summary>
-        /// ½¡¿µ·µ»Ø×´Ì¬
+        /// å¥åº·è¿”å›çŠ¶æ€
         /// </summary>
-        /// <param name="httpContext">ÉÏÏÂÎÄ</param>
-        /// <param name="result">½¡¿µ±¨±í</param>
+        /// <param name="httpContext">ä¸Šä¸‹æ–‡</param>
+        /// <param name="result">å¥åº·æŠ¥è¡¨</param>
         /// <returns></returns>
         private static Task WriteResponse(HttpContext httpContext, HealthReport result)
         {

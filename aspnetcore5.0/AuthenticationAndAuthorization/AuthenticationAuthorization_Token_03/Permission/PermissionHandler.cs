@@ -21,46 +21,66 @@ namespace AuthenticationAuthorization_Token_03
     /// </summary>
     public class PermissionHandler : AuthorizationHandler<PermissionRequirement>
     {
+        /// <summary>
+        /// 用户权限
+        /// </summary>
+        public List<Permission> UserPermissions { get; set; }
 
         /// <summary>
-        /// 验证方案提供对象
-        /// </summary>
-        public IAuthenticationSchemeProvider Schemes { get; set; }
-
-        /// <summary>
-        /// 构造
-        /// </summary>
-        /// <param name="schemes"></param>
-        public PermissionHandler(IAuthenticationSchemeProvider schemes)
-        {
-            Schemes = schemes;
-        }
-        /// <summary>
-        /// 验证每次请求
+        /// 
         /// </summary>
         /// <param name="context"></param>
         /// <param name="requirement"></param>
         /// <returns></returns>
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
         {
-            if (context.Resource is RouteEndpoint route && route != null)
+            //请求的url
+            var questUrl = "";
+            //请求谓词
+            var method = "";
+            if (context.Resource is RouteEndpoint)
             {
-                var questUrl = route.RoutePattern.RawText;
-                if (requirement.Permissions.GroupBy(g => g.Url).Where(w => w.Key.ToLower() == questUrl).Count() > 0)
+                var route = (context.Resource as Microsoft.AspNetCore.Routing.RouteEndpoint);
+                if (route.RoutePattern.Parameters.Count > 0)
                 {
-                    var name = context.User.Claims.SingleOrDefault(s => s.Type == requirement.ClaimType)?.Value;
-                    //验证权限
-                    if (requirement.Permissions.Where(w => w.Name == name && w.Url.ToLower() == questUrl).Count() > 0)
-                    {                        //判断过期时间
-                        if (DateTime.Parse(context.User.Claims.SingleOrDefault(s => s.Type == ClaimTypes.Expiration).Value) >= DateTime.Now)
-                        {
-                            context.Succeed(requirement);
-                            return Task.CompletedTask;
-                        }
-                    }
+                    questUrl = $"{route.RoutePattern.Defaults["controller"].ToString().ToLower() }/{route.RoutePattern.Defaults["action"].ToString().ToLower()}";
+                }
+                else
+                {
+                    questUrl = route.RoutePattern.RawText;
                 }
             }
-            context.Fail();
+            else
+            {
+                var fileContext = (context.Resource as AuthorizationFilterContext);
+                questUrl = fileContext?.HttpContext?.Request?.Path.Value?.ToLower();
+                method = fileContext?.HttpContext?.Request?.Method;
+            }
+            //赋值用户权限
+            UserPermissions = requirement.Permissions;
+            //是否经过验证
+            var isAuthenticated = context?.User?.Identity?.IsAuthenticated;
+            if (isAuthenticated.HasValue && isAuthenticated.Value)
+            {
+                if (UserPermissions.GroupBy(g => g.Url).Where(w => w.Key.ToLower() == questUrl).Count() > 0)
+                {
+                    //用户名
+                    var userName = context.User.Claims.SingleOrDefault(s => s.Type == ClaimTypes.Sid).Value;
+                    if (UserPermissions.Where(w => w.Name == userName && w.Url.ToLower() == questUrl).Count() > 0)
+                    {
+                        context.Succeed(requirement);
+                    }
+                    else
+                    {
+                        //无权限跳转到拒绝页面
+                        context.Fail();
+                    }
+                }
+                else
+                {
+                    context.Succeed(requirement);
+                }
+            }
             return Task.CompletedTask;
         }
     }

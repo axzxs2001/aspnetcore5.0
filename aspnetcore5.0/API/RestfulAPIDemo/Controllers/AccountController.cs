@@ -43,7 +43,7 @@ namespace RestfulAPIDemo.Controllers
         /// </summary>
         /// <param name="userId">用户ID</param>
         /// <returns></returns>
-        [ProducesResponseType(typeof(IEnumerable<Account>), 200)]
+        [ProducesResponseType(typeof(IList<Account>), 200)]
         [HttpGet]
         public ActionResult GetAccounts(int userId)
         {
@@ -54,7 +54,7 @@ namespace RestfulAPIDemo.Controllers
             }
             else
             {
-                return Ok(accounts);
+                return new JsonResult(accounts);
             }
         }
         /// <summary>
@@ -136,7 +136,7 @@ namespace RestfulAPIDemo.Controllers
             }
             else
             {
-                return Ok(accounts);
+                return new JsonResult(accounts);
             }
         }
         /// <summary>

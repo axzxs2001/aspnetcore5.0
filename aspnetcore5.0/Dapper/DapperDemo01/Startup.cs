@@ -28,14 +28,14 @@ namespace DapperDemo01
 
         public void ConfigureServices(IServiceCollection services)
         {
-            #region SingleDatabase  ×¢ÈëÁ¬½Ó×Ö·û´®  ×¢ÈëIDapperPlusDB  ×¢ÈëIDbConnection
+            #region SingleDatabase  æ³¨å…¥è¿æ¥å­—ç¬¦ä¸²  æ³¨å…¥IDapperPlusDB  æ³¨å…¥IDbConnection
             var connection = string.Format(Configuration.GetConnectionString("Sqlite"), System.IO.Directory.GetCurrentDirectory());
             services.AddSingleton(connection);
             services.AddScoped<IDapperPlusDB, DapperPlusDB>();
             services.AddScoped<IDbConnection, SqliteConnection>();
             #endregion
 
-            #region MultiDatabase  ×¢Èë¸÷¸öÊı¾İ¿âÁ´½Ó¶ÔÏó
+            #region MultiDatabase  æ³¨å…¥å„ä¸ªæ•°æ®åº“é“¾æ¥å¯¹è±¡
             //services.AddScoped<IDapperPlusDB, DapperPlusDB>(service =>
             //{
             //    return new DapperPlusDB(new SqliteConnection(string.Format(Configuration.GetConnectionString("Sqlite"), System.IO.Directory.GetCurrentDirectory())));
@@ -47,7 +47,7 @@ namespace DapperDemo01
             #endregion
 
 
-            #region MultiDatabase  ×¢ÈëÏà¶ÔÀàĞÍÊı¾İ¿âÁ´½Ó¶ÔÏó
+            #region MultiDatabase  æ³¨å…¥ç›¸å¯¹ç±»å‹æ•°æ®åº“é“¾æ¥å¯¹è±¡
             //services.AddScoped<IDapperPlusDB, DapperPlusDB>(service =>
             //{
             //    return new DapperPlusDB(dbConnection: new NpgsqlConnection(Configuration.GetConnectionString("Postgre")), dataBaseMark: "pg");

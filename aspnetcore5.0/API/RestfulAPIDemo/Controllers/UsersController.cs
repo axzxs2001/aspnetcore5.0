@@ -226,7 +226,7 @@ namespace RestfulAPIDemo.Controllers
                     NextPageLink = nextLink
                 };
                 Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(meta));
-                return Ok(pageUsers);
+                return new JsonResult(pageUsers);
             }
 
         }

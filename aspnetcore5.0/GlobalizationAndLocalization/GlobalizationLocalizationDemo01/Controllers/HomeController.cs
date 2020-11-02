@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
 
+
 namespace GlobalizationLocalizationDemo01.Controllers
 {
     public class HomeController : Controller

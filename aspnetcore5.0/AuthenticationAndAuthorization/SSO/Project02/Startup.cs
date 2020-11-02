@@ -26,7 +26,7 @@ namespace Project02
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
@@ -50,7 +50,7 @@ namespace Project02
             {
                 options.Cookie.Name = ".AspNet.SharedCookie";
             });
-            //Ìí¼ÓÈÏÖ¤CookieÐÅÏ¢
+            //ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤Cookieï¿½ï¿½Ï¢
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,options =>
                 {
