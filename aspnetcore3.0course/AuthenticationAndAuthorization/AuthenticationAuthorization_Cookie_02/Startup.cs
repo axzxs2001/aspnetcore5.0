@@ -38,14 +38,14 @@ namespace AuthenticationAuthorization_Cookie_02
 
             services.AddAuthorization(options =>
             {
-                //×Ô¶¨ÒåRequirement£¬userPermission¿É´ÓÊý¾Ý¿âÖÐ»ñµÃ
+                //ï¿½Ô¶ï¿½ï¿½ï¿½Requirementï¿½ï¿½userPermissionï¿½É´ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Ð»ï¿½ï¿½
                 var userPermission = new List<UserPermission> {
-                              new UserPermission {  Url="home/index", UserName="gsw"},
-                              new UserPermission {  Url="adminpage", UserName="gsw"},
-                              new UserPermission {  Url="logout", UserName="gsw"},
-                              new UserPermission {  Url="home/index", UserName="aaa"},
-                              new UserPermission {  Url="systempage", UserName="aaa"},
-                              new UserPermission {  Url="logout", UserName="aaa"}
+                              new UserPermission {  Url="/home/index", UserName="gsw"},
+                              new UserPermission {  Url="/adminpage", UserName="gsw"},
+                              new UserPermission {  Url="/logout", UserName="gsw"},
+                              new UserPermission {  Url="/home/index", UserName="aaa"},
+                              new UserPermission {  Url="/systempage", UserName="aaa"},
+                              new UserPermission {  Url="/logout", UserName="aaa"}
 
                           };
                 options.AddPolicy("Permission", policy =>
@@ -59,7 +59,7 @@ namespace AuthenticationAuthorization_Cookie_02
                     options.LoginPath = new PathString("/login");
                     options.AccessDeniedPath = new PathString("/denied");
                 });
-            //×¢ÈëÊÚÈ¨Handler
+            //×¢ï¿½ï¿½ï¿½ï¿½È¨Handler
             services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
             services.AddControllersWithViews(opt =>
             {
@@ -86,14 +86,14 @@ namespace AuthenticationAuthorization_Cookie_02
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            //Ìí¼ÓÑéÖ¤
+            //ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤
             app.UseAuthentication();
             app.UseRouting();
 
             app.UseAuthorization();
-            //ÆÕÍ¨Ä£Ê½
+            //ï¿½ï¿½Í¨Ä£Ê½
             app.UseMvcWithDefaultRoute();
-            //ÖÕ¶ËµãÄ£Ê½
+            //ï¿½Õ¶Ëµï¿½Ä£Ê½
             //app.UseEndpoints(endpoints =>
             //{
             //    endpoints.MapControllerRoute(

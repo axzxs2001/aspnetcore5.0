@@ -52,7 +52,7 @@ namespace AuthenticationAuthorization_Cookie_01
                 .AddNewtonsoftJson();
             services.AddRazorPages();
      
-            //Ìí¼ÓÈÏÖ¤CookieÐÅÏ¢
+            //ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤Cookieï¿½ï¿½Ï¢
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
