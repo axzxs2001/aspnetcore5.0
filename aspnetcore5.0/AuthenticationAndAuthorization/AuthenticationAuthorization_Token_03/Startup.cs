@@ -28,6 +28,14 @@ namespace AuthenticationAuthorization_Token_03
         public void ConfigureServices(IServiceCollection services)
         {
             AddAuth(services);
+            //这个集合模拟用户权限表,可从数据库中查询出来
+            var permission = new List<Permission> {
+                              new Permission {  Url="/adminapi", Credentials="admin",Method="GET"},
+                              new Permission {  Url="/adminapi", Credentials="admin",Method="POST"},
+                              new Permission {  Url="/systemapi", Credentials="system",Method="GET"},
+                              new Permission {  Url="/systemapi", Credentials="system",Method="POST"}
+                          };
+            services.AddSingleton(permission);
 
             services.AddControllers()
                 .AddNewtonsoftJson();
@@ -83,14 +91,10 @@ namespace AuthenticationAuthorization_Token_03
 
             };
             var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
-            //这个集合模拟用户权限表,可从数据库中查询出来
-            var permission = new List<Permission> {
-                              new Permission {  Url="/adminapi", Name="admin"},
-                              new Permission {  Url="/systemapi", Name="system"}
-                          };
+
             //如果第三个参数，是ClaimTypes.Role，上面集合的每个元素的Name为角色名称，如果ClaimTypes.Name，即上面集合的每个元素的Name为用户名
             var permissionRequirement = new PermissionRequirement(
-                "/api/denied", permission,
+                "/api/denied",
                 ClaimTypes.Role,
                 audienceConfig["Issuer"],
                 audienceConfig["Audience"],

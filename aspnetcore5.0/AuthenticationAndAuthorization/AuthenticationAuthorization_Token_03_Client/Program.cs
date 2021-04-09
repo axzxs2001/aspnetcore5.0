@@ -15,7 +15,7 @@ namespace AuthenticationAuthorization_Token_03_Client
             dynamic token = null;
             while (true)
             {
-                Console.WriteLine("1、登录【admin】 2、登录【system】 3、登录【错误用户名密码】 4、查询数据 ");
+                Console.WriteLine("1、登录【admin】 2、登录【system】 3、登录【错误用户名密码】 4、查询Admin数据  5、查询System数据 ");
                 var mark = Console.ReadLine();
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
@@ -31,7 +31,10 @@ namespace AuthenticationAuthorization_Token_03_Client
                         token = NullLogin();
                         break;
                     case "4":
-                        ApiInvock(token);
+                        AdminApiInvock(token);
+                        break;
+                    case "5":
+                        SystemApiInvock(token);
                         break;
                 }
                 stopwatch.Stop();
@@ -78,13 +81,24 @@ namespace AuthenticationAuthorization_Token_03_Client
             Console.WriteLine(loginContent);
             return Newtonsoft.Json.JsonConvert.DeserializeObject(loginContent);
         }
-        static void ApiInvock(dynamic token)
+        static void AdminApiInvock(dynamic token)
         {
             var client = new RestClient(_url);
             //这里要在获取的令牌字符串前加Bearer
             var tk = $"Bearer {Convert.ToString(token?.access_token)}";
             client.AddDefaultHeader("Authorization", tk);
             var request = new RestRequest("/adminapi", Method.GET);
+            IRestResponse response = client.Execute(request);
+            var content = response.Content;
+            Console.WriteLine($"状态：{response.StatusCode}  {(int)response.StatusCode}返回结果：{content}");
+        }
+        static void SystemApiInvock(dynamic token)
+        {
+            var client = new RestClient(_url);
+            //这里要在获取的令牌字符串前加Bearer
+            var tk = $"Bearer {Convert.ToString(token?.access_token)}";
+            client.AddDefaultHeader("Authorization", tk);
+            var request = new RestRequest("/systemapi", Method.GET);
             IRestResponse response = client.Execute(request);
             var content = response.Content;
             Console.WriteLine($"状态：{response.StatusCode}  {(int)response.StatusCode}返回结果：{content}");
